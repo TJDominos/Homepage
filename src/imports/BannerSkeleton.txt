@@ -1,0 +1,13 @@
+import React from "react";
+import "./BannerSkeleton.scss";
+
+const BannerSkeleton = () => (
+  <div className="banner-skeleton">
+    <div className="skeleton-banner">
+      <div className="skeleton-banner-content">
+      </div>
+    </div>
+  </div>
+);
+
+export default BannerSkeleton; 

@@ -1,0 +1,129 @@
+.test-page {
+  min-height: 100vh;
+  padding-top: 68rem;
+  padding-bottom: 60rem;
+  background: linear-gradient(to bottom, #D5D6F7 0%, #E1E2F9 50%, #ffffff 100%);
+  font-family: var(--app-font-family);
+}
+
+.test-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  background: linear-gradient(to right, #D5D6F7, #E1E2F9, #D3C3FB);
+  border-bottom: 1rem solid rgba(167, 139, 250, 0.3);
+  box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.05);
+
+  .test-header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    max-width: 1024rem;
+    margin: 0 auto;
+    padding: 12rem 16rem;
+  }
+
+  .logo-area {
+    display: flex;
+    align-items: center;
+    margin-right: 45rem;
+
+    .logo {
+      display: inline-block;
+      width: 40rem;
+      height: 40rem;
+      margin-right: 8rem;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      border-radius: 8rem;
+    }
+  }
+
+  .title {
+    font-size: 16rem;
+    font-weight: bold;
+    letter-spacing: 0.5rem;
+    color: #000;
+    text-align: center;
+  }
+
+  .community-btn {
+    width: 85rem;
+    height: 24rem;
+    flex-shrink: 0;
+    border-radius: 20rem;
+    border: 1rem solid #000;
+    color: #000;
+    font-family: inherit;
+    font-size: 10rem;
+    font-weight: 500;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 3rem;
+    text-decoration: none;
+
+    span {
+      display: inline-block;
+      height: 14rem;
+      width: 14rem;
+      background: url('./imgs/Vector.svg') no-repeat center;
+      background-size: contain;
+    }
+  }
+
+  @media (min-width: 768px) {
+    .title {
+      font-size: 20rem;
+    }
+    .community-btn {
+      width: 145rem;
+      height: 40rem;
+      font-size: 15rem;
+      border: 2rem solid #000;
+      gap: 6rem;
+      span {
+        width: 18rem;
+        height: 18rem;
+      }
+    }
+    .logo-area {
+      margin-right: 105rem;
+    }
+  }
+}
+
+.test-content {
+  max-width: 1024rem;
+  margin: 0 auto;
+  padding: 40rem 16rem;
+
+  h1 {
+    font-size: 32rem;
+    margin-bottom: 16rem;
+    color: #000;
+  }
+
+  p {
+    font-size: 16rem;
+    color: #666;
+    margin-bottom: 20rem;
+  }
+
+  .test-box {
+    width: 200rem;
+    height: 100rem;
+    background: white;
+    border-radius: 12rem;
+    padding: 20rem;
+    box-shadow: 0 2rem 8rem rgba(0, 0, 0, 0.1);
+
+    p {
+      font-size: 14rem;
+      color: #333;
+      margin: 0;
+    }
+  }
+}

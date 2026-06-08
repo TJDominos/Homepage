@@ -1,0 +1,560 @@
+.home-page {
+  background: 
+    linear-gradient(177deg, rgba(255, 255, 255, 0.00) 7.99%, #fff 100%),
+    linear-gradient(272deg, #D5D6F7 1.78%, #E1E2F9 46.59%, #D3C3FB 99.68%);
+  background-size: 100% 314rem, 100% 314rem;
+  background-repeat: no-repeat;
+  padding-bottom: 60rem;
+  min-height: calc(min(100dvh, 100vh) - 60rem);
+  padding-top: 68rem;
+  font-family: var(--app-font-family);
+
+  &.desktop-mode {
+    font-family: var(--app-font-family);
+  }
+  
+  .loading-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 200rem;
+    margin-top: 76rem;
+    
+    .loading-text {
+      font-size: 16rem;
+      color: #666;
+    }
+  }
+  
+  .home-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    background: linear-gradient(90deg, #D5D6F7 0%, #E1E2F9 50%, #D3C3FB 100%);
+    border-bottom: 1rem solid rgba(167, 139, 250, 0.3);
+    box-shadow: 0 1rem 4rem rgba(95, 64, 161, 0.06);
+    
+    .home-header-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+      max-width: var(--max-content-width-pc);
+      margin: 0 auto;
+      padding: 12rem 16rem;
+    }
+    
+    .logo-area {
+      display: flex;
+      align-items: center;
+      margin-right: 45rem;
+      
+      .logo {
+        display: inline-block;
+        width: 40rem;
+        height: 40rem;
+        margin-right: 8rem;
+        position: relative;
+        background: #f4f0ff;
+        border-radius: 50%;
+        box-shadow: 0 1rem 4rem rgba(0, 0, 0, 0.08);
+
+        &::before {
+          content: '';
+          position: absolute;
+          inset: 8rem;
+          border-radius: 50%;
+          background:
+            radial-gradient(circle at 50% 0%, #f2b447 0 4rem, transparent 4.5rem),
+            radial-gradient(circle at 100% 50%, #60b96e 0 4rem, transparent 4.5rem),
+            radial-gradient(circle at 50% 100%, #5b87d9 0 4rem, transparent 4.5rem),
+            radial-gradient(circle at 0% 50%, #db5f8e 0 4rem, transparent 4.5rem);
+        }
+
+      }
+    }
+
+    .title {
+      font-size: 16rem;
+      font-weight: bold;
+      letter-spacing: 0.5rem;
+      color: #000;
+      text-align: center;
+    }
+    
+    .community-btn,
+    .signin-btn {
+      width: 85rem;
+      height: 24rem;
+      flex-shrink: 0;
+      border-radius: 20rem;
+      border: 1rem solid #000;
+      color: #000;
+      font-family: inherit;
+      font-size: 10rem;
+      text-decoration: none;
+      font-weight: 500;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 3rem;
+      span,
+      svg {
+        display: inline-block;
+        height: 14rem;
+        width: 14rem;
+      }
+    }
+
+    @media (min-width: 768px) {
+      .title {
+        font-size: 20rem;
+      }
+      .community-btn,
+      .signin-btn {
+        width: 145rem;
+        height: 40rem;
+        font-size: 15rem;
+        border: 2rem solid #000;
+        gap: 6rem;
+        span,
+        svg {
+          width: 18rem;
+          height: 18rem;
+        }
+      }
+      .logo-area {
+        margin-right: 105rem;
+      }
+    }
+  }
+  
+  .home-banner {
+    margin: 0 16rem 20rem 16rem; // 为固定header留出空间
+    border-radius: 12rem;
+    overflow: hidden;
+    height: 160rem;
+    
+    // 自定义轮播图分页器样式
+    .nut-indicator {
+      display: flex;
+      gap: 3rem;
+      justify-content: center;
+      
+      .nut-indicator-dot {
+        width: 14rem;
+        height: 3rem;
+        border-radius: 8rem;
+        background: rgba(255, 255, 255, 0.5);
+        transition: all 0.3s ease;
+        
+        &.nut-indicator-active {
+          background: #FFFFFF!important;
+        }
+      }
+    }
+    
+    // 真实轮播图样式
+    .banner-image {
+      width: 100%;
+      height: 160rem;
+      border-radius: 0rem !important;
+      display: block;
+      object-fit: cover;
+    }
+    
+    .banner-link {
+      display: block;
+      width: 100%;
+      height: 160rem;
+      text-decoration: none;
+      
+      &:hover {
+        text-decoration: none;
+      }
+    }
+    
+    .banner-placeholder {
+      width: 100%;
+      height: 160rem;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      
+      .banner-content {
+        text-align: center;
+        color: white;
+        z-index: 2;
+        
+        h3 {
+          font-size: 14rem;
+          margin: 0rem 0rem 6rem 0rem;
+          opacity: 0.9;
+        }
+        
+        h2 {
+          font-size: 24rem;
+          font-weight: bold;
+          margin: 0rem 0rem 12rem 0rem;
+          text-shadow: 1rem 1rem 2rem rgba(0,0,0,0.3);
+        }
+        
+        .banner-stats {
+          display: flex;
+          gap: 20rem;
+          justify-content: center;
+          
+          .stat {
+            text-align: center;
+            
+            .stat-label {
+              font-size: 10rem;
+              opacity: 0.8;
+              margin-bottom: 2rem;
+            }
+            
+            .stat-value {
+              font-size: 16rem;
+              font-weight: bold;
+            }
+          }
+        }
+      }
+    }
+    
+    .banner-img {
+      width: 100%;
+      height: 160rem;
+      object-fit: cover;
+      border-radius: 12rem;
+      display: block;
+    }
+  }
+  
+  .game-section {
+    margin: 0rem 16rem 24rem 16rem;
+    
+    // 当没有轮播图时，第一个游戏区块需要额外的顶部边距
+    &:first-of-type {
+      margin-top: 20rem;
+    }
+
+    .game-list {
+      display: block;
+    }
+    
+    .section-title {
+      font-size: 18rem;
+      font-weight: 600;
+      margin: 0rem 0rem 10rem 0rem;
+      color: #000;
+    }
+    
+    .game-item {
+      display: flex;
+      align-items: flex-start;
+      border-radius: 12rem;
+      // padding: 16rem 16rem;
+      margin-bottom: 11rem;
+      transition: background 0.2s;
+      gap: 6rem;
+    
+      &.coming-soon {
+        opacity: 0.65;
+        
+        .play-btn {
+          background: #eee;
+          color: #aaa;
+          cursor: default;
+        }
+
+        .game-status {
+          color: rgba(0, 0, 0, 0.45);
+        }
+      }
+      
+      .game-logo {
+        width: 52rem;
+        height: 52rem;
+        border-radius: 10rem;
+        margin-right: 6rem;
+        background: #fff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+        position: relative;
+        
+        .game-logo-img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          border-radius: 10rem;
+        }
+        
+        .game-logo-placeholder {
+          width: 100%;
+          height: 100%;
+          border-radius: 10rem;
+          background: linear-gradient(135deg, #4CAF50, #2196F3);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          color: white;
+          font-size: 18rem;
+          font-weight: bold;
+        }
+      }
+      
+      .game-content {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        height: 52rem;
+        justify-content: space-between;
+        
+        .game-header {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          
+          .game-name {
+            font-size: 16rem;
+            font-weight: 600;
+            line-height: 100%;
+            color: #000;
+          }
+        }
+          
+        .game-desc {
+          height: 32rem;
+          display: flex;
+          align-items: center;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          color: rgba(0, 0, 0, 0.45);
+          font-family: inherit;
+          font-size: 11rem;
+          font-style: normal;
+          font-weight: 400;
+          line-height: 14rem;
+          
+          // 内部文本容器
+          > div {
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            width: 100%;
+            line-height: 14rem;
+          }
+        }
+      }
+
+      .game-status {
+        display: none;
+        min-width: 92rem;
+        padding-top: 8rem;
+        text-align: right;
+        color: rgba(0, 0, 0, 0.45);
+        font-size: 11rem;
+      }
+
+      .game-action {
+        min-width: 92rem;
+        padding-top: 8rem;
+      }
+
+      .play-btn {
+        border-radius: 27rem; // Rounded value for better maintainability
+        background: rgba(95, 64, 161, 0.1);
+        color: #5F40A1;
+        border: none;
+        font-size: 12rem;
+        line-height: 20rem;
+        border-radius: 16rem;
+        display: block;
+        width: 92rem;
+        text-align: center;
+        padding: 4rem 0;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background 0.2s;
+        white-space: nowrap;
+
+        &:hover:not(.disabled) {
+          background: #d1c4f6;
+        }
+
+        &.disabled {
+          color: rgba(0, 0, 0, 0.45);
+          cursor: default;
+        }
+      }
+    }
+  }
+}
+
+.home-page.desktop-mode {
+  min-height: 100vh;
+  padding-top: 68rem;
+  background: linear-gradient(to bottom, #D5D6F7 0%, #E1E2F9 50%, #ffffff 100%);
+}
+
+// 优化加载状态
+.home-games {
+  .loading-text {
+    text-align: center;
+    padding: 40rem 0;
+    color: #666;
+    font-size: 14rem;
+  }
+} 
+
+ .desktop-home-content {
+  min-height: calc(100vh - 68rem);
+  padding: 12rem 0 60rem;
+  font-family: var(--app-font-family);
+}
+
+.desktop-home-container {
+  max-width: 1024rem;
+  margin: 0 auto;
+  padding: 0 16rem;
+}
+
+.desktop-banner-section {
+  padding: 0 0 24rem;
+
+  .desktop-banner-card-wrap {
+    width: 100%;
+    padding: 0 8rem;
+  }
+
+  .desktop-banner-slide {
+    padding-bottom: 8rem;
+  }
+
+  .desktop-banner-card {
+    width: 100%;
+    aspect-ratio: 2 / 1;
+    border-radius: 16rem;
+    display: block;
+    object-fit: cover;
+    box-shadow: 0 12rem 30rem rgba(95, 64, 161, 0.18);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+    &:hover {
+      transform: scale(1.02);
+      box-shadow: 0 16rem 36rem rgba(95, 64, 161, 0.28);
+    }
+  }
+}
+
+.desktop-home-games {
+  display: flex;
+  flex-direction: column;
+  gap: 8rem;
+}
+
+.desktop-game-section {
+  .desktop-section-title {
+    margin-bottom: 6rem;
+    color: #000;
+    font-size: 24rem;
+    font-weight: 600;
+    line-height: 1.2;
+  }
+
+  .desktop-game-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 8rem;
+  }
+
+  .desktop-game-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10rem;
+    border-radius: 12rem;
+    padding: 6rem;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, opacity 0.3s ease;
+
+    &:hover {
+      transform: translateY(-4rem);
+      box-shadow: 0 16rem 24rem rgba(0, 0, 0, 0.08);
+    }
+
+    &.coming-soon {
+      opacity: 0.65;
+
+      &:hover {
+        transform: none;
+        box-shadow: none;
+      }
+    }
+  }
+
+  .desktop-game-logo {
+    flex-shrink: 0;
+    width: 70rem;
+    height: 70rem;
+    border-radius: 10rem;
+    overflow: hidden;
+    box-shadow: 0 2rem 8rem rgba(0, 0, 0, 0.08);
+  }
+
+  .desktop-game-logo-img {
+    width: 100%;
+    height: 100%;
+    border-radius: 10rem;
+    object-fit: cover;
+  }
+
+  .desktop-game-content {
+    width: 100%;
+    text-align: center;
+  }
+
+  .desktop-game-name {
+    margin-bottom: 2rem;
+    color: #000;
+    font-size: 20rem;
+    font-weight: 400;
+    line-height: 1.25;
+  }
+
+  .desktop-game-desc {
+    color: rgba(0, 0, 0, 0.8);
+    font-size: 14rem;
+    font-weight: 400;
+    line-height: 1.45;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
+
+@media (max-width: 1024px) {
+  .desktop-game-section {
+    .desktop-game-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+}
+
+@media (max-width: 900px) {
+  .desktop-game-section {
+    .desktop-game-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+}

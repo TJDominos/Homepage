@@ -1,0 +1,59 @@
+// Banner骨架屏样式
+.banner-skeleton {
+  width: 343rem;
+  height: 160rem;
+  margin: 0 16rem 20rem 16rem;
+  border-radius: 12rem;
+  overflow: hidden;
+  background: linear-gradient(90deg, 
+    #f0f0f0 0%, 
+    #e8e8e8 20%, 
+    #f0f0f0 40%, 
+    #f0f0f0 100%
+  );
+  background-size: 200% 100%;
+  animation: skeleton-shimmer 1.5s infinite linear;
+  position: relative;
+  
+  .skeleton-banner {
+    width: 343rem;
+    height: 100%;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    .skeleton-banner-content {
+      z-index: 1;
+      text-align: center;
+      
+      .skeleton-banner-title {
+        width: 160rem;
+        height: 24rem;
+        background: rgba(255, 255, 255, 0.8);
+        border-radius: 6rem;
+        margin-bottom: 12rem;
+        animation: skeleton-shimmer 1.8s infinite linear;
+        animation-delay: 0.3s;
+      }
+      
+      .skeleton-banner-subtitle {
+        width: 120rem;
+        height: 16rem;
+        background: rgba(255, 255, 255, 0.6);
+        border-radius: 4rem;
+        animation: skeleton-shimmer 1.8s infinite linear;
+        animation-delay: 0.5s;
+      }
+    }
+  }
+}
+
+@keyframes skeleton-shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+} 

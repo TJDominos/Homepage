@@ -1,0 +1,123 @@
+// 游戏列表骨架屏样式
+.games-skeleton {
+  margin: 0rem 16rem 24rem 16rem;
+  
+  // 当没有轮播图时，第一个游戏区块需要额外的顶部边距
+  &:first-of-type {
+    margin-top: 20rem;
+  }
+  
+  .skeleton-section-title {
+    font-size: 18rem;
+    font-weight: 600;
+    margin: 0rem 0rem 10rem 0rem;
+    color: #000;
+  }
+  
+  .skeleton-game-item {
+    display: flex;
+    align-items: flex-start;
+    padding: 0;
+    margin-bottom: 11rem;
+    background: transparent;
+    border-radius: 12rem;
+    box-shadow: none;
+    
+    &:nth-child(2) .skeleton-game-logo,
+    &:nth-child(2) .skeleton-game-name,
+    &:nth-child(2) .skeleton-play-btn,
+    &:nth-child(2) .skeleton-game-desc {
+      animation-delay: 0.1s;
+    }
+    
+    &:nth-child(3) .skeleton-game-logo,
+    &:nth-child(3) .skeleton-game-name,
+    &:nth-child(3) .skeleton-play-btn,
+    &:nth-child(3) .skeleton-game-desc {
+      animation-delay: 0.2s;
+    }
+    
+    .skeleton-game-logo {
+      width: 52rem;
+      height: 52rem;
+      border-radius: 10rem;
+      background: linear-gradient(90deg, 
+        #f0f0f0 0%, 
+        #e8e8e8 20%, 
+        #f0f0f0 40%, 
+        #f0f0f0 100%
+      );
+      background-size: 200% 100%;
+      animation: skeleton-shimmer 1.5s infinite linear;
+      margin-right: 12rem;
+      flex-shrink: 0;
+    }
+    
+    .skeleton-game-content {
+      flex: 1;
+      
+      .skeleton-game-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 12rem;
+        
+        .skeleton-game-name {
+          width: 100rem;
+          height: 16rem;
+          border-radius: 4rem;
+          background: linear-gradient(90deg, 
+            #f0f0f0 0%, 
+            #e8e8e8 20%, 
+            #f0f0f0 40%, 
+            #f0f0f0 100%
+          );
+          background-size: 200% 100%;
+          animation: skeleton-shimmer 1.5s infinite linear;
+        }
+        
+        .skeleton-play-btn {
+          width: 60rem;
+          height: 20rem;
+          border-radius: 16rem;
+          background: linear-gradient(90deg, 
+            #f0f0f0 0%, 
+            #e8e8e8 20%, 
+            #f0f0f0 40%, 
+            #f0f0f0 100%
+          );
+          background-size: 200% 100%;
+          animation: skeleton-shimmer 1.5s infinite linear;
+        }
+      }
+      
+      .skeleton-game-desc {
+        width: 100%;
+        height: 12rem;
+        border-radius: 4rem;
+        background: linear-gradient(90deg, 
+          #f0f0f0 0%, 
+          #e8e8e8 20%, 
+          #f0f0f0 40%, 
+          #f0f0f0 100%
+        );
+        background-size: 200% 100%;
+        animation: skeleton-shimmer 1.5s infinite linear;
+        margin-top: 8rem;
+        
+        &:last-child {
+          width: 75%;
+        }
+      }
+    }
+  }
+}
+
+@keyframes skeleton-shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+} 
