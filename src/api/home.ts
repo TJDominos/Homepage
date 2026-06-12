@@ -1,11 +1,6 @@
 import { useState, useEffect } from 'react';
 
-// Mock game logos (using Unsplash game-related images)
-const gameLogo1 = "https://images.unsplash.com/photo-1511512578047-dfb367046420?w=200&h=200&fit=crop";
-const gameLogo2 = "https://images.unsplash.com/photo-1570303345338-e1f0eddf4946?w=200&h=200&fit=crop";
-const gameLogo3 = "https://images.unsplash.com/photo-1556438064-2d7646166914?w=200&h=200&fit=crop";
-const gameLogo4 = "https://images.unsplash.com/photo-1542751371-adc38448a05e?w=200&h=200&fit=crop";
-const gameLogo5 = "https://images.unsplash.com/photo-1511882150382-421056c89033?w=200&h=200&fit=crop";
+const LOGO_BASE_URL = "https://storage.randseed.org/Product/Logo/";
 
 export interface Banner {
   id: number;
@@ -64,7 +59,7 @@ export function useHomeData() {
               id: 1,
               name: 'Daily 4',
               description: 'Just $0.5 to play! $4,500+ Daily 4 Jackpot',
-              logo: gameLogo1,
+              logo: `${LOGO_BASE_URL}daily4logosmall.png`,
               status: 'available',
               frontend_route: '/game/daily4'
             }
@@ -77,109 +72,41 @@ export function useHomeData() {
               id: 2,
               name: 'Lucky Nicky',
               description: 'Our most well-balanced, high win rate game!',
-              logo: gameLogo2,
+              logo: `${LOGO_BASE_URL}LNlogo.jpg`,
               status: 'available',
               frontend_route: '/game/lucky-nicky'
             },
             {
               id: 3,
-              name: 'Quick Quid',
-              description: '1 in 100 shot at a quick $50 win in our rapid-fire draw!',
-              logo: gameLogo3,
+              name: 'Roulette',
+              description: 'Classic roulette action with a crypto twist!',
+              logo: `${LOGO_BASE_URL}Roulette.png`,
               status: 'available',
-              frontend_route: '/game/quick-quid'
+              frontend_route: '/game/roulette'
             },
             {
               id: 4,
-              name: 'Triple Jokers',
-              description: 'Three times the fun with triple jackpot opportunities!',
-              logo: gameLogo4,
+              name: 'Fruits Garden',
+              description: 'Match fruits for sweet rewards!',
+              logo: `${LOGO_BASE_URL}Fruitsgardenlogosmall.png`,
               status: 'available',
-              frontend_route: '/game/triple-jokers'
+              frontend_route: '/game/fruits-garden'
             },
             {
               id: 5,
-              name: 'Lucky Nicky Combo',
-              description: 'Our most well-balanced, high win rate game!',
-              logo: gameLogo2,
+              name: 'Mines',
+              description: 'Navigate the minefield and multiply your winnings!',
+              logo: `${LOGO_BASE_URL}Mineslogo.png`,
               status: 'available',
-              frontend_route: '/game/lucky-nicky-combo'
+              frontend_route: '/game/mines'
             },
             {
               id: 6,
-              name: 'Power Play',
-              description: 'Maximum excitement with power multipliers!',
-              logo: gameLogo5,
-              status: 'coming_soon'
-            },
-            {
-              id: 7,
-              name: 'Mega Millions Mini',
-              description: 'Big jackpots, small entry fees!',
-              logo: gameLogo1,
+              name: 'Keno',
+              description: 'Pick your lucky numbers in this fast-paced draw!',
+              logo: `${LOGO_BASE_URL}Kenologosmall.png`,
               status: 'available',
-              frontend_route: '/game/mega-mini'
-            },
-            {
-              id: 8,
-              name: 'Speed Ball',
-              description: 'Fast-paced action with instant results!',
-              logo: gameLogo3,
-              status: 'available',
-              frontend_route: '/game/speed-ball'
-            },
-            {
-              id: 9,
-              name: 'Golden Ticket',
-              description: 'Your chance at life-changing prizes!',
-              logo: gameLogo4,
-              status: 'coming_soon'
-            },
-            {
-              id: 10,
-              name: 'Diamond Draw',
-              description: 'Premium game with exclusive rewards!',
-              logo: gameLogo5,
-              status: 'available',
-              frontend_route: '/game/diamond-draw'
-            },
-            {
-              id: 11,
-              name: 'Bonus Blast',
-              description: 'Extra bonuses on every play!',
-              logo: gameLogo1,
-              status: 'available',
-              frontend_route: '/game/bonus-blast'
-            },
-            {
-              id: 12,
-              name: 'Super Seven',
-              description: 'Lucky number 7 brings good fortune!',
-              logo: gameLogo2,
-              status: 'coming_soon'
-            },
-            {
-              id: 13,
-              name: 'Cash Cascade',
-              description: 'Watch the cash flow in!',
-              logo: gameLogo3,
-              status: 'available',
-              frontend_route: '/game/cash-cascade'
-            },
-            {
-              id: 14,
-              name: 'Fortune Wheel',
-              description: 'Spin to win amazing prizes!',
-              logo: gameLogo4,
-              status: 'available',
-              frontend_route: '/game/fortune-wheel'
-            },
-            {
-              id: 15,
-              name: 'Jackpot Joy',
-              description: 'Pure joy with every jackpot!',
-              logo: gameLogo5,
-              status: 'coming_soon'
+              frontend_route: '/game/keno'
             }
           ]
         ]
