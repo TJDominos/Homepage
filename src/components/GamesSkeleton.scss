@@ -1,5 +1,6 @@
 .games-skeleton {
   margin: 0 16rem 24rem 16rem;
+  width: 100%;
 
   &:first-of-type {
     margin-top: 20rem;
@@ -28,7 +29,13 @@
       height: 52rem;
       border-radius: 10rem;
       flex-shrink: 0;
-      background: linear-gradient(90deg, #f0f0f0 0%, #e8e8e8 20%, #f0f0f0 40%, #f0f0f0 100%);
+      background: linear-gradient(
+        90deg,
+        #f0f0f0 0%,
+        #e8e8e8 20%,
+        #f0f0f0 40%,
+        #f0f0f0 100%
+      );
       background-size: 200% 100%;
       animation: skeleton-shimmer 1.5s infinite linear;
     }
@@ -40,7 +47,13 @@
       .skeleton-game-name,
       .skeleton-game-desc {
         border-radius: 6rem;
-        background: linear-gradient(90deg, #f0f0f0 0%, #e8e8e8 20%, #f0f0f0 40%, #f0f0f0 100%);
+        background: linear-gradient(
+          90deg,
+          #f0f0f0 0%,
+          #e8e8e8 20%,
+          #f0f0f0 40%,
+          #f0f0f0 100%
+        );
         background-size: 200% 100%;
         animation: skeleton-shimmer 1.5s infinite linear;
       }
@@ -65,7 +78,13 @@
 
     .skeleton-play-btn,
     .skeleton-game-status {
-      background: linear-gradient(90deg, #f0f0f0 0%, #e8e8e8 20%, #f0f0f0 40%, #f0f0f0 100%);
+      background: linear-gradient(
+        90deg,
+        #f0f0f0 0%,
+        #e8e8e8 20%,
+        #f0f0f0 40%,
+        #f0f0f0 100%
+      );
       background-size: 200% 100%;
       animation: skeleton-shimmer 1.5s infinite linear;
       flex-shrink: 0;
@@ -98,7 +117,15 @@
     .skeleton-game-list {
       display: grid;
       grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 16rem;
+      gap: 8rem;
+
+      @media (max-width: 1024px) {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+
+      @media (max-width: 900px) {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
     }
 
     .skeleton-game-item {
@@ -106,12 +133,12 @@
       flex-direction: column;
       gap: 10rem;
       border-radius: 12rem;
-      padding: 14rem;
+      padding: 24rem 16rem;
 
       .skeleton-game-logo {
-        width: 86rem;
-        height: 86rem;
-        border-radius: 12rem;
+        width: 70rem;
+        height: 70rem;
+        border-radius: 10rem;
       }
 
       .skeleton-game-content {
@@ -121,13 +148,13 @@
         .skeleton-game-name {
           width: 70%;
           height: 20rem;
-          margin: 0 auto 10rem auto;
+          margin: 0 auto 2rem auto;
         }
 
         .skeleton-game-desc {
           width: 100%;
           height: 14rem;
-          margin-bottom: 8rem;
+          margin-bottom: 2rem;
 
           &.short {
             width: 80%;

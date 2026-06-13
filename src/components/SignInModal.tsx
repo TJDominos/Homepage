@@ -158,37 +158,47 @@ export function SignInModal({ isOpen, onClose }: SignInModalProps) {
       return;
     }
 
+    const safeCheck = (check: () => any) => {
+      try {
+        return !!check();
+      } catch (e) {
+        return false;
+      }
+    };
+
     const detected = [
       {
         id: "metamask",
         name: "MetaMask",
-        installed: !!(window as any).ethereum?.isMetaMask,
+        installed: safeCheck(() => (window as any).ethereum?.isMetaMask),
         url: "https://metamask.io/download/",
       },
       {
         id: "okx",
         name: "OKX Wallet",
-        installed: !!(window as any).okxwallet,
+        installed: safeCheck(() => (window as any).okxwallet),
         url: "https://www.okx.com/web3/build/projects/wallets",
       },
       {
         id: "coinbase",
         name: "Coinbase Wallet",
-        installed:
-          !!(window as any).coinbaseWalletExtension ||
-          !!(window as any).ethereum?.isCoinbaseWallet,
+        installed: safeCheck(
+          () =>
+            (window as any).coinbaseWalletExtension ||
+            (window as any).ethereum?.isCoinbaseWallet,
+        ),
         url: "https://www.coinbase.com/wallet",
       },
       {
         id: "binance",
         name: "Binance Wallet",
-        installed: !!(window as any).BinanceChain,
+        installed: safeCheck(() => (window as any).BinanceChain),
         url: "https://www.bnbchain.org/en/binance-wallet",
       },
       {
         id: "phantom",
         name: "Phantom",
-        installed: !!(window as any).phantom?.solana,
+        installed: safeCheck(() => (window as any).phantom?.solana),
         url: "https://phantom.app/",
       },
     ];
@@ -240,9 +250,25 @@ export function SignInModal({ isOpen, onClose }: SignInModalProps) {
       );
   }, [isOpen]);
 
-  const handleWalletSelect = (wallet: any) => {
+  const handleWalletSelect = async (wallet: any) => {
     setSelectedWallet({ name: wallet.name, icon: getWalletIcon(wallet) });
     setStep("CONNECTING");
+
+    if (wallet.id === "metamask" && typeof (window as any).ethereum !== "undefined") {
+      try {
+        const accounts = await (window as any).ethereum.request({ method: "eth_requestAccounts" });
+        if (accounts && accounts.length > 0) {
+          setStep("SUCCESS");
+          setTimeout(() => {
+            onClose(accounts[0]);
+          }, 1500);
+          return;
+        }
+      } catch (error) {
+        console.error("MetaMask connection error:", error);
+        // It may fail in iframes or if user rejects, fallback to original mock
+      }
+    }
 
     setTimeout(() => {
       setStep("PENDING");

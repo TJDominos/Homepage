@@ -6,7 +6,10 @@ interface GamesSkeletonProps {
   desktop?: boolean;
 }
 
-const GamesSkeleton: React.FC<GamesSkeletonProps> = ({ title, desktop = false }) => (
+const GamesSkeleton: React.FC<GamesSkeletonProps> = ({
+  title,
+  desktop = false,
+}) => (
   <div className={`games-skeleton${desktop ? " desktop-mode" : ""}`}>
     <div className="skeleton-section-title">{title}</div>
     <div className="skeleton-game-list">

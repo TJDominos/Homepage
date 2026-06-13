@@ -83,6 +83,7 @@
     flex-direction: row;
     align-items: stretch;
     justify-content: space-between;
+    margin: 0 auto;
     gap: 16rem;
     background: rgba(255, 255, 255, 0.4);
     padding: 12rem 16rem;
@@ -243,8 +244,8 @@
     padding-bottom: 0;
 
     .home-footer-main {
-      flex-direction: row;
-      justify-content: space-between;
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
       align-items: center;
       gap: 32rem;
       padding: 48rem 56rem 0;
@@ -253,9 +254,14 @@
     .home-footer-brand {
       align-items: flex-start;
       text-align: left;
+      /* Remove max-width so it can fill 1fr and wrap text */
+      max-width: 100%;
+      min-width: 0;
 
       p {
         font-size: 16px;
+        white-space: normal;
+        word-break: break-word;
       }
     }
 
@@ -264,6 +270,12 @@
     }
 
     .home-footer-metrics {
+      justify-self: center;
+
+      &:hover {
+        transform: translateY(-2rem);
+      }
+
       .metric-label {
         font-size: 14px;
         line-height: 14px;
@@ -277,6 +289,7 @@
     .home-footer-links {
       width: auto;
       gap: 32px;
+      justify-self: end;
     }
 
     .home-footer-column {
@@ -303,15 +316,12 @@
 @media (min-width: 768px) and (max-width: 1024px) {
   .home-footer {
     .home-footer-main {
-      flex-direction: row;
-      justify-content: space-between;
-      align-items: center;
       gap: 16rem;
       padding: 20rem 16rem 0;
     }
 
     .home-footer-brand {
-      max-width: 220rem;
+      max-width: 100%;
     }
 
     .home-footer-metrics {

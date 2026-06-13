@@ -1,12 +1,19 @@
 .banner-skeleton {
   margin: 0 16rem 20rem 16rem;
+  width: 100%;
 
   .skeleton-banner {
     width: 100%;
     height: 160rem;
     border-radius: 12rem;
     overflow: hidden;
-    background: linear-gradient(90deg, #f0f0f0 0%, #e8e8e8 20%, #f0f0f0 40%, #f0f0f0 100%);
+    background: linear-gradient(
+      90deg,
+      #f0f0f0 0%,
+      #e8e8e8 20%,
+      #f0f0f0 40%,
+      #f0f0f0 100%
+    );
     background-size: 200% 100%;
     animation: skeleton-shimmer 1.5s infinite linear;
   }
@@ -17,6 +24,7 @@
 
   &.desktop-mode {
     margin: 0 0 24rem 0;
+    padding: 0 8rem;
 
     .skeleton-banner {
       height: 0;
@@ -33,11 +41,9 @@
       box-shadow: 0 12rem 24rem rgba(95, 64, 161, 0.12);
     }
 
-    @media (min-width: 900px) {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 16rem;
-    }
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16rem;
   }
 }
 

@@ -39,7 +39,7 @@ export const GameHoverOverlay: React.FC<Props> = ({ gameName }) => {
   };
 
   return (
-    <div className="absolute inset-0 z-20 overflow-hidden rounded-[10rem] opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none bg-black/40 backdrop-blur-[2px] flex items-center justify-center">
+    <div className="absolute inset-0 z-20 overflow-hidden rounded-[10rem] opacity-0 group-hover:opacity-100 group-active:opacity-100 transition-opacity duration-300 pointer-events-none bg-black/40 backdrop-blur-[2px] flex items-center justify-center">
       {renderAnimation()}
     </div>
   );

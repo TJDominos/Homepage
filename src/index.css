@@ -10,8 +10,12 @@
   --foreground: oklch(0.145 0 0);
   --radius: 0.5rem;
   --max-content-width-pc: 1024rem;
-  --app-font-family: -apple-system, BlinkMacSystemFont, "SF Pro", "SF Pro Text", system-ui, sans-serif;
-  --app-font-display: -apple-system, BlinkMacSystemFont, "SF Pro", "SF Pro Display", system-ui, sans-serif;
+  --app-font-family:
+    -apple-system, BlinkMacSystemFont, "SF Pro", "SF Pro Text", system-ui,
+    sans-serif;
+  --app-font-display:
+    -apple-system, BlinkMacSystemFont, "SF Pro", "SF Pro Display", system-ui,
+    sans-serif;
 }
 .dark {
   --background: oklch(0.145 0 0);
@@ -23,8 +27,12 @@
   --color-foreground: var(--foreground);
   --animate-shimmer: shimmer 3s infinite linear;
   @keyframes shimmer {
-    0% { transform: translateX(-150%) skewX(-20deg); }
-    100% { transform: translateX(150%) skewX(-20deg); }
+    0% {
+      transform: translateX(-150%) skewX(-20deg);
+    }
+    100% {
+      transform: translateX(150%) skewX(-20deg);
+    }
   }
 }
 
@@ -849,15 +857,6 @@
     padding-bottom: 8rem;
   }
 
-  @keyframes shine {
-    0% {
-      transform: translateX(-200%) skewX(-25deg);
-    }
-    100% {
-      transform: translateX(300%) skewX(-25deg);
-    }
-  }
-
   .desktop-banner-card {
     width: 100%;
     aspect-ratio: 2 / 1;
@@ -928,7 +927,7 @@
     align-items: center;
     gap: 10rem;
     border-radius: 12rem;
-    padding: 6rem;
+    padding: 24rem 16rem;
     transition:
       transform 0.3s ease,
       box-shadow 0.3s ease,
@@ -1030,6 +1029,15 @@
 
   &.slick-hidden {
     display: none !important;
+  }
+}
+
+@keyframes shine {
+  0% {
+    transform: translateX(-200%) skewX(-25deg);
+  }
+  100% {
+    transform: translateX(300%) skewX(-25deg);
   }
 }
 

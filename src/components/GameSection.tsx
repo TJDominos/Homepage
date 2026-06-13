@@ -63,17 +63,19 @@ const GameSection: React.FC<GameSectionProps> = ({
       <div className="section-title">{title}</div>
       <div className="game-list">
         {games.map((game) => {
+          const isComingSoon = game.status === "coming_soon";
           return (
             <div
-              className={`game-item group relative${game.status === "coming_soon" ? " coming-soon" : " clickable"}`}
+              className={`game-item group relative${isComingSoon ? " coming-soon" : " clickable"}`}
               key={game.id}
               onClick={() => handleGameClick(game)}
               style={{
-                cursor: game.status === "coming_soon" ? "default" : "pointer",
+                cursor: isComingSoon ? "default" : "pointer",
               }}
             >
-              <div className="game-logo relative z-10">
-                <ProductLogo src={game.logo} className="game-logo-img" />
+              <div className="game-logo relative z-10 w-[52rem] h-[52rem] shrink-0 rounded-[10rem] overflow-hidden bg-white">
+                <ProductLogo src={game.logo} className="game-logo-img w-full h-full object-cover rounded-[10rem]" />
+                {!isComingSoon && <GameHoverOverlay gameName={game.name} />}
               </div>
               <div className="game-content relative z-10">
                 <div className="game-header">
