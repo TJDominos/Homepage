@@ -241,7 +241,6 @@
   background-repeat: no-repeat;
   padding-bottom: 60rem;
   min-height: calc(min(100dvh, 100vh) - 60rem);
-  padding-top: 68rem;
   font-family: var(--app-font-family);
   width: 100%;
   min-width: 0;

@@ -41,7 +41,7 @@ export function MoneyPage({
         </div>
       </div>
 
-      <div className={`money-content-wrapper max-w-[896rem] mx-auto px-[16rem] w-full pb-[40rem] z-20 relative ${isDesktop ? 'pt-[8rem]' : 'pt-[20rem]'}`}>
+      <div className={`money-content-wrapper max-w-[896rem] mx-auto px-[16rem] w-full pb-[40rem] z-20 relative ${isDesktop ? 'pt-[8rem]' : 'pt-[88rem]'}`}>
         {/* User Info Bar */}
         <div className="w-full px-[8rem] flex justify-between items-center gap-[16rem] pb-[20rem]">
           <div className="flex items-center flex-1">
@@ -231,7 +231,7 @@ export function MoneyPage({
       {activeModal && (
         <div className="fixed inset-0 z-[100] flex items-end sm:items-center justify-center">
           <div 
-            className="absolute inset-0 bg-black/40 backdrop-blur-sm"
+            className="absolute inset-0 bg-black/60 backdrop-blur-sm"
             onClick={closeModal}
           ></div>
           

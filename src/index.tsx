@@ -14,6 +14,7 @@ import TabSwitch from "./components/TabSwitch";
 import Footer from "./components/Footer";
 import { SignInModal } from "./components/SignInModal";
 import { AccountInfoModal } from "./components/AccountInfoModal";
+import { RegistrationModal } from "./components/RegistrationModal";
 import { MoneyPage } from "./components/MoneyPage";
 import RanksPage from "./components/RanksPage";
 import { WltHeaderPrice } from "./components/WltHeaderPrice";
@@ -31,6 +32,7 @@ function App() {
   >("play");
   const [isSignInModalOpen, setSignInModalOpen] = useState(false);
   const [isAccountModalOpen, setAccountModalOpen] = useState(false);
+  const [isRegistrationModalOpen, setRegistrationModalOpen] = useState(false);
   const [userAccount, setUserAccount] = useState<string | null>(null);
 
   const isDesktop = windowWidth >= 768;
@@ -171,18 +173,18 @@ function App() {
       {(isDesktop || activeTab !== "money") && (
         <div className="home-header">
           <div className="home-header-content">
-            <div className="flex items-center gap-[8rem]">
+            <div className="flex items-center gap-[6rem]">
               <div 
-                className="flex items-center gap-[8rem] cursor-pointer" 
+                className="flex items-center gap-[6rem] cursor-pointer" 
                 onClick={() => setActiveTab("play")}
               >
-                <div className="logo-area flex items-center justify-center" style={{ marginRight: 0 }}>
-                  <Shell className="text-purple-600" size={32} />
+                <div className="logo-area flex items-center justify-center shrink-0" style={{ marginRight: 0 }}>
+                  <Shell className="text-purple-600" size={26} />
                 </div>
-                <span className="text-[20rem] font-bold text-black font-sans tracking-tight">Randseed</span>
+                <span className="text-[18rem] md:text-[20rem] font-bold text-black font-sans tracking-tight whitespace-nowrap shrink-0">Randseed</span>
               </div>
               
-              <a href="https://jup.ag/tokens/G45pgo5kzUMPnXGqrLeDXXgxSrVx6ssXJiJTDWpHjups" target="_blank" rel="noreferrer" className="flex items-center ml-[2rem] hover:opacity-80 transition-opacity">
+              <a href="https://jup.ag/tokens/G45pgo5kzUMPnXGqrLeDXXgxSrVx6ssXJiJTDWpHjups" target="_blank" rel="noreferrer" className="flex items-center ml-[2rem] hover:opacity-80 transition-opacity shrink-0">
                 <WltHeaderPrice />
               </a>
             </div>
@@ -291,8 +293,14 @@ function App() {
           setSignInModalOpen(false);
           if (typeof accountId === "string") {
             setUserAccount(accountId);
+            setRegistrationModalOpen(true);
           }
         }}
+      />
+
+      <RegistrationModal 
+        isOpen={isRegistrationModalOpen}
+        onClose={() => setRegistrationModalOpen(false)}
       />
 
       {userAccount && (

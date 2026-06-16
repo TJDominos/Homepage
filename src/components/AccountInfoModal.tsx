@@ -61,7 +61,7 @@ export function AccountInfoModal({
       {isOpen && (
         <div className="fixed inset-x-0 bottom-[80rem] z-[100] flex justify-center pointer-events-none px-[16rem]">
           <div 
-            className="fixed inset-0 pointer-events-auto" 
+            className="fixed inset-0 pointer-events-auto bg-black/60 backdrop-blur-sm" 
             onClick={() => onClose()}
           />
           <motion.div

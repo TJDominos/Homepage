@@ -349,7 +349,7 @@ export function SignInModal({ isOpen, onClose }: SignInModalProps) {
     <AnimatePresence>
       {isOpen && (
         <div 
-          className="fixed inset-0 z-[9999] flex items-end sm:items-center justify-center pointer-events-auto bg-black/40 backdrop-blur-md px-[16rem] pb-[32rem] sm:pb-0"
+          className="fixed inset-0 z-[9999] flex items-end sm:items-center justify-center pointer-events-auto bg-black/60 backdrop-blur-sm px-[16rem] pb-[32rem] sm:pb-0"
           onClick={() => onClose()}
         >
           <motion.div
