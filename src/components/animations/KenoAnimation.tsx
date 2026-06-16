@@ -21,7 +21,7 @@ export const KenoAnimation: React.FC = () => {
       {Array.from({ length: 9 }).map((_, i) => (
         <motion.div
           key={i}
-          className="w-[14rem] h-[14rem] rounded-sm bg-purple-600 flex items-center justify-center text-[8px] text-white font-bold transition-opacity duration-300"
+          className="w-[14rem] h-[14rem] rounded-sm bg-purple-600 flex items-center justify-center text-[8rem] text-white font-bold transition-opacity duration-300"
           style={{ opacity: activeIndices.includes(i) ? 1 : 0.2 }}
         >
           {i + 1}

@@ -90,7 +90,7 @@
       }
     }
 
-    @media (min-width: 768px) {
+    @media (min-width: 768rem) {
       .title {
         font-size: 20rem;
       }

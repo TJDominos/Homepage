@@ -9,7 +9,7 @@
   --background: oklch(1 0 0);
   --foreground: oklch(0.145 0 0);
   --radius: 0.5rem;
-  --max-content-width-pc: 1024rem;
+  --max-content-width-pc: 1024px;
   --app-font-family:
     -apple-system, BlinkMacSystemFont, "SF Pro", "SF Pro Text", system-ui,
     sans-serif;
@@ -54,9 +54,7 @@
       rgba(255, 255, 255, 1) 100%
     );
   }
-  html {
-    font-size: 1px !important;
-  }
+  
   h1,
   h2,
   h3,
@@ -119,7 +117,7 @@
   line-height: 1;
   color: rgba(255, 255, 255, 0.9);
   opacity: 1;
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+  text-shadow: 0 2rem 4rem rgba(0, 0, 0, 0.5);
 }
 
 .banner-carousel-web .slick-prev:before,
@@ -151,7 +149,7 @@
   color: rgba(255, 255, 255, 0.5) !important;
   font-size: 10rem !important;
   opacity: 1 !important;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+  text-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.5);
 }
 
 .banner-carousel-web .slick-dots li.slick-active button:before,
@@ -231,121 +229,6 @@
   }
 }
 
-.games-skeleton {
-  margin: 0 16rem 24rem 16rem;
-  .skeleton-section-title {
-    font-size: 18rem;
-    font-weight: 600;
-    margin: 0 0 10rem 0;
-    color: #000;
-  }
-  .skeleton-game-list {
-    display: flex;
-    flex-direction: column;
-    gap: 11rem;
-  }
-  .skeleton-game-item {
-    display: flex;
-    align-items: flex-start;
-    gap: 12rem;
-    .skeleton-game-logo,
-    .skeleton-game-name,
-    .skeleton-game-desc,
-    .skeleton-play-btn,
-    .skeleton-game-status {
-      background: linear-gradient(
-        90deg,
-        #f0f0f0 0%,
-        #e8e8e8 20%,
-        #f0f0f0 40%,
-        #f0f0f0 100%
-      );
-      background-size: 200% 100%;
-      animation: skeleton-shimmer 1.5s infinite linear;
-    }
-    .skeleton-game-logo {
-      width: 52rem;
-      height: 52rem;
-      border-radius: 10rem;
-      flex-shrink: 0;
-    }
-    .skeleton-game-content {
-      flex: 1;
-      padding-top: 2rem;
-    }
-    .skeleton-game-name {
-      width: 120rem;
-      height: 16rem;
-      margin-bottom: 8rem;
-      border-radius: 6rem;
-    }
-    .skeleton-game-desc {
-      width: 100%;
-      height: 12rem;
-      margin-bottom: 6rem;
-      border-radius: 6rem;
-    }
-    .skeleton-play-btn {
-      width: 92rem;
-      height: 28rem;
-      border-radius: 16rem;
-      margin-top: 8rem;
-      flex-shrink: 0;
-    }
-  }
-}
-
-.games-skeleton.desktop-mode {
-  margin: 0 0 24rem 0;
-  .skeleton-section-title {
-    font-size: 24rem;
-    margin: 0 0 16rem 0;
-  }
-  .skeleton-game-list {
-    display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: 16rem;
-
-    @media (max-width: 1024px) {
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-    }
-
-    @media (max-width: 900px) {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-  }
-  .skeleton-game-item {
-    align-items: center;
-    flex-direction: column;
-    gap: 10rem;
-    border-radius: 12rem;
-    padding: 14rem;
-    .skeleton-game-logo {
-      width: 86rem;
-      height: 86rem;
-      border-radius: 12rem;
-    }
-    .skeleton-game-content {
-      width: 100%;
-      padding-top: 0;
-      .skeleton-game-name {
-        width: 70%;
-        height: 20rem;
-        margin: 0 auto 10rem auto;
-      }
-      .skeleton-game-desc {
-        width: 100%;
-        height: 14rem;
-        margin-bottom: 8rem;
-      }
-    }
-    .skeleton-play-btn,
-    .skeleton-game-status {
-      display: none;
-    }
-  }
-}
-
 .home-page {
   position: relative;
   background-color: #ffffff;
@@ -400,15 +283,21 @@
     right: 0;
     z-index: 100;
     background: rgba(255, 255, 255, 0.6);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
+    backdrop-filter: blur(16rem);
+    -webkit-backdrop-filter: blur(16rem);
     border-bottom: 1rem solid rgba(255, 255, 255, 0.8);
     box-shadow: 0 4rem 16rem rgba(95, 64, 161, 0.04);
 
+    .title {
+      font-size: 16rem;
+    }
+
     .home-header-content {
+      position: relative;
       display: flex;
       justify-content: space-between;
       align-items: center;
+      gap: 8rem;
       width: 100%;
       max-width: var(--max-content-width-pc);
       margin: 0 auto;
@@ -475,12 +364,12 @@
     height: 28rem;
     flex-shrink: 0;
     border-radius: 20rem;
-    border: 1px solid rgba(0, 0, 0, 0.1);
+    border: 1rem solid rgba(0, 0, 0, 0.1);
     background: rgba(255, 255, 255, 0.7);
-    backdrop-filter: blur(8px);
+    backdrop-filter: blur(8rem);
     color: #000;
     font-family: inherit;
-    font-size: 10rem;
+    font-size: 12rem;
     text-decoration: none;
     font-weight: 500;
     display: flex;
@@ -488,14 +377,14 @@
     align-items: center;
     gap: 3rem;
     transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 2rem 8rem rgba(0, 0, 0, 0.05);
 
     &:hover {
       background: #fff;
       border-color: rgba(95, 64, 161, 0.4);
       color: #5f40a1;
-      transform: translateY(-1px);
-      box-shadow: 0 4px 16px rgba(95, 64, 161, 0.2);
+      transform: translateY(-1rem);
+      box-shadow: 0 4rem 16rem rgba(95, 64, 161, 0.2);
     }
 
     span,
@@ -507,17 +396,12 @@
   }
 
   @media (max-width: 360px) {
-    .community-btn,
-    .signin-btn {
-      width: 80rem;
-      height: 20rem;
-    }
   }
 
   @media (min-width: 768px) {
     .home-header {
       .title {
-        font-size: 20rem;
+        font-size: 24rem;
       }
       .logo-area {
         margin-right: 105rem;
@@ -528,7 +412,7 @@
       width: 120rem;
       height: 40rem;
       font-size: 14rem;
-      border: 1px solid rgba(0, 0, 0, 0.1);
+      border: 1rem solid rgba(0, 0, 0, 0.1);
       gap: 6rem;
       span,
       svg {
@@ -812,7 +696,7 @@
 
 .home-page.desktop-mode {
   min-height: 100vh;
-  padding-top: 68rem;
+  padding-top: 120rem;
   background: linear-gradient(to bottom, #d5d6f7 0%, #e1e2f9 50%, #ffffff 100%);
 }
 
@@ -837,7 +721,8 @@
 
 .desktop-home-container {
   box-sizing: border-box;
-  max-width: 1024rem;
+  width: 100%;
+  max-width: var(--max-content-width-pc);
   margin: 0 auto;
   padding: 0 16rem;
 }
@@ -848,6 +733,7 @@
 
 .desktop-banner-section {
   padding: 0 0 24rem;
+  width: 100%;
 
   .desktop-banner-card-wrap {
     padding: 0 8rem;
@@ -904,6 +790,7 @@
   display: flex;
   flex-direction: column;
   gap: 8rem;
+  width: 100%;
 }
 
 .desktop-game-section {
@@ -992,21 +879,7 @@
   }
 }
 
-@media (max-width: 1024px) {
-  .desktop-game-section {
-    .desktop-game-grid {
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-    }
-  }
-}
 
-@media (max-width: 900px) {
-  .desktop-game-section {
-    .desktop-game-grid {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-  }
-}
 
 .custom-arrow::before {
   display: none !important;
@@ -1018,8 +891,8 @@
   justify-content: center;
   background: rgba(0, 0, 0, 0.4) !important;
   border-radius: 50%;
-  width: 36px !important;
-  height: 36px !important;
+  width: 36rem !important;
+  height: 36rem !important;
   z-index: 2;
   transition: background 0.2s ease;
 
@@ -1057,8 +930,8 @@
 
 .desktop-banner-section .slick-dots li.slick-active .desktop-custom-dot {
   background: rgba(95, 64, 161, 1) !important;
-  width: 16px !important;
-  border-radius: 4px !important;
+  width: 16rem !important;
+  border-radius: 4rem !important;
 }
 
 .desktop-banner-section .slick-dots li .desktop-custom-dot {
@@ -1067,12 +940,12 @@
 }
 
 .custom-scrollbar::-webkit-scrollbar {
-  width: 4px;
+  width: 4rem;
 }
 .custom-scrollbar::-webkit-scrollbar-track {
   background: transparent;
 }
 .custom-scrollbar::-webkit-scrollbar-thumb {
   background-color: rgba(0, 0, 0, 0.1);
-  border-radius: 10px;
+  border-radius: 10rem;
 }

@@ -4,6 +4,31 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>My Google AI Studio App</title>
+    <script>
+      (function () {
+        function setRem() {
+          var html = document.documentElement;
+          var width = html.clientWidth || window.innerWidth;
+          
+          if (width >= 768) {
+            // Desktop mode: fix 1rem = 1px, relying on max-width layouts
+            html.style.fontSize = "1px";
+          } else {
+            // Mobile mode: scale dynamically. 
+            // Assuming 390px typical mobile width for 1rem = 1px
+            var designWidth = 390; 
+            var ratio = width / designWidth;
+            html.style.fontSize = ratio + "px";
+          }
+        }
+        
+        setRem();
+        window.addEventListener("resize", setRem);
+        window.addEventListener("pageshow", function(e) {
+            if (e.persisted) setRem();
+        });
+      })();
+    </script>
   </head>
   <body>
     <div id="root"></div>

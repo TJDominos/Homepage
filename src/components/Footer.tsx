@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useMemo } from "react";
+import React from "react";
 import {
   MessageSquare,
   ShieldCheck,
@@ -9,103 +9,11 @@ import {
   ArrowUpRight,
 } from "lucide-react";
 import "./Footer.scss";
-
-interface WltMarketData {
-  price: number | null;
-  change24h: number | null;
-  fdv: number | null;
-}
-
-const FALLBACK_STATS: WltMarketData = {
-  price: 0.00015885,
-  change24h: 0.0,
-  fdv: 158850,
-};
-
-const formatSmallPrice = (value: number | null) => {
-  if (value === null || Number.isNaN(value)) return "--";
-  if (value >= 0.01) {
-    return new Intl.NumberFormat("en-US", {
-      style: "currency",
-      currency: "USD",
-      minimumFractionDigits: 4,
-      maximumFractionDigits: 4,
-    }).format(value);
-  }
-
-  const str = value.toFixed(20);
-  const match = str.match(/^0\.0+/);
-  if (match) {
-    const zeroCount = match[0].length - 2;
-    if (zeroCount >= 2) {
-      const remainingDigits = str.slice(match[0].length).slice(0, 4);
-      return (
-        <span className="price-formatted">
-          $0.0<sub>{zeroCount}</sub>
-          {remainingDigits}
-        </span>
-      );
-    }
-  }
-  return `$${value}`;
-};
-
-const formatCurrencyCompact = (value: number | null) => {
-  if (value === null || Number.isNaN(value)) return "--";
-  return new Intl.NumberFormat("en-US", {
-    style: "currency",
-    currency: "USD",
-    notation: "compact",
-    minimumFractionDigits: 0,
-    maximumFractionDigits: 0,
-  }).format(value);
-};
-
-const formatChange = (value: number | null) => {
-  if (value === null || Number.isNaN(value)) return "--";
-  return `${value > 0 ? "+" : ""}${value.toFixed(2)}%`;
-};
+import { useWltPrice } from "../hooks/useWltPrice";
+import { formatSmallPrice, formatChange, formatCurrencyCompact } from "../utils/format";
 
 const Footer: React.FC = () => {
-  const [stats, setStats] = useState<WltMarketData>(FALLBACK_STATS);
-  const [isLive, setIsLive] = useState(false);
-
-  useEffect(() => {
-    const controller = new AbortController();
-    const loadPrice = async () => {
-      try {
-        const response = await fetch(
-          "https://api.geckoterminal.com/api/v2/networks/solana/pools/D3yTkWUxmL5T1roVkeWptLEaosw5k1nYSkt392QwAkg1",
-          {
-            signal: controller.signal,
-            headers: { accept: "application/json" },
-          },
-        );
-        if (!response.ok) return;
-        const json = await response.json();
-        const attrs = json?.data?.attributes;
-        if (!attrs) return;
-
-        setStats({
-          price: parseFloat(attrs.base_token_price_usd) || FALLBACK_STATS.price,
-          change24h:
-            parseFloat(attrs.price_change_percentage?.h24) ||
-            FALLBACK_STATS.change24h,
-          fdv: parseFloat(attrs.fdv_usd) || FALLBACK_STATS.fdv,
-        });
-        setIsLive(true);
-      } catch (error) {
-        if (!controller.signal.aborted) setIsLive(false);
-      }
-    };
-
-    loadPrice();
-    const interval = setInterval(loadPrice, 300000); // 300s update
-    return () => {
-      controller.abort();
-      clearInterval(interval);
-    };
-  }, []);
+  const { stats } = useWltPrice();
 
   const isPositive = (stats.change24h ?? 0) >= 0;
 
@@ -120,7 +28,7 @@ const Footer: React.FC = () => {
             <p>
               Decentralized Blockchain Games
               <br />
-              Built on on-chain randomness and public blockchain ledger
+              Built on <a href="https://learn.internetcomputer.org/hc/en-us/articles/34209486239252-Chain-Key-Cryptography" target="_blank" rel="noreferrer" className="underline hover:text-purple-600 transition-colors">on-chain randomness</a> and public blockchain ledger
             </p>
           </div>
 
@@ -188,7 +96,7 @@ const Footer: React.FC = () => {
                 </li>
                 <li>
                   <a
-                    href="https://randseed.org/how-to-win"
+                    href="https://randseed.org/community/howtowin"
                     target="_blank"
                     rel="noopener noreferrer"
                   >
@@ -265,33 +173,39 @@ const Footer: React.FC = () => {
 
         <div className="home-footer-bottom flex flex-col items-center gap-[12rem]">
           <p>© 2026 Randseed. All rights reserved.</p>
-          <div className="flex items-center justify-center gap-[8rem] text-[14px] text-black/60 flex-wrap">
+          <div className="flex items-center justify-center gap-[8rem] text-[14rem] text-black/60 flex-wrap">
             <span>Powered by</span>
             <div className="flex items-center gap-[12rem]">
-              <img
-                src="/internet-computer-icp-logo.svg"
-                alt="ICP"
-                className="h-[20px] object-contain opacity-80 hover:opacity-100 transition-opacity"
-                onError={(e) => {
-                  e.currentTarget.style.display = "none";
-                }}
-              />
-              <img
-                src="/solana-sol-logo-horizontal.svg"
-                alt="Solana"
-                className="h-[20px] object-contain opacity-80 hover:opacity-100 transition-opacity"
-                onError={(e) => {
-                  e.currentTarget.style.display = "none";
-                }}
-              />
-              <img
-                src="/ethereum-eth-logo-full-horizontal.svg"
-                alt="EVM"
-                className="h-[20px] object-contain opacity-80 hover:opacity-100 transition-opacity"
-                onError={(e) => {
-                  e.currentTarget.style.display = "none";
-                }}
-              />
+              <a href="https://internetcomputer.org" target="_blank" rel="noreferrer" className="flex items-center">
+                <img
+                  src="/internet-computer-icp-logo.svg"
+                  alt="ICP"
+                  className="h-[20rem] object-contain opacity-80 hover:opacity-100 transition-opacity"
+                  onError={(e) => {
+                    e.currentTarget.style.display = "none";
+                  }}
+                />
+              </a>
+              <a href="https://solana.com" target="_blank" rel="noreferrer" className="flex items-center">
+                <img
+                  src="/solana-sol-logo-horizontal.svg"
+                  alt="Solana"
+                  className="h-[20rem] object-contain opacity-80 hover:opacity-100 transition-opacity"
+                  onError={(e) => {
+                    e.currentTarget.style.display = "none";
+                  }}
+                />
+              </a>
+              <a href="https://ethereum.org" target="_blank" rel="noreferrer" className="flex items-center">
+                <img
+                  src="/ethereum-eth-logo-full-horizontal.svg"
+                  alt="EVM"
+                  className="h-[20rem] object-contain opacity-80 hover:opacity-100 transition-opacity"
+                  onError={(e) => {
+                    e.currentTarget.style.display = "none";
+                  }}
+                />
+              </a>
             </div>
           </div>
         </div>

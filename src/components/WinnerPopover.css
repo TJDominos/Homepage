@@ -1,0 +1,24 @@
+.wl-user-info-badges {
+  display: flex;
+  align-items: center;
+  margin-left: 3rem;
+  cursor: pointer;
+}
+.badge-icon {
+  width: 18rem;
+  height: 18rem;
+  position: relative;
+  z-index: 10;
+}
+.badge-name {
+  color: #5F40A1;
+  height: 14rem;
+  display: flex;
+  align-items: center;
+  padding-left: 11rem;
+  background: linear-gradient(90deg, rgba(99, 67, 167, 0.50) 0%, rgba(151, 97, 245, 0.00) 100%);
+  font-family: inherit;
+  font-size: 10rem;
+  font-weight: 600;
+  margin-left: -9rem;
+}

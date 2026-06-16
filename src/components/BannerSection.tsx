@@ -107,7 +107,6 @@ const BannerSection: React.FC<BannerSectionProps> = ({
                   src={banner.imageUrl}
                   alt={banner.title || "Randseed banner"}
                   loading={index === 0 ? "eager" : "lazy"}
-                  fetchpriority={index === 0 ? "high" : "auto"}
                   decoding="async"
                   role={banner.linkUrl ? "button" : undefined}
                   tabIndex={banner.linkUrl ? 0 : undefined}

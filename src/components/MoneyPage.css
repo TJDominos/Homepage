@@ -11,7 +11,7 @@
 
 .money-page-container.desktop-layout {
   min-height: calc(100vh - 68rem);
-  background: linear-gradient(to bottom, #d5d6f7 0%, #e1e2f9 50%, #ffffff 100%);
+  background: transparent;
 }
 
 .money-page-header .title {

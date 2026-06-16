@@ -1,10 +1,11 @@
 import React from "react";
 import "./index.scss";
 import svgPaths from "../../imports/svg-401s87trfk";
+import { Trophy } from "lucide-react";
 
 interface TabSwitchProps {
-  activePage: 'money' | 'play' | 'inbox' | 'history';
-  setActivePage: (page: 'money' | 'play' | 'inbox' | 'history') => void;
+  activePage: 'money' | 'play' | 'rank' | 'history' | string;
+  setActivePage: (page: 'money' | 'play' | 'rank' | 'history' | string) => void;
 }
 
 const TabSwitch = ({ activePage, setActivePage }: TabSwitchProps) => {
@@ -51,19 +52,13 @@ const TabSwitch = ({ activePage, setActivePage }: TabSwitchProps) => {
           </button>
           
           <button
-            onClick={() => setActivePage("inbox")}
-            className={activePage === "inbox" ? "nav-link active" : "nav-link"}
+            onClick={() => setActivePage("rank")}
+            className={activePage === "rank" ? "nav-link active" : "nav-link"}
           >
-            <div className="tab-icon inbox">
-              <svg className="w-full h-full" viewBox="0 0 27 27" fill="none">
-                <path 
-                  d={svgPaths.p213e89c0} 
-                  fill="currentColor" 
-                  fillOpacity={activePage === 'inbox' ? '1' : '0.65'} 
-                />
-              </svg>
+            <div className={`tab-icon rank flex items-center justify-center ${activePage === 'rank' ? 'text-[#333]' : 'text-black/65'}`}>
+              <Trophy size={activePage === 'rank' ? 26 : 24} strokeWidth={activePage === 'rank' ? 2 : 1.5} />
             </div>
-            <div className="label">Inbox</div>
+            <div className="label">Rank</div>
           </button>
           
           <button

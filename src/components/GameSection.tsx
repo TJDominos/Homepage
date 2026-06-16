@@ -37,7 +37,7 @@ const GameSection: React.FC<GameSectionProps> = ({
                 onClick={() => handleGameClick(game)}
                 style={{ cursor: isComingSoon ? "default" : "pointer" }}
               >
-                <div className="desktop-game-logo relative z-10 w-[70rem] h-[70rem] shrink-0 rounded-[10rem] overflow-hidden shadow-[0_2rem_8rem_rgba(0,0,0,0.08)] bg-white transition-transform duration-300 group-hover:scale-105 group-hover:-translate-y-[4rem]">
+                <div className="desktop-game-logo relative z-10 w-[70rem] h-[70rem] shrink-0 rounded-[10rem] overflow-hidden shadow-[0_2px_8px_rgba(0,0,0,0.08)] bg-white transition-transform duration-300 group-hover:scale-105 group-hover:-translate-y-[4rem]">
                   <ProductLogo
                     src={game.logo}
                     className="desktop-game-logo-img w-full h-full object-cover rounded-[10rem]"

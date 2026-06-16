@@ -348,13 +348,17 @@ export function SignInModal({ isOpen, onClose }: SignInModalProps) {
   return (
     <AnimatePresence>
       {isOpen && (
-        <div className="fixed inset-0 z-[9999] flex items-end sm:items-center justify-center pointer-events-auto bg-black/40 backdrop-blur-md px-[16rem] pb-[32rem] sm:pb-0">
+        <div 
+          className="fixed inset-0 z-[9999] flex items-end sm:items-center justify-center pointer-events-auto bg-black/40 backdrop-blur-md px-[16rem] pb-[32rem] sm:pb-0"
+          onClick={() => onClose()}
+        >
           <motion.div
+            onClick={(e) => e.stopPropagation()}
             initial={{ opacity: 0, y: 100, scale: 1 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 100, scale: 1 }}
             transition={{ type: "spring", damping: 25, stiffness: 300 }}
-            className="bg-[#e9ebef] w-full sm:max-w-[400rem] rounded-[32rem] sm:rounded-[36rem] shadow-2xl relative overflow-hidden flex flex-col max-h-[75vh] sm:max-h-[85vh] border border-[#e2e4e8]"
+            className="bg-[#e9ebef] w-full sm:max-w-[400rem] rounded-[20rem] shadow-2xl relative overflow-hidden flex flex-col max-h-[75vh] sm:max-h-[85vh] border border-[#e2e4e8]"
           >
             <div className="flex items-center justify-between px-[20rem] pt-[20rem] pb-[4rem] border-b border-transparent">
               <h3 className="font-bold text-slate-800 tracking-wide text-[18rem]">
@@ -391,7 +395,7 @@ export function SignInModal({ isOpen, onClose }: SignInModalProps) {
                             strokeWidth={2}
                           />
                         </div>
-                        <span className="font-semibold text-slate-800 text-[14px]">
+                        <span className="font-semibold text-slate-800 text-[14rem]">
                           Sign in with email
                         </span>
                       </div>
@@ -407,7 +411,7 @@ export function SignInModal({ isOpen, onClose }: SignInModalProps) {
                           <div className="w-[32rem] h-[32rem] flex items-center justify-center rounded-[10rem] overflow-hidden shrink-0 bg-white shadow-sm border border-black/5 p-[4rem]">
                             <InternetIdentityIcon />
                           </div>
-                          <span className="font-semibold text-slate-800 text-[14px]">
+                          <span className="font-semibold text-slate-800 text-[14rem]">
                             Internet Identity
                           </span>
                         </div>
@@ -425,11 +429,11 @@ export function SignInModal({ isOpen, onClose }: SignInModalProps) {
                     </div>
 
                     <div className="flex flex-row items-center justify-center gap-[8rem] px-[8rem] py-[2rem] opacity-40">
-                      <div className="flex-1 h-[1px] bg-slate-400"></div>
+                      <div className="flex-1 h-[1rem] bg-slate-400"></div>
                       <span className="text-[10rem] font-bold uppercase tracking-widest text-slate-500">
                         OR
                       </span>
-                      <div className="flex-1 h-[1px] bg-slate-400"></div>
+                      <div className="flex-1 h-[1rem] bg-slate-400"></div>
                     </div>
 
                     {orderedWallets.length === 0 ? (
@@ -452,7 +456,7 @@ export function SignInModal({ isOpen, onClose }: SignInModalProps) {
                               {getWalletIcon(w)}
                             </div>
                             <span
-                              className={`font-semibold text-[14px] flex-1 text-left ${w.installed ? "text-slate-800" : "text-slate-500"}`}
+                              className={`font-semibold text-[14rem] flex-1 text-left ${w.installed ? "text-slate-800" : "text-slate-500"}`}
                             >
                               {w.name}
                             </span>
