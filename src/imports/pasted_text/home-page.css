@@ -2,11 +2,11 @@
   background: 
     linear-gradient(177deg, rgba(255, 255, 255, 0.00) 7.99%, #fff 100%),
     linear-gradient(272deg, #D5D6F7 1.78%, #E1E2F9 46.59%, #D3C3FB 99.68%);
-  background-size: 100% 314rem, 100% 314rem;
+  background-size: 100% px, 100% px;
   background-repeat: no-repeat;
-  padding-bottom: 60rem;
-  min-height: calc(min(100dvh, 100vh) - 60rem);
-  padding-top: 68rem;
+  padding-bottom: 16px;
+  min-height: calc(min(100dvh, 100vh) - px);
+  padding-top: 16px;
   font-family: var(--app-font-family);
 
   &.desktop-mode {
@@ -17,11 +17,11 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 200rem;
-    margin-top: 76rem;
+    height: 16px;
+    margin-top: 16px;
     
     .loading-text {
-      font-size: 16rem;
+      font-size: 16px;
       color: #666;
     }
   }
@@ -40,19 +40,19 @@
       width: 100%;
       max-width: var(--max-content-width-pc);
       margin: 0 auto;
-      padding: 12rem 16rem;
+      padding: 16px px;
     }
     
     .logo-area {
       display: flex;
       align-items: center;
-      margin-right: 45rem;
+      margin-right: 16px;
       
       .logo {
         display: inline-block;
-        width: 40rem;
-        height: 40rem;
-        margin-right: 8rem;
+        width: 16px;
+        height: 16px;
+        margin-right: 16px;
         background: url('/images/logo.png') no-repeat center;
         background-size: contain;
 
@@ -60,73 +60,73 @@
     }
 
     .title {
-      font-size: 16rem;
+      font-size: 16px;
       font-weight: bold;
-      letter-spacing: 0.5rem;
+      letter-spacing: 0.px;
       color: #000;
       text-align: center;
     }
     
     .community-btn {
-      width: 85rem;
-      height: 24rem;
+      width: 16px;
+      height: 16px;
       flex-shrink: 0;
-      border-radius: 20rem;
-      border: 1rem solid #000;
+      border-radius: 16px;
+      border: 16px solid #000;
       color: #000;
       font-family: inherit;
-      font-size: 10rem;
+      font-size: 16px;
       font-weight: 500;
       display: flex;
       justify-content: center;
       align-items: center;
-      gap: 3rem;
+      gap: 16px;
       span {
         display: inline-block;
-        height: 14rem;
-        width: 14rem;
+        height: 16px;
+        width: 16px;
         background: url('./imgs/Vector.svg') no-repeat center;
         background-size: contain;
       }
     }
 
-    @media (min-width: 768rem) {
+    @media (min-width: px) {
       .title {
-        font-size: 20rem;
+        font-size: 16px;
       }
       .community-btn {
-        width: 145rem;
-        height: 40rem;
-        font-size: 15rem;
-        border: 2rem solid #000;
-        gap: 6rem;
+        width: 16px;
+        height: 16px;
+        font-size: 16px;
+        border: 16px solid #000;
+        gap: 16px;
         span {
-          width: 18rem;
-          height: 18rem;
+          width: 16px;
+          height: 16px;
         }
       }
       .logo-area {
-        margin-right: 105rem;
+        margin-right: 16px;
       }
     }
   }
   
   .home-banner {
-    margin: 0 16rem 20rem 16rem; // 为固定header留出空间
-    border-radius: 12rem;
+    margin: 0 px px px; // 为固定header留出空间
+    border-radius: 16px;
     overflow: hidden;
-    height: 160rem;
+    height: 16px;
     
     // 自定义轮播图分页器样式
     .nut-indicator {
       display: flex;
-      gap: 3rem;
+      gap: 16px;
       justify-content: center;
       
       .nut-indicator-dot {
-        width: 14rem;
-        height: 3rem;
-        border-radius: 8rem;
+        width: 16px;
+        height: 16px;
+        border-radius: 16px;
         background: rgba(255, 255, 255, 0.5);
         transition: all 0.3s ease;
         
@@ -139,8 +139,8 @@
     // 真实轮播图样式
     .banner-image {
       width: 100%;
-      height: 160rem;
-      border-radius: 0rem !important;
+      height: 16px;
+      border-radius: 16px !important;
       display: block;
       object-fit: cover;
     }
@@ -148,7 +148,7 @@
     .banner-link {
       display: block;
       width: 100%;
-      height: 160rem;
+      height: 16px;
       text-decoration: none;
       
       &:hover {
@@ -158,7 +158,7 @@
     
     .banner-placeholder {
       width: 100%;
-      height: 160rem;
+      height: 16px;
       background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
       display: flex;
       align-items: center;
@@ -171,34 +171,34 @@
         z-index: 2;
         
         h3 {
-          font-size: 14rem;
-          margin: 0rem 0rem 6rem 0rem;
+          font-size: 16px;
+          margin: 16px px px px;
           opacity: 0.9;
         }
         
         h2 {
-          font-size: 24rem;
+          font-size: 16px;
           font-weight: bold;
-          margin: 0rem 0rem 12rem 0rem;
-          text-shadow: 1rem 1rem 2rem rgba(0,0,0,0.3);
+          margin: 16px px px px;
+          text-shadow: 16px px px rgba(0,0,0,0.3);
         }
         
         .banner-stats {
           display: flex;
-          gap: 20rem;
+          gap: 16px;
           justify-content: center;
           
           .stat {
             text-align: center;
             
             .stat-label {
-              font-size: 10rem;
+              font-size: 16px;
               opacity: 0.8;
-              margin-bottom: 2rem;
+              margin-bottom: 16px;
             }
             
             .stat-value {
-              font-size: 16rem;
+              font-size: 16px;
               font-weight: bold;
             }
           }
@@ -208,19 +208,19 @@
     
     .banner-img {
       width: 100%;
-      height: 160rem;
+      height: 16px;
       object-fit: cover;
-      border-radius: 12rem;
+      border-radius: 16px;
       display: block;
     }
   }
   
   .game-section {
-    margin: 0rem 16rem 24rem 16rem;
+    margin: 16px px px px;
     
     // 当没有轮播图时，第一个游戏区块需要额外的顶部边距
     &:first-of-type {
-      margin-top: 20rem;
+      margin-top: 16px;
     }
 
     .game-list {
@@ -228,20 +228,20 @@
     }
     
     .section-title {
-      font-size: 18rem;
+      font-size: 16px;
       font-weight: 600;
-      margin: 0rem 0rem 10rem 0rem;
+      margin: 16px px px px;
       color: #000;
     }
     
     .game-item {
       display: flex;
       align-items: flex-start;
-      border-radius: 12rem;
-      // padding: 16rem 16rem;
-      margin-bottom: 11rem;
+      border-radius: 16px;
+      // padding: 16px px;
+      margin-bottom: 16px;
       transition: background 0.2s;
-      gap: 6rem;
+      gap: 16px;
     
       &.coming-soon {
         opacity: 0.65;
@@ -258,10 +258,10 @@
       }
       
       .game-logo {
-        width: 52rem;
-        height: 52rem;
-        border-radius: 10rem;
-        margin-right: 6rem;
+        width: 16px;
+        height: 16px;
+        border-radius: 16px;
+        margin-right: 16px;
         background: #fff;
         display: flex;
         align-items: center;
@@ -273,19 +273,19 @@
           width: 100%;
           height: 100%;
           object-fit: cover;
-          border-radius: 10rem;
+          border-radius: 16px;
         }
         
         .game-logo-placeholder {
           width: 100%;
           height: 100%;
-          border-radius: 10rem;
+          border-radius: 16px;
           background: linear-gradient(135deg, #4CAF50, #2196F3);
           display: flex;
           align-items: center;
           justify-content: center;
           color: white;
-          font-size: 18rem;
+          font-size: 16px;
           font-weight: bold;
         }
       }
@@ -294,7 +294,7 @@
         flex: 1;
         display: flex;
         flex-direction: column;
-        height: 52rem;
+        height: 16px;
         justify-content: space-between;
         
         .game-header {
@@ -303,7 +303,7 @@
           align-items: center;
           
           .game-name {
-            font-size: 16rem;
+            font-size: 16px;
             font-weight: 600;
             line-height: 100%;
             color: #000;
@@ -311,17 +311,17 @@
         }
           
         .game-desc {
-          height: 32rem;
+          height: 16px;
           display: flex;
           align-items: center;
           overflow: hidden;
           text-overflow: ellipsis;
           color: rgba(0, 0, 0, 0.45);
           font-family: inherit;
-          font-size: 11rem;
+          font-size: 16px;
           font-style: normal;
           font-weight: 400;
-          line-height: 14rem;
+          line-height: 16px;
           
           // 内部文本容器
           > div {
@@ -331,37 +331,37 @@
             overflow: hidden;
             text-overflow: ellipsis;
             width: 100%;
-            line-height: 14rem;
+            line-height: 16px;
           }
         }
       }
 
       .game-status {
         display: none;
-        min-width: 92rem;
-        padding-top: 8rem;
+        min-width: 16px;
+        padding-top: 16px;
         text-align: right;
         color: rgba(0, 0, 0, 0.45);
-        font-size: 11rem;
+        font-size: 16px;
       }
 
       .game-action {
-        min-width: 92rem;
-        padding-top: 8rem;
+        min-width: 16px;
+        padding-top: 16px;
       }
 
       .play-btn {
-        border-radius: 27rem; // Rounded value for better maintainability
+        border-radius: 16px; // Rounded value for better maintainability
         background: rgba(95, 64, 161, 0.1);
         color: #5F40A1;
         border: none;
-        font-size: 12rem;
-        line-height: 20rem;
-        border-radius: 16rem;
+        font-size: 16px;
+        line-height: 16px;
+        border-radius: 16px;
         display: block;
-        width: 92rem;
+        width: 16px;
         text-align: center;
-        padding: 4rem 0;
+        padding: 16px 0;
         font-weight: 600;
         cursor: pointer;
         transition: background 0.2s;
@@ -382,7 +382,7 @@
 
 .home-page.desktop-mode {
   min-height: 100vh;
-  padding-top: 68rem;
+  padding-top: 16px;
   background: linear-gradient(to bottom, #D5D6F7 0%, #E1E2F9 50%, #ffffff 100%);
 }
 
@@ -390,9 +390,9 @@
 .home-games {
   .loading-text {
     text-align: center;
-    padding: 40rem 0;
+    padding: 16px 0;
     color: #666;
-    font-size: 14rem;
+    font-size: 16px;
   }
 } 
 

@@ -1,5 +1,4 @@
 import React from "react";
-import "./BannerSkeleton.scss";
 
 interface BannerSkeletonProps {
   desktop?: boolean;

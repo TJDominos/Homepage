@@ -171,16 +171,16 @@ const Footer: React.FC = () => {
           </div>
         </div>
 
-        <div className="home-footer-bottom flex flex-col items-center gap-[12rem]">
-          <p>© 2026 Randseed. All rights reserved.</p>
-          <div className="flex items-center justify-center gap-[8rem] text-[14rem] text-black/60 flex-wrap">
-            <span>Powered by</span>
-            <div className="flex items-center gap-[12rem]">
+        <div className="home-footer-bottom flex flex-wrap items-center justify-center py-6 mt-8 mx-0 md:mx-0 w-full border-t border-black/10 gap-x-2 gap-y-1">
+          <p style={{ margin: '0' }}>© 2026 Randseed. All rights reserved.</p>
+          <div className="flex items-center text-[14px] text-black/60 md:ml-2">
+            <span style={{ marginRight: '6px' }}>Powered by</span>
+            <div className="flex items-center" style={{ gap: '8px' }}>
               <a href="https://internetcomputer.org" target="_blank" rel="noreferrer" className="flex items-center">
                 <img
                   src="/internet-computer-icp-logo.svg"
                   alt="ICP"
-                  className="h-[20rem] object-contain opacity-80 hover:opacity-100 transition-opacity"
+                  className="h-[14px] object-contain opacity-80 hover:opacity-100 transition-opacity"
                   onError={(e) => {
                     e.currentTarget.style.display = "none";
                   }}
@@ -190,7 +190,7 @@ const Footer: React.FC = () => {
                 <img
                   src="/solana-sol-logo-horizontal.svg"
                   alt="Solana"
-                  className="h-[20rem] object-contain opacity-80 hover:opacity-100 transition-opacity"
+                  className="h-[14px] object-contain opacity-80 hover:opacity-100 transition-opacity"
                   onError={(e) => {
                     e.currentTarget.style.display = "none";
                   }}
@@ -200,7 +200,7 @@ const Footer: React.FC = () => {
                 <img
                   src="/ethereum-eth-logo-full-horizontal.svg"
                   alt="EVM"
-                  className="h-[20rem] object-contain opacity-80 hover:opacity-100 transition-opacity"
+                  className="h-[14px] object-contain opacity-80 hover:opacity-100 transition-opacity"
                   onError={(e) => {
                     e.currentTarget.style.display = "none";
                   }}

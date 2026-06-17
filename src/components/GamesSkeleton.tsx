@@ -1,5 +1,4 @@
 import React from "react";
-import "./GamesSkeleton.scss";
 
 interface GamesSkeletonProps {
   title: string;

@@ -12,13 +12,13 @@ export const Daily4Animation: React.FC = () => {
   }, []);
 
   return (
-    <div className="absolute inset-0 flex items-center justify-center gap-[4rem]">
+    <div className="absolute inset-0 flex items-center justify-center gap-[4px] transform scale-[0.85]">
       {nums.map((num, i) => {
         const isLast = i === 3;
         return (
           <motion.div
             key={i}
-            className={`w-[16rem] h-[16rem] rounded-full shadow-md flex items-center justify-center font-bold text-white border border-white/60 text-[10rem] relative ${isLast ? 'bg-[#ff4d4d]' : 'bg-[#18181b]'}`}
+            className={`w-[16px] h-[16px] rounded-full shadow-md flex items-center justify-center font-bold text-white border border-white/60 text-[10px] relative ${isLast ? 'bg-[#ff4d4d]' : 'bg-[#18181b]'}`}
             animate={{ 
               y: [0, -5, 0],
             }}
@@ -28,7 +28,7 @@ export const Daily4Animation: React.FC = () => {
               delay: i * 0.1
             }}
           >
-            <div className="absolute top-[3rem] left-[3rem] w-[3rem] h-[3rem] bg-white rounded-full opacity-90"></div>
+            <div className="absolute top-[3px] left-[3px] w-[3px] h-[3px] bg-white rounded-full opacity-90"></div>
             {num}
           </motion.div>
         );

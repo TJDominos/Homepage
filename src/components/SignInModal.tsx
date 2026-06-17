@@ -22,35 +22,11 @@ const DEFAULT_ICONS: Record<string, string> = {
 };
 
 const InternetIdentityIcon = () => (
-  <svg
-    viewBox="0 0 100 100"
-    fill="none"
-    xmlns="http://www.w3.org/2000/svg"
-    className="w-[24rem] h-[24rem]"
-  >
-    <path
-      d="M 20 50 C 20 20, 50 20, 50 50 C 50 80, 80 80, 80 50 C 80 20, 50 20, 50 50 C 50 80, 20 80, 20 50 Z"
-      stroke="url(#gradient)"
-      strokeWidth="14"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    />
-    <defs>
-      <linearGradient
-        id="gradient"
-        x1="10"
-        y1="50"
-        x2="90"
-        y2="50"
-        gradientUnits="userSpaceOnUse"
-      >
-        <stop stopColor="#F15A24" />
-        <stop offset="0.33" stopColor="#FBB03B" />
-        <stop offset="0.66" stopColor="#00AEEF" />
-        <stop offset="1" stopColor="#ED1E79" />
-      </linearGradient>
-    </defs>
-  </svg>
+  <img
+    src="/internet-computer-icp-logo.svg"
+    alt="Internet Identity"
+    className="w-[24px] h-[24px] object-contain"
+  />
 );
 
 const PhantomIcon = () => (
@@ -58,7 +34,7 @@ const PhantomIcon = () => (
     viewBox="0 0 128 128"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
-    className="w-[24rem] h-[24rem]"
+    className="w-full h-full object-contain"
   >
     <rect width="128" height="128" rx="20" fill="#AB9FF2" />
     <path
@@ -75,7 +51,7 @@ const CoinbaseIcon = () => (
     viewBox="0 0 100 100"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
-    className="w-[24rem] h-[24rem]"
+    className="w-full h-full object-contain"
   >
     <rect width="100" height="100" rx="20" fill="#0052FF" />
     <circle cx="50" cy="50" r="32" fill="white" />
@@ -88,7 +64,7 @@ const OkxIcon = () => (
     viewBox="0 0 100 100"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
-    className="w-[24rem] h-[24rem]"
+    className="w-full h-full object-contain"
   >
     <rect width="100" height="100" rx="20" fill="black" />
     <rect x="18" y="24" width="24" height="24" rx="4" fill="white" />
@@ -107,7 +83,7 @@ const getWalletIcon = (w: any) => {
     return (
       <img
         src={DEFAULT_ICONS.metamask}
-        className="w-[24rem] h-[24rem] object-contain"
+        className="w-6 h-6 object-contain"
         alt="MetaMask logo"
       />
     );
@@ -115,7 +91,7 @@ const getWalletIcon = (w: any) => {
     return (
       <img
         src={DEFAULT_ICONS.binance}
-        className="w-[24rem] h-[24rem] object-contain"
+        className="w-6 h-6 object-contain"
         alt="Binance logo"
       />
     );
@@ -123,12 +99,12 @@ const getWalletIcon = (w: any) => {
     return (
       <img
         src={w.icon}
-        className="w-[24rem] h-[24rem] object-contain"
+        className="w-6 h-6 object-contain"
         alt={`${w.name} logo`}
       />
     );
   return (
-    <div className="w-full h-full bg-slate-200 text-slate-500 font-bold flex items-center justify-center text-[12rem]">
+    <div className="w-full h-full bg-slate-200 text-slate-500 font-bold flex items-center justify-center text-sm">
       {w.name.charAt(0)}
     </div>
   );
@@ -349,8 +325,12 @@ export function SignInModal({ isOpen, onClose }: SignInModalProps) {
     <AnimatePresence>
       {isOpen && (
         <div 
-          className="fixed inset-0 z-[9999] flex items-end sm:items-center justify-center pointer-events-auto bg-black/60 backdrop-blur-sm px-[16rem] pb-[32rem] sm:pb-0"
-          onClick={() => onClose()}
+          className="fixed inset-0 z-[9999] flex items-end sm:items-center justify-center pointer-events-auto bg-black/60 backdrop-blur-sm px-4 pb-4 sm:pb-0"
+          onClick={() => {
+            if (step === "SELECT_WALLET") {
+              onClose();
+            }
+          }}
         >
           <motion.div
             onClick={(e) => e.stopPropagation()}
@@ -358,86 +338,86 @@ export function SignInModal({ isOpen, onClose }: SignInModalProps) {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 100, scale: 1 }}
             transition={{ type: "spring", damping: 25, stiffness: 300 }}
-            className="bg-[#e9ebef] w-full sm:max-w-[400rem] rounded-[20rem] shadow-2xl relative overflow-hidden flex flex-col max-h-[75vh] sm:max-h-[85vh] border border-[#e2e4e8]"
+            className="bg-[#FFF] w-[90%] sm:w-[380px] rounded-2xl shadow-2xl relative overflow-hidden flex flex-col max-h-[85vh] border border-[#e2e4e8]"
           >
-            <div className="flex items-center justify-between px-[20rem] pt-[20rem] pb-[4rem] border-b border-transparent">
-              <h3 className="font-bold text-slate-800 tracking-wide text-[18rem]">
+            <div className="flex items-center justify-between px-4 pt-4 pb-4 border-b border-black/5">
+              <h3 className="font-semibold text-black tracking-wide text-[16px]">
                 {step === "SELECT_WALLET" ? "Connect Wallet" : "Sign In Status"}
               </h3>
               <button
                 onClick={() => onClose()}
-                className="p-[8rem] -mr-[8rem] text-slate-400 hover:text-slate-800 hover:bg-black/5 rounded-[9999rem] transition-colors"
+                className="p-2 -mr-2 text-slate-400 hover:text-slate-800 hover:bg-black/5 rounded-2xl transition-colors"
                 disabled={step === "PENDING" || step === "CONNECTING"}
               >
-                <X className="w-[20rem] h-[20rem]" />
+                <X className="w-5 h-5" />
               </button>
             </div>
 
-            <div className="p-[16rem] sm:p-[20rem] flex-1 min-h-0 overflow-y-auto w-full pt-[4rem] pb-[40rem] custom-scrollbar">
+            <div className="p-4 sm:p-4 flex-1 min-h-0 overflow-y-auto w-full pt-4 pb-4 custom-scrollbar">
               {step === "SELECT_WALLET" && (
                 <motion.div
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
                   exit={{ opacity: 0, x: -20 }}
                 >
-                  <p className="text-[14rem] text-[#7a8699] mb-[16rem] px-[8rem]">
+                  <p className="text-[14px] text-[#7a8699] mb-3 px-3">
                     Select an installed wallet to sign in, or use your email.
                   </p>
-                  <div className="flex flex-col gap-[8rem]">
+                  <div className="flex flex-col gap-0.5">
                     <button
                       onClick={handleEmailSelect}
-                      className="w-full flex flex-row items-center justify-between p-[12rem] px-[16rem] rounded-[20rem] border transition-all bg-[#f4f5f7] border-transparent hover:border-[#126b6f] hover:shadow-sm cursor-pointer hover:bg-white"
+                      className="w-full h-[40px] md:h-[36px] flex flex-row items-center justify-between px-3 rounded-[12px] transition-all hover:bg-black/5 cursor-pointer"
                     >
-                      <div className="flex flex-row items-center gap-[12rem]">
-                        <div className="w-[32rem] h-[32rem] flex items-center justify-center rounded-[10rem] overflow-hidden shrink-0 text-slate-600 bg-white shadow-sm border border-black/5">
+                      <div className="flex flex-row items-center gap-2.5">
+                        <div className="w-[24px] h-[24px] flex items-center justify-center shrink-0 text-black/80">
                           <Mail
-                            className="w-[18rem] h-[18rem]"
-                            strokeWidth={2}
+                            className="w-[24px] h-[24px]"
+                            strokeWidth={1.5}
                           />
                         </div>
-                        <span className="font-semibold text-slate-800 text-[14rem]">
+                        <span className="font-semibold text-black text-[14px]">
                           Sign in with email
                         </span>
                       </div>
-                      <ChevronRight className="w-[16rem] h-[16rem] text-slate-400 opacity-60" />
+                      <ChevronRight className="w-[14px] h-[14px] text-black/30" />
                     </button>
 
-                    <div className="flex flex-col items-center gap-[8rem]">
+                    <div className="flex flex-col items-center">
                       <button
                         onClick={handleInternetIdentitySelect}
-                        className="w-full flex flex-row items-center justify-between p-[12rem] px-[16rem] rounded-[20rem] border transition-all bg-[#f4f5f7] border-transparent hover:border-[#126b6f] hover:shadow-sm cursor-pointer hover:bg-white"
+                        className="w-full h-[40px] md:h-[36px] flex flex-row items-center justify-between px-3 rounded-[12px] transition-all hover:bg-black/5 cursor-pointer"
                       >
-                        <div className="flex flex-row items-center gap-[12rem]">
-                          <div className="w-[32rem] h-[32rem] flex items-center justify-center rounded-[10rem] overflow-hidden shrink-0 bg-white shadow-sm border border-black/5 p-[4rem]">
+                        <div className="flex flex-row items-center gap-2.5">
+                          <div className="w-[24px] h-[24px] flex items-center justify-center shrink-0">
                             <InternetIdentityIcon />
                           </div>
-                          <span className="font-semibold text-slate-800 text-[14rem]">
+                          <span className="font-semibold text-black text-[14px]">
                             Internet Identity
                           </span>
                         </div>
-                        <ChevronRight className="w-[16rem] h-[16rem] text-slate-400 opacity-60" />
+                        <ChevronRight className="w-[14px] h-[14px] text-black/30" />
                       </button>
 
-                      <div className="flex flex-col items-center mb-[4rem]">
-                        <span className="text-[13rem] text-slate-700">
-                          Coming from our old site
+                      <div className="flex flex-row items-center justify-center gap-2 mt-1">
+                        <span className="text-[10px] text-black/45">
+                          Coming from our old site?
                         </span>
-                        <button className="text-[14rem] text-slate-800 underline underline-offset-2 hover:text-[#126b6f] transition-colors">
+                        <button className="text-[10px] text-black/65 underline underline-offset-2 hover:text-black transition-colors">
                           Retrieve account
                         </button>
                       </div>
                     </div>
 
-                    <div className="flex flex-row items-center justify-center gap-[8rem] px-[8rem] py-[2rem] opacity-40">
-                      <div className="flex-1 h-[1rem] bg-slate-400"></div>
-                      <span className="text-[10rem] font-bold uppercase tracking-widest text-slate-500">
+                    <div className="flex flex-row items-center justify-center gap-2 px-3 py-[4px] my-1 opacity-70">
+                      <div className="flex-1 h-[1px] bg-black/10"></div>
+                      <span className="text-[10px] font-semibold uppercase tracking-[0.05em] text-black/40">
                         OR
                       </span>
-                      <div className="flex-1 h-[1rem] bg-slate-400"></div>
+                      <div className="flex-1 h-[1px] bg-black/10"></div>
                     </div>
 
                     {orderedWallets.length === 0 ? (
-                      <div className="p-[12rem] text-center rounded-[12rem] bg-white border border-black/5 text-slate-500 text-[14rem]">
+                      <div className="p-3 text-center rounded-2xl bg-white border border-black/5 text-slate-500 text-[14px]">
                         No compatible wallets detected.
                       </div>
                     ) : (
@@ -449,31 +429,31 @@ export function SignInModal({ isOpen, onClose }: SignInModalProps) {
                               ? handleWalletSelect(w)
                               : w.url && window.open(w.url, "_blank")
                           }
-                          className={`w-full flex items-center justify-between p-[12rem] px-[16rem] rounded-[20rem] border transition-all ${w.installed ? "bg-[#f4f5f7] hover:bg-white border-transparent hover:border-[#126b6f] hover:shadow-sm cursor-pointer" : "bg-[#e9ebef] border-transparent hover:bg-[#f0f2f5] cursor-pointer opacity-70"}`}
+                          className={`w-full h-[40px] md:h-[36px] flex items-center justify-between px-3 rounded-[12px] transition-all ${w.installed ? "hover:bg-black/5 cursor-pointer" : "hover:bg-black/5 cursor-pointer opacity-70"}`}
                         >
-                          <div className="flex flex-row items-center gap-[12rem]">
-                            <div className="w-[32rem] h-[32rem] flex items-center justify-center rounded-[10rem] overflow-hidden shrink-0 bg-white shadow-sm border border-black/5">
+                          <div className="flex flex-row items-center gap-2.5">
+                            <div className="w-[24px] h-[24px] flex items-center justify-center rounded-[6px] overflow-hidden shrink-0 bg-white shadow-sm border border-black/5 p-[1px]">
                               {getWalletIcon(w)}
                             </div>
                             <span
-                              className={`font-semibold text-[14rem] flex-1 text-left ${w.installed ? "text-slate-800" : "text-slate-500"}`}
+                              className={`font-semibold flex-1 text-left text-[14px] ${w.installed ? "text-black" : "text-black/60"}`}
                             >
                               {w.name}
                             </span>
                           </div>
                           {w.installed ? (
-                            <div className="flex flex-row items-center justify-center gap-[6rem]">
-                              <span className="text-[10rem] uppercase font-bold text-[#126b6f] bg-[#126b6f]/10 px-[8rem] py-[4rem] rounded-[9999rem]">
+                            <div className="flex flex-row items-center justify-center gap-2">
+                              <span className="text-[9px] uppercase font-bold text-[#5F40A1] bg-[#5F40A1]/10 flex items-center justify-center px-1.5 py-0.5 rounded-[12px]">
                                 Installed
                               </span>
-                              <ChevronRight className="w-[16rem] h-[16rem] text-slate-400 opacity-60" />
+                              <ChevronRight className="w-[14px] h-[14px] text-black/30" />
                             </div>
                           ) : (
-                            <div className="flex flex-row items-center justify-center gap-[4rem]">
-                              <span className="text-[11rem] uppercase font-bold text-[#8a9bb3]">
+                            <div className="flex flex-row items-center justify-center gap-2">
+                              <span className="text-[9px] uppercase font-bold text-black/45 flex items-center justify-center px-1.5 py-0.5 rounded-[12px] bg-black/5">
                                 Get
                               </span>
-                              <ExternalLink className="w-[16rem] h-[16rem] text-[#8a9bb3] opacity-80" />
+                              <ExternalLink className="w-[14px] h-[14px] text-black/45" />
                             </div>
                           )}
                         </button>
@@ -487,27 +467,27 @@ export function SignInModal({ isOpen, onClose }: SignInModalProps) {
                 <motion.div
                   initial={{ opacity: 0, scale: 0.9 }}
                   animate={{ opacity: 1, scale: 1 }}
-                  className="flex flex-col items-center justify-center py-[40rem] text-center gap-[20rem]"
+                  className="flex flex-col items-center justify-center py-3 text-center gap-4"
                 >
                   <div className="relative">
                     {selectedWallet?.name === "Email" ? (
-                      <div className="w-[64rem] h-[64rem] rounded-[16rem] bg-white shadow-md flex flex-row items-center justify-center border border-black/5 text-slate-700 z-10 relative">
-                        <Mail className="w-[32rem] h-[32rem]" />
+                      <div className="w-14 h-14 flex flex-row items-center justify-center text-black/80 z-10 relative">
+                        <Mail className="w-full h-full" strokeWidth={1.5} />
                       </div>
                     ) : selectedWallet?.icon ? (
-                      <div className="w-[64rem] h-[64rem] flex items-center justify-center z-10 relative bg-white p-[12rem] rounded-[16rem] shadow-md border border-black/5 [&>svg]:w-full [&>svg]:h-full [&>img]:w-full [&>img]:h-full [&>img]:object-contain">
+                      <div className="w-14 h-14 flex items-center justify-center z-10 relative [&>svg]:w-full [&>svg]:h-full [&>img]:w-full [&>img]:h-full [&>img]:object-contain">
                         {selectedWallet.icon}
                       </div>
                     ) : null}
-                    <div className="absolute inset-0 bg-[#126b6f] blur-[16rem] opacity-20 rounded-[9999rem] animate-pulse"></div>
+                    <div className="absolute inset-0 bg-[#126b6f] blur-md opacity-20 rounded-2xl animate-pulse"></div>
                   </div>
-                  <div className="flex flex-col items-center gap-[8rem]">
-                    <h4 className="font-bold text-[18rem] text-slate-800">
+                  <div className="flex flex-col items-center gap-4">
+                    <h4 className="font-bold text-sm text-slate-800">
                       {selectedWallet?.name === "Email"
                         ? "Connecting to Email..."
                         : "Approve connection"}
                     </h4>
-                    <p className="text-[14rem] text-slate-500 max-w-[200rem] mx-auto text-center">
+                    <p className="text-sm text-slate-500 max-w-[80%] mx-auto text-center">
                       {selectedWallet?.name === "Email"
                         ? "Please wait"
                         : `Please open your ${selectedWallet?.name} extension to sign the message.`}
@@ -520,14 +500,14 @@ export function SignInModal({ isOpen, onClose }: SignInModalProps) {
                 <motion.div
                   initial={{ opacity: 0, scale: 0.9 }}
                   animate={{ opacity: 1, scale: 1 }}
-                  className="flex flex-col items-center justify-center py-[40rem] text-center gap-[20rem]"
+                  className="flex flex-col items-center justify-center py-3 text-center gap-4"
                 >
-                  <Loader2 className="w-[64rem] h-[64rem] text-[#126b6f] animate-spin" />
-                  <div className="flex flex-col items-center gap-[8rem]">
-                    <h4 className="font-bold text-[18rem] text-slate-800">
+                  <Loader2 className="w-12 h-12 text-[#126b6f] animate-spin" />
+                  <div className="flex flex-col items-center gap-4">
+                    <h4 className="font-bold text-sm text-slate-800">
                       Sign in Pending
                     </h4>
-                    <p className="text-[14rem] text-slate-500 text-center">
+                    <p className="text-sm text-slate-500 text-center">
                       Waiting for confirmation.
                     </p>
                   </div>
@@ -538,14 +518,14 @@ export function SignInModal({ isOpen, onClose }: SignInModalProps) {
                 <motion.div
                   initial={{ opacity: 0, scale: 0.9 }}
                   animate={{ opacity: 1, scale: 1 }}
-                  className="flex flex-col items-center justify-center py-[40rem] text-center gap-[20rem]"
+                  className="flex flex-col items-center justify-center py-3 text-center gap-4"
                 >
-                  <CheckCircle2 className="w-[64rem] h-[64rem] text-emerald-500" />
-                  <div className="flex flex-col items-center gap-[8rem]">
-                    <h4 className="font-bold text-[18rem] text-emerald-600">
+                  <CheckCircle2 className="w-12 h-12 text-emerald-500" />
+                  <div className="flex flex-col items-center gap-4">
+                    <h4 className="font-bold text-sm text-emerald-600">
                       Sign in Successful!
                     </h4>
-                    <p className="text-[14rem] text-slate-500 text-center">
+                    <p className="text-sm text-slate-500 text-center">
                       You are now connected.
                     </p>
                   </div>

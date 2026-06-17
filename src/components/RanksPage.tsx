@@ -68,6 +68,12 @@ export default function RanksPage() {
     return String.fromCodePoint(...codePoints);
   }
 
+  function getCountryFlagImg(short_code: string) {
+    if (!short_code || short_code.toUpperCase() === 'UNKNOWN') return null;
+    const code = short_code.substring(0, 2).toLowerCase();
+    return `https://flagcdn.com/w40/${code}.png`;
+  }
+
   function formatUserName(user_name: string) {
     if (!user_name) {
       return '-';
@@ -124,15 +130,15 @@ export default function RanksPage() {
   }, [list]);
 
   return (
-    <div className="w-full max-w-[var(--max-content-width-pc)] mx-auto px-[24rem] py-[40rem] pb-[80rem] fade-in-up">
-      <div className="mb-[32rem]">
-        <h1 className="text-[24rem] font-bold text-black mb-[16rem] text-left">Winning Ranks</h1>
-        <div className="flex items-center gap-[8rem]">
+    <div className="w-full max-w-[1024px] mx-auto px-4 py-3 pb-4 fade-in-up">
+      <div className="mb-4">
+        <h1 className="text-[16px] font-bold text-black mb-4 text-left">Winning Ranks</h1>
+        <div className="flex items-center gap-2">
           {['Bonus', 'WLT', 'Gcoin'].map(tab => (
             <button
               key={tab}
               onClick={() => setSubTab(tab)}
-              className={`px-[16rem] h-[32rem] rounded-[8rem] text-[14rem] font-medium transition-colors ${
+              className={`w-[80px] h-[28px] rounded-2xl text-sm font-medium transition-colors flex items-center justify-center ${
                 subTab === tab
                   ? 'bg-black text-white'
                   : 'bg-black/5 text-black/60 hover:text-black hover:bg-black/10'
@@ -144,75 +150,102 @@ export default function RanksPage() {
         </div>
       </div>
 
-      <div className="rounded-[12rem] overflow-hidden">
+      <div className="rounded-2xl overflow-hidden">
         <div className="overflow-x-auto">
-          <table className="w-full text-left">
-            <thead className="bg-[#e5e7eb] border-none text-[14rem] font-medium text-black/40">
+          <table className="w-full text-left border-collapse">
+            <thead className="bg-[#e5e7eb] border-none text-[12px] md:text-[14px] font-medium text-black/40">
               <tr>
-                <th className="px-[24rem] py-[16rem] text-center md:text-left w-[64rem]">#</th>
-                <th className="px-[24rem] py-[16rem]">Player</th>
-                <th className="px-[24rem] py-[16rem] hidden md:table-cell">Country</th>
-                <th className="px-[24rem] py-[16rem] hidden md:table-cell">Total Plays</th>
-                <th className="px-[24rem] py-[16rem]">Winnings</th>
+                <th className="px-2 md:px-4 py-3 md:py-4 w-10 md:w-16 text-center">#</th>
+                <th className="px-2 md:px-4 py-3 md:py-4">Player</th>
+                <th className="px-4 py-4 hidden md:table-cell">Country</th>
+                <th className="px-4 py-4 hidden md:table-cell">Total Plays</th>
+                <th className="px-2 md:px-4 py-3 md:py-4 text-right pr-3 md:pr-6 whitespace-nowrap">Winnings</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-black/5 bg-transparent text-[16rem]">
+            <tbody className="divide-y divide-black/5 bg-transparent text-[14px] md:text-[16px]">
               {loading ? (
                 [...Array(10)].map((_, index) => (
                   <tr key={index} className="animate-pulse bg-transparent">
-                    <td className="px-[24rem] py-[24rem]"><div className="h-[16rem] bg-black/10 rounded w-[16rem]"></div></td>
-                    <td className="px-[24rem] py-[24rem]">
-                      <div className="flex items-center space-x-[12rem]">
-                        <div className="w-[48rem] h-[48rem] bg-black/10 rounded-full"></div>
-                        <div className="h-[16rem] bg-black/10 rounded w-[96rem]"></div>
+                    <td className="px-2 md:px-4 py-3 md:py-4 text-center"><div className="h-10 bg-black/10 rounded w-8 mx-auto"></div></td>
+                    <td className="px-2 md:px-4 py-3 md:py-4">
+                      <div className="flex items-center space-x-2 md:space-x-4">
+                        <div className="w-10 h-10 md:w-12 md:h-12 bg-black/10 rounded-full shrink-0"></div>
+                        <div className="flex flex-col gap-1.5 w-20 md:w-24">
+                          <div className="h-4 bg-black/10 rounded w-full"></div>
+                          <div className="h-3 bg-black/10 rounded w-2/3 md:hidden"></div>
+                        </div>
                       </div>
                     </td>
-                    <td className="px-[24rem] py-[24rem] hidden md:table-cell"><div className="h-[16rem] bg-black/10 rounded w-[64rem]"></div></td>
-                    <td className="px-[24rem] py-[24rem] hidden md:table-cell"><div className="h-[16rem] bg-black/10 rounded w-[48rem]"></div></td>
-                    <td className="px-[24rem] py-[24rem]"><div className="h-[16rem] bg-black/10 rounded w-[80rem]"></div></td>
+                    <td className="px-4 py-4 hidden md:table-cell"><div className="h-10 bg-black/10 rounded w-24"></div></td>
+                    <td className="px-4 py-4 hidden md:table-cell"><div className="h-10 bg-black/10 rounded w-16"></div></td>
+                    <td className="px-2 md:px-4 py-3 md:py-4 text-right pr-3 md:pr-6">
+                      <div className="flex flex-col gap-1.5 items-end justify-center">
+                        <div className="h-4 bg-black/10 rounded w-16 md:w-20"></div>
+                        <div className="h-3 bg-black/10 rounded w-10 md:hidden"></div>
+                      </div>
+                    </td>
                   </tr>
                 ))
               ) : list.length > 0 ? (
                 list.map((winner, index) => (
                   <tr key={winner.id || index} className="hover:bg-black/5 transition-colors">
-                    <td className="px-[24rem] py-[24rem] text-center md:text-left text-black/60">
+                    <td className="px-2 md:px-4 py-3 md:py-4 text-black/60 font-medium text-center">
                       {(index + 1) + (currentPage - 1) * itemsPerPage}
                     </td>
-                    <td className="px-[24rem] py-[24rem]">
+                    <td className="px-2 md:px-4 py-3 md:py-4">
                       <div 
-                        className="flex items-center space-x-[16rem] cursor-pointer group"
+                        className="flex items-center space-x-2 md:space-x-4 cursor-pointer group"
                         onClick={() => handleUserClick(winner)}
                       >
                         <img 
                           src={getAvatar(winner.user_info?.logo || '01')} 
                           alt="avatar" 
-                          className="w-[48rem] h-[48rem] rounded-full border border-black/10 transition-colors" 
+                          className="w-10 h-10 md:w-12 md:h-12 rounded-full border-2 border-black transition-colors shrink-0 object-cover" 
                         />
-                        <div className="flex flex-col">
-                          <span className="text-black group-hover:text-purple-600 transition-colors">
+                        <div className="flex flex-col text-left">
+                          <span className="text-black text-[15px] md:text-[16px] font-semibold group-hover:text-purple-600 transition-colors leading-tight">
                             {formatUserName(winner.user_info?.user_name)}
                           </span>
-                          <span className="text-[12rem] text-black/40 hidden mt-[4rem] max-md:flex items-center gap-[4rem]">
-                            <span className="text-[14rem]">{getFlagEmoji(winner.user_info?.country?.[0])}</span> {getCountryName(winner.user_info?.country?.[0])}
+                          <span className="text-[12px] md:text-[14px] text-black/40 mt-1 leading-tight md:hidden flex items-center gap-1">
+                            {getCountryFlagImg(winner.user_info?.country?.[0]) ? (
+                              <img 
+                                src={getCountryFlagImg(winner.user_info?.country?.[0])!} 
+                                alt=""
+                                className="w-[16px] h-[10px] object-cover rounded-sm inline-block shadow-sm"
+                                referrerPolicy="no-referrer"
+                              />
+                            ) : (
+                              <span>{getFlagEmoji(winner.user_info?.country?.[0])}</span>
+                            )}
+                            <span className="truncate max-w-[80px] xs:max-w-[110px] sm:max-w-none">{getCountryName(winner.user_info?.country?.[0])}</span>
                           </span>
                         </div>
                       </div>
                     </td>
-                    <td className="px-[24rem] py-[24rem] hidden md:table-cell text-black/80">
-                      <div className="flex items-center gap-[8rem]">
-                        <span className="text-[16rem]">{getFlagEmoji(winner.user_info?.country?.[0])}</span>
-                        {getCountryName(winner.user_info?.country?.[0])}
+                    <td className="px-4 py-4 hidden md:table-cell text-black selection:bg-transparent">
+                      <div className="flex items-center gap-2">
+                        {getCountryFlagImg(winner.user_info?.country?.[0]) ? (
+                          <img 
+                            src={getCountryFlagImg(winner.user_info?.country?.[0])!} 
+                            alt=""
+                            className="w-[20px] h-[14px] object-cover rounded-sm inline-block shadow-sm"
+                            referrerPolicy="no-referrer"
+                          />
+                        ) : (
+                          <span className="text-[18px] leading-none">{getFlagEmoji(winner.user_info?.country?.[0])}</span>
+                        )}
+                        <span>{getCountryName(winner.user_info?.country?.[0])}</span>
                       </div>
                     </td>
-                    <td className="px-[24rem] py-[24rem] hidden md:table-cell text-black/80">
+                    <td className="px-4 py-4 hidden md:table-cell text-black">
                       {winner?.playtimes?.toString() || '0'}
                     </td>
-                    <td className="px-[24rem] py-[24rem]">
-                      <div className="flex flex-col">
-                        <span className="text-black">
-                          {Number(Number(winner?.total_win_amount).toFixed(2)).toLocaleString() || 0} {subTab}
+                    <td className="px-2 md:px-4 py-3 md:py-4 text-right pr-3 md:pr-6 whitespace-nowrap">
+                      <div className="flex flex-col items-end justify-center whitespace-nowrap">
+                        <span className="text-black text-[15px] md:text-[16px] font-semibold leading-tight whitespace-nowrap">
+                          {Number(Number(winner?.total_win_amount).toFixed(2)).toLocaleString()}&nbsp;{subTab === 'Bonus' ? 'USD' : subTab}
                         </span>
-                        <span className="text-[12rem] text-black/40 block md:hidden mt-[4rem]">
+                        <span className="text-[12px] md:text-[14px] text-zinc-400 mt-1 leading-tight md:hidden whitespace-nowrap">
                           {winner?.playtimes?.toString() || '0'}P
                         </span>
                       </div>
@@ -221,7 +254,7 @@ export default function RanksPage() {
                 ))
               ) : (
                 <tr>
-                  <td colSpan={5} className="px-[24rem] py-[48rem] text-center text-black/40">
+                  <td colSpan={5} className="px-4 py-4 text-center text-black/40">
                     No data
                   </td>
                 </tr>
@@ -232,39 +265,39 @@ export default function RanksPage() {
 
         {/* Pagination Info & Controls */}
         {list.length > 0 && !loading && (
-          <div className="px-[24rem] py-[16rem] border-t border-black/5 bg-transparent flex flex-col sm:flex-row items-center justify-between gap-[16rem]">
-            <div className="text-[14rem] text-black/40">
+          <div className="px-4 py-3 border-t border-black/5 bg-transparent flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div className="text-sm text-black/40">
               Showing {totalItems} players
             </div>
             
             {totalPages > 1 && (
-              <div className="flex items-center gap-[4rem] bg-transparent">
+              <div className="flex items-center gap-1 bg-transparent">
                 <button
                   onClick={goToPreviousPage}
                   disabled={!canGoToPreviousPage}
-                  className={`p-[6rem] rounded-[6rem] flex items-center justify-center ${
+                  className={`w-8 h-8 md:w-9 md:h-9 rounded-lg flex items-center justify-center transition-colors ${
                     !canGoToPreviousPage 
-                      ? "text-black/20 cursor-not-allowed" 
-                      : "text-black/60 hover:bg-black/5 hover:text-black"
+                      ? "text-black/20 cursor-not-allowed bg-transparent" 
+                      : "text-black/60 hover:bg-black/5 hover:text-black bg-transparent"
                   }`}
                 >
                   <ChevronLeft size={16} />
                 </button>
                 
-                <div className="flex items-center">
+                <div className="flex items-center gap-1">
                   {pageNumbers.map((pageNumber, index) => (
                     <React.Fragment key={index}>
                       {pageNumber === -1 ? (
-                        <div className="w-[32rem] h-[32rem] flex items-center justify-center text-black/40">
+                        <div className="w-8 h-8 md:w-9 md:h-9 flex items-center justify-center text-black/40">
                           <MoreHorizontal size={14} />
                         </div>
                       ) : (
                         <button
                           onClick={() => handlePageChange(pageNumber)}
-                          className={`min-w-[32rem] h-[32rem] px-[8rem] text-[14rem] rounded-[6rem] flex items-center justify-center transition-colors ${
+                          className={`w-8 h-8 md:w-9 md:h-9 text-xs md:text-sm rounded-lg flex items-center justify-center transition-all ${
                             currentPage === pageNumber
-                              ? "bg-black/5 text-black font-semibold"
-                              : "text-black/60 hover:bg-black/5"
+                              ? "bg-transparent text-black font-semibold border border-black shadow-[0_1px_3px_rgba(0,0,0,0.05)]"
+                              : "text-black/65 hover:bg-black/5"
                           }`}
                         >
                           {pageNumber}
@@ -277,10 +310,10 @@ export default function RanksPage() {
                 <button
                   onClick={goToNextPage}
                   disabled={!canGoToNextPage}
-                  className={`p-[6rem] rounded-[6rem] flex items-center justify-center ${
+                  className={`w-8 h-8 md:w-9 md:h-9 rounded-lg flex items-center justify-center transition-colors ${
                     !canGoToNextPage 
-                      ? "text-black/20 cursor-not-allowed" 
-                      : "text-black/60 hover:bg-black/5 hover:text-black"
+                      ? "text-black/20 cursor-not-allowed bg-transparent" 
+                      : "text-black/60 hover:bg-black/5 hover:text-black bg-transparent"
                   }`}
                 >
                   <ChevronRight size={16} />

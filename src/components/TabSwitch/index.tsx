@@ -15,7 +15,7 @@ const TabSwitch = ({ activePage, setActivePage }: TabSwitchProps) => {
       style={{ zIndex: 100 }}
     >
       <div className="tab-switch-page-v2-bottom-box">
-        <div className="tab-switch-page-v2-bottom-box-container max-w-[600rem] mx-auto">
+        <div className="tab-switch-page-v2-bottom-box-container max-w-full mx-auto">
           <button
             onClick={() => setActivePage("money")}
             className={activePage === "money" ? "nav-link active" : "nav-link"}

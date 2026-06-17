@@ -17,11 +17,11 @@ export const KenoAnimation: React.FC = () => {
   }, []);
 
   return (
-    <div className="absolute inset-0 flex items-center justify-center gap-[2rem] flex-wrap p-[8rem] opacity-90">
+    <div className="absolute inset-0 flex items-center justify-center gap-[2px] flex-wrap p-[8px] opacity-90">
       {Array.from({ length: 9 }).map((_, i) => (
         <motion.div
           key={i}
-          className="w-[14rem] h-[14rem] rounded-sm bg-purple-600 flex items-center justify-center text-[8rem] text-white font-bold transition-opacity duration-300"
+          className="w-[14px] h-[14px] rounded-[2px] bg-purple-600 flex items-center justify-center text-[8px] text-white font-bold transition-opacity duration-300"
           style={{ opacity: activeIndices.includes(i) ? 1 : 0.2 }}
         >
           {i + 1}
