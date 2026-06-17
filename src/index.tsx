@@ -117,33 +117,35 @@ function App() {
     // Play tab
     if (isDesktopView) {
       return (
-        <div className="desktop-home-container">
-          {bannersLoading ? (
-            <BannerSkeleton desktop />
-          ) : (
-            <BannerSection
-              banners={banners}
-              onBannerClick={onBannerClick}
-              isDesktop={true}
-            />
-          )}
-          <div className="desktop-home-games">
-            {gamesLoading ? (
-              <>
-                <GamesSkeleton title="Rand Game" desktop />
-                <GamesSkeleton title="Rand Ball" desktop />
-              </>
+        <div className="desktop-home-content w-full">
+          <div className="desktop-home-container">
+            {bannersLoading ? (
+              <BannerSkeleton desktop />
             ) : (
-              games.map((game, i) => (
-                <GameSection
-                  key={i}
-                  title={game[0]}
-                  games={game[1]}
-                  onGameClick={onGameClick}
-                  isDesktop={true}
-                />
-              ))
+              <BannerSection
+                banners={banners}
+                onBannerClick={onBannerClick}
+                isDesktop={true}
+              />
             )}
+            <div className="desktop-home-games">
+              {gamesLoading ? (
+                <>
+                  <GamesSkeleton title="Rand Game" desktop />
+                  <GamesSkeleton title="Rand Ball" desktop />
+                </>
+              ) : (
+                games.map((game, i) => (
+                  <GameSection
+                    key={i}
+                    title={game[0]}
+                    games={game[1]}
+                    onGameClick={onGameClick}
+                    isDesktop={true}
+                  />
+                ))
+              )}
+            </div>
           </div>
         </div>
       );
