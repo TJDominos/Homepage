@@ -7,7 +7,13 @@ export const BannerSkeleton = ({ desktop = false }: { desktop?: boolean }) => (
   </div>
 );
 
-export const GamesSkeleton = ({ title, desktop = false }: { title: string; desktop?: boolean }) => (
+export const GamesSkeleton = ({
+  title,
+  desktop = false,
+}: {
+  title: string;
+  desktop?: boolean;
+}) => (
   <div className={`games-skeleton${desktop ? " desktop-mode" : ""}`}>
     <div className="skeleton-section-title">{title}</div>
     <div className="skeleton-game-list">

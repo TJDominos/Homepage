@@ -5,8 +5,18 @@ import { GameHoverOverlay } from "./GameHoverOverlay";
 
 const MOVE_THRESHOLD = 10;
 
-export const MobileGameSection = ({ title, games, onGameClick }: { title: string; games: Game[]; onGameClick: (g: Game) => void }) => {
-  const [touchedGameId, setTouchedGameId] = useState<string | number | null>(null);
+export const MobileGameSection = ({
+  title,
+  games,
+  onGameClick,
+}: {
+  title: string;
+  games: Game[];
+  onGameClick: (g: Game) => void;
+}) => {
+  const [touchedGameId, setTouchedGameId] = useState<string | number | null>(
+    null,
+  );
   const touchStartRef = useRef<{ x: number; y: number } | null>(null);
 
   const handleGameClick = (game: Game) => {
@@ -35,8 +45,12 @@ export const MobileGameSection = ({ title, games, onGameClick }: { title: string
               onTouchMove={(e) => {
                 if (touchedGameId !== game.id || !touchStartRef.current) return;
                 const touch = e.touches[0];
-                const deltaX = Math.abs(touch.clientX - touchStartRef.current.x);
-                const deltaY = Math.abs(touch.clientY - touchStartRef.current.y);
+                const deltaX = Math.abs(
+                  touch.clientX - touchStartRef.current.x,
+                );
+                const deltaY = Math.abs(
+                  touch.clientY - touchStartRef.current.y,
+                );
 
                 if (deltaX > MOVE_THRESHOLD || deltaY > MOVE_THRESHOLD) {
                   setTouchedGameId(null);
@@ -55,7 +69,7 @@ export const MobileGameSection = ({ title, games, onGameClick }: { title: string
                 cursor: isComingSoon ? "default" : "pointer",
                 padding: "8px",
                 margin: "-8px",
-                marginBottom: "3px"
+                marginBottom: "3px",
               }}
             >
               <div className="game-logo relative z-10 w-[52px] h-[52px] shrink-0 rounded-[10px] overflow-hidden">
@@ -66,7 +80,9 @@ export const MobileGameSection = ({ title, games, onGameClick }: { title: string
                 {!isComingSoon && (
                   <div
                     className={`absolute inset-0 z-20 pointer-events-none transition-opacity duration-150 ${
-                      isTouched ? "opacity-100" : "opacity-0 group-hover:opacity-100"
+                      isTouched
+                        ? "opacity-100"
+                        : "opacity-0 group-hover:opacity-100"
                     }`}
                   >
                     <GameHoverOverlay gameName={game.name} />
@@ -111,4 +127,3 @@ export const MobileGameSection = ({ title, games, onGameClick }: { title: string
     </div>
   );
 };
-

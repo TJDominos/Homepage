@@ -1,9 +1,15 @@
 import React from "react";
 
-export const ProductLogo: React.FC<{ src?: string; className?: string; alt?: string }> = ({ src, className = '', alt = 'Product logo' }) => {
+export const ProductLogo: React.FC<{
+  src?: string;
+  className?: string;
+  alt?: string;
+}> = ({ src, className = "", alt = "Product logo" }) => {
   if (!src) {
     return (
-      <div className={`bg-gradient-to-br from-[#4CAF50] to-[#2196F3] flex items-center justify-center text-white text-lg font-bold ${className}`}>
+      <div
+        className={`bg-gradient-to-br from-[#4CAF50] to-[#2196F3] flex items-center justify-center text-white text-lg font-bold ${className}`}
+      >
         ?
       </div>
     );
@@ -16,10 +22,10 @@ export const ProductLogo: React.FC<{ src?: string; className?: string; alt?: str
       className={className}
       onError={(e) => {
         const target = e.target as HTMLImageElement;
-        target.style.display = 'none';
-        const placeholder = document.createElement('div');
+        target.style.display = "none";
+        const placeholder = document.createElement("div");
         placeholder.className = `bg-gradient-to-br from-[#4CAF50] to-[#2196F3] flex items-center justify-center text-white text-lg font-bold ${className}`;
-        placeholder.textContent = '?';
+        placeholder.textContent = "?";
         target.parentNode?.replaceChild(placeholder, target);
       }}
     />

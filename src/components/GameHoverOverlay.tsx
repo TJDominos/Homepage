@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import {
   Daily4Animation,
   RouletteAnimation,
@@ -6,8 +6,8 @@ import {
   MinesAnimation,
   KenoAnimation,
   LuckyNickyAnimation,
-  DefaultAnimation
-} from './animations';
+  DefaultAnimation,
+} from "./animations";
 
 interface Props {
   gameName: string;
@@ -17,22 +17,22 @@ export const GameHoverOverlay: React.FC<Props> = ({ gameName }) => {
   const normalizedName = gameName.toLowerCase();
 
   const renderAnimation = () => {
-    if (normalizedName.includes('daily 4')) {
+    if (normalizedName.includes("daily 4")) {
       return <Daily4Animation />;
     }
-    if (normalizedName.includes('roulette')) {
+    if (normalizedName.includes("roulette")) {
       return <RouletteAnimation />;
     }
-    if (normalizedName.includes('fruits garden')) {
+    if (normalizedName.includes("fruits garden")) {
       return <FruitsGardenAnimation />;
     }
-    if (normalizedName.includes('mines')) {
+    if (normalizedName.includes("mines")) {
       return <MinesAnimation />;
     }
-    if (normalizedName.includes('keno')) {
+    if (normalizedName.includes("keno")) {
       return <KenoAnimation />;
     }
-    if (normalizedName.includes('lucky nicky')) {
+    if (normalizedName.includes("lucky nicky")) {
       return <LuckyNickyAnimation />;
     }
     return <DefaultAnimation />;
@@ -44,4 +44,3 @@ export const GameHoverOverlay: React.FC<Props> = ({ gameName }) => {
     </div>
   );
 };
-

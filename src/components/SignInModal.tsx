@@ -230,9 +230,14 @@ export function SignInModal({ isOpen, onClose }: SignInModalProps) {
     setSelectedWallet({ name: wallet.name, icon: getWalletIcon(wallet) });
     setStep("CONNECTING");
 
-    if (wallet.id === "metamask" && typeof (window as any).ethereum !== "undefined") {
+    if (
+      wallet.id === "metamask" &&
+      typeof (window as any).ethereum !== "undefined"
+    ) {
       try {
-        const accounts = await (window as any).ethereum.request({ method: "eth_requestAccounts" });
+        const accounts = await (window as any).ethereum.request({
+          method: "eth_requestAccounts",
+        });
         if (accounts && accounts.length > 0) {
           setStep("SUCCESS");
           setTimeout(() => {
@@ -324,7 +329,7 @@ export function SignInModal({ isOpen, onClose }: SignInModalProps) {
   return (
     <AnimatePresence>
       {isOpen && (
-        <div 
+        <div
           className="fixed inset-0 z-[9999] flex items-end sm:items-center justify-center pointer-events-auto bg-black/60 backdrop-blur-sm px-4 pb-4 sm:pb-0"
           onClick={() => {
             if (step === "SELECT_WALLET") {

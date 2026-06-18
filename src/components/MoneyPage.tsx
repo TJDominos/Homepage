@@ -174,7 +174,7 @@ export function MoneyPage({
               className="flex flex-col items-center shrink-0 cursor-pointer"
               onClick={() => handleModalOpen("balance")}
             >
-              <div className="flex items-center gap-1 mb-1 sm:mb-1.5">
+              <div className="flex items-center gap-1 mb-2 sm:mb-3">
                 <span className="text-[18px] font-bold text-[#111] font-mono leading-none tracking-tight">
                   {userAccount ? "≈ $0.00" : "≈ $0.00"}
                 </span>
@@ -193,7 +193,7 @@ export function MoneyPage({
               className="flex flex-col items-center shrink-0 cursor-pointer"
               onClick={() => handleModalOpen("deposit")}
             >
-              <div className="flex items-center gap-1 mb-1 sm:mb-1.5">
+              <div className="flex items-center gap-1 mb-2 sm:mb-3">
                 <span className="text-[18px] font-bold text-[#111] font-mono leading-none tracking-tight">
                   {userAccount ? "123,343.00" : "0.00"}
                 </span>
@@ -213,7 +213,7 @@ export function MoneyPage({
               className="flex flex-col items-center shrink-0 cursor-pointer"
               onClick={() => handleModalOpen("bonus")}
             >
-              <div className="flex items-center gap-1 mb-1 sm:mb-1.5">
+              <div className="flex items-center gap-1 mb-2 sm:mb-3">
                 <span className="text-[18px] font-bold text-[#111] font-mono leading-none tracking-tight">
                   {userAccount ? "12" : "0.00"}
                 </span>
@@ -229,7 +229,7 @@ export function MoneyPage({
 
             {/* WLT Amount */}
             <div className="flex flex-col items-center shrink-0 cursor-pointer">
-              <div className="flex items-center gap-1 mb-1 sm:mb-1.5">
+              <div className="flex items-center gap-1 mb-2 sm:mb-3">
                 <span className="text-[18px] font-bold text-[#111] font-mono leading-none tracking-tight">
                   {userAccount ? "0.00" : "0.00"}
                 </span>
@@ -278,7 +278,7 @@ export function MoneyPage({
                       <h3 className="text-sm font-semibold text-black leading-tight">
                         First Deposit Bonus
                       </h3>
-                      <p className="text-[12px] text-black/50 mt-1 leading-tight">
+                      <p className="text-[12px] text-black/50 mt-2 leading-tight">
                         Deposit to get 0.1 ICP bonus
                       </p>
                     </div>
@@ -306,7 +306,7 @@ export function MoneyPage({
                         <h3 className="text-sm font-semibold text-black leading-tight">
                           Invite Friends
                         </h3>
-                        <p className="text-[12px] text-black/50 mt-1 leading-tight">
+                        <p className="text-[12px] text-black/50 mt-2 leading-tight">
                           Up to 5% earnings
                         </p>
                       </div>
@@ -318,7 +318,7 @@ export function MoneyPage({
                 )}
 
                 {/* WL Point Card */}
-                <div className="bg-[#f0f2f5] rounded-3xl p-4 sm:p-5 shadow-sm border border-black/5 font-sans">
+                <div className="bg-[#f0f2f5] rounded-3xl p-4 sm:p-6 shadow-sm border border-black/5 font-sans">
                   <div className="flex justify-between items-start mb-5 border-b border-black/5 pb-5">
                     <div>
                       <h3 className="font-semibold text-[15px] text-black mb-3 flex items-center gap-1.5">
@@ -346,7 +346,7 @@ export function MoneyPage({
                         <h4 className="font-semibold text-[15px] text-black leading-tight">
                           Daily Check-in
                         </h4>
-                        <p className="text-[13px] text-black/40 mt-1.5">
+                        <p className="text-[13px] text-black/40 mt-2">
                           Earn points by clicking the button
                         </p>
                       </div>
@@ -381,7 +381,7 @@ export function MoneyPage({
                           <h3 className="text-sm font-semibold text-black leading-tight">
                             Invite Friends
                           </h3>
-                          <p className="text-[12px] text-black/50 mt-1 leading-tight">
+                          <p className="text-[12px] text-black/50 mt-2 leading-tight">
                             Up to 5% earnings
                           </p>
                         </div>
@@ -392,7 +392,7 @@ export function MoneyPage({
                     </div>
                   ) : (
                     <div className="bg-[#f0f2f5] rounded-2xl p-6 border border-black/5 relative overflow-hidden flex flex-col h-full min-h-[380px]">
-                      <h2 className="text-[20px] font-bold text-black mb-4">
+                      <h2 className="text-[20px] font-bold text-black mb-3">
                         Invite Friends
                       </h2>
 
@@ -423,7 +423,7 @@ export function MoneyPage({
                           </div>
                         </div>
 
-                        <div className="bg-gradient-to-r from-purple-200 to-indigo-200 rounded-xl p-5 flex items-center justify-between mb-8">
+                        <div className="bg-gradient-to-r from-purple-200 to-indigo-200 rounded-xl p-6 flex items-center justify-between mb-8">
                           <span className="text-[14px] font-bold text-purple-900 w-1/2">
                             50% of Platform Revenue Return to Invites Rewards
                           </span>

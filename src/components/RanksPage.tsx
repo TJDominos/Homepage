@@ -11,9 +11,11 @@ export default function RanksPage() {
   const [totalItems, setTotalItems] = useState(0);
   const [list, setList] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
-  const [selectedUser, setSelectedUser] = useState<UserProfileInfo | null>(null);
+  const [selectedUser, setSelectedUser] = useState<UserProfileInfo | null>(
+    null,
+  );
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [subTab, setSubTab] = useState('Bonus');
+  const [subTab, setSubTab] = useState("Bonus");
 
   const {
     currentPage,
@@ -25,17 +27,20 @@ export default function RanksPage() {
     goToPreviousPage,
     canGoToNextPage,
     canGoToPreviousPage,
-    pageNumbers
+    pageNumbers,
   } = usePagination({
     totalItems,
     itemsPerPage,
-    initialPage: 1
+    initialPage: 1,
   });
 
   async function getWinners(page = 1, page_size = 10) {
     try {
       setLoading(true);
-      const winners = await pay_center.get_winners([BigInt(page)], [BigInt(page_size)]);
+      const winners = await pay_center.get_winners(
+        [BigInt(page)],
+        [BigInt(page_size)],
+      );
       setList(winners.rankings || []);
       setTotalItems(Number(winners.total_winners) || 0);
     } catch (error) {
@@ -53,48 +58,52 @@ export default function RanksPage() {
 
   function getCountryName(short_code: string) {
     if (!short_code) {
-      return 'Unknown';
+      return "Unknown";
     }
-    const country = COUNTRY_REGION_LIST.find((item) => item.abbreviation2.toLowerCase() === short_code.toLowerCase());
-    return country?.name || short_code || 'Unknown';
+    const country = COUNTRY_REGION_LIST.find(
+      (item) => item.abbreviation2.toLowerCase() === short_code.toLowerCase(),
+    );
+    return country?.name || short_code || "Unknown";
   }
 
   function getFlagEmoji(short_code: string) {
-    if (!short_code || short_code.toUpperCase() === 'UNKNOWN') return '🏳️';
+    if (!short_code || short_code.toUpperCase() === "UNKNOWN") return "🏳️";
     const code = short_code.substring(0, 2).toUpperCase();
     const codePoints = code
-      .split('')
-      .map(char => 127397 + char.charCodeAt(0));
+      .split("")
+      .map((char) => 127397 + char.charCodeAt(0));
     return String.fromCodePoint(...codePoints);
   }
 
   function getCountryFlagImg(short_code: string) {
-    if (!short_code || short_code.toUpperCase() === 'UNKNOWN') return null;
+    if (!short_code || short_code.toUpperCase() === "UNKNOWN") return null;
     const code = short_code.substring(0, 2).toLowerCase();
     return `https://flagcdn.com/w40/${code}.png`;
   }
 
   function formatUserName(user_name: string) {
     if (!user_name) {
-      return '-';
+      return "-";
     }
-    return user_name.length > 10 ? user_name.slice(0, 10) + '...' : user_name;
+    return user_name.length > 10 ? user_name.slice(0, 10) + "..." : user_name;
   }
 
   const handleUserClick = (winner: any) => {
     if (!winner.user_info) return;
-    
+
     const profileInfo: UserProfileInfo = {
-      avatarUrl: getAvatar(winner.user_info.logo || '01'),
+      avatarUrl: getAvatar(winner.user_info.logo || "01"),
       username: formatUserName(winner.user_info.user_name),
       isVerified: true,
       hasStake: true,
-      lastActive: '',
-      bio: '',
+      lastActive: "",
+      bio: "",
       location: `${getFlagEmoji(winner.user_info.country?.[0])} ${getCountryName(winner.user_info.country?.[0])}`,
-      joinedDate: winner.user_info.create_time ? `Joined ${new Date(Number(winner.user_info.create_time / 1000000n)).toLocaleDateString()}` : 'N/A'
+      joinedDate: winner.user_info.create_time
+        ? `Joined ${new Date(Number(winner.user_info.create_time / 1000000n)).toLocaleDateString()}`
+        : "N/A",
     };
-    
+
     setSelectedUser(profileInfo);
     setIsModalOpen(true);
   };
@@ -111,11 +120,13 @@ export default function RanksPage() {
     if (list.length > 0 && !list[0].user_info) {
       list.forEach(async (winner: any, index: number) => {
         try {
-          const user_info = await user.query_user_by_principal_id(winner.principal_id);
+          const user_info = await user.query_user_by_principal_id(
+            winner.principal_id,
+          );
           if (list[index].user_info) {
             return;
           }
-          setList(prevList => {
+          setList((prevList) => {
             const newList = [...prevList];
             if (newList[index]) {
               newList[index] = { ...newList[index], user_info: user_info[0] };
@@ -123,25 +134,30 @@ export default function RanksPage() {
             return newList;
           });
         } catch (error) {
-          console.error(`Failed to fetch user info for ${winner.principal_id}:`, error);
+          console.error(
+            `Failed to fetch user info for ${winner.principal_id}:`,
+            error,
+          );
         }
       });
     }
   }, [list]);
 
   return (
-    <div className="w-full max-w-[1024px] mx-auto px-4 py-3 pb-4 fade-in-up">
+    <div className="w-full max-w-[1024px] mx-auto px-4 pt-4 pb-4 fade-in-up">
       <div className="mb-4">
-        <h1 className="text-[16px] font-bold text-black mb-4 text-left">Winning Ranks</h1>
+        <h1 className="text-[16px] font-bold text-black mb-3 text-left">
+          Winning Ranks
+        </h1>
         <div className="flex items-center gap-2">
-          {['Bonus', 'WLT', 'Gcoin'].map(tab => (
+          {["Bonus", "WLT", "Gcoin"].map((tab) => (
             <button
               key={tab}
               onClick={() => setSubTab(tab)}
               className={`w-[80px] h-[28px] rounded-2xl text-sm font-medium transition-colors flex items-center justify-center ${
                 subTab === tab
-                  ? 'bg-black text-white'
-                  : 'bg-black/5 text-black/60 hover:text-black hover:bg-black/10'
+                  ? "bg-black text-white"
+                  : "bg-black/5 text-black/60 hover:text-black hover:bg-black/10"
               }`}
             >
               {tab}
@@ -155,18 +171,24 @@ export default function RanksPage() {
           <table className="w-full text-left border-collapse">
             <thead className="bg-[#e5e7eb] border-none text-[12px] md:text-[14px] font-medium text-black/40">
               <tr>
-                <th className="px-2 md:px-4 py-3 md:py-4 w-10 md:w-16 text-center">#</th>
+                <th className="px-2 md:px-4 py-3 md:py-4 w-10 md:w-16 text-center">
+                  #
+                </th>
                 <th className="px-2 md:px-4 py-3 md:py-4">Player</th>
                 <th className="px-4 py-4 hidden md:table-cell">Country</th>
                 <th className="px-4 py-4 hidden md:table-cell">Total Plays</th>
-                <th className="px-2 md:px-4 py-3 md:py-4 text-right pr-3 md:pr-6 whitespace-nowrap">Winnings</th>
+                <th className="px-2 md:px-4 py-3 md:py-4 text-right pr-3 md:pr-6 whitespace-nowrap">
+                  Winnings
+                </th>
               </tr>
             </thead>
             <tbody className="divide-y divide-black/5 bg-transparent text-[14px] md:text-[16px]">
               {loading ? (
                 [...Array(10)].map((_, index) => (
                   <tr key={index} className="animate-pulse bg-transparent">
-                    <td className="px-2 md:px-4 py-3 md:py-4 text-center"><div className="h-10 bg-black/10 rounded w-8 mx-auto"></div></td>
+                    <td className="px-2 md:px-4 py-3 md:py-4 text-center">
+                      <div className="h-10 bg-black/10 rounded w-8 mx-auto"></div>
+                    </td>
                     <td className="px-2 md:px-4 py-3 md:py-4">
                       <div className="flex items-center space-x-2 md:space-x-4">
                         <div className="w-10 h-10 md:w-12 md:h-12 bg-black/10 rounded-full shrink-0"></div>
@@ -176,8 +198,12 @@ export default function RanksPage() {
                         </div>
                       </div>
                     </td>
-                    <td className="px-4 py-4 hidden md:table-cell"><div className="h-10 bg-black/10 rounded w-24"></div></td>
-                    <td className="px-4 py-4 hidden md:table-cell"><div className="h-10 bg-black/10 rounded w-16"></div></td>
+                    <td className="px-4 py-4 hidden md:table-cell">
+                      <div className="h-10 bg-black/10 rounded w-24"></div>
+                    </td>
+                    <td className="px-4 py-4 hidden md:table-cell">
+                      <div className="h-10 bg-black/10 rounded w-16"></div>
+                    </td>
                     <td className="px-2 md:px-4 py-3 md:py-4 text-right pr-3 md:pr-6">
                       <div className="flex flex-col gap-1.5 items-end justify-center">
                         <div className="h-4 bg-black/10 rounded w-16 md:w-20"></div>
@@ -188,36 +214,49 @@ export default function RanksPage() {
                 ))
               ) : list.length > 0 ? (
                 list.map((winner, index) => (
-                  <tr key={winner.id || index} className="hover:bg-black/5 transition-colors">
+                  <tr
+                    key={winner.id || index}
+                    className="hover:bg-black/5 transition-colors"
+                  >
                     <td className="px-2 md:px-4 py-3 md:py-4 text-black/60 font-medium text-center">
-                      {(index + 1) + (currentPage - 1) * itemsPerPage}
+                      {index + 1 + (currentPage - 1) * itemsPerPage}
                     </td>
                     <td className="px-2 md:px-4 py-3 md:py-4">
-                      <div 
+                      <div
                         className="flex items-center space-x-2 md:space-x-4 cursor-pointer group"
                         onClick={() => handleUserClick(winner)}
                       >
-                        <img 
-                          src={getAvatar(winner.user_info?.logo || '01')} 
-                          alt="avatar" 
-                          className="w-10 h-10 md:w-12 md:h-12 rounded-full border-2 border-black transition-colors shrink-0 object-cover" 
+                        <img
+                          src={getAvatar(winner.user_info?.logo || "01")}
+                          alt="avatar"
+                          className="w-10 h-10 md:w-12 md:h-12 rounded-full border-2 border-black transition-colors shrink-0 object-cover"
                         />
                         <div className="flex flex-col text-left">
                           <span className="text-black text-[15px] md:text-[16px] font-semibold group-hover:text-purple-600 transition-colors leading-tight">
                             {formatUserName(winner.user_info?.user_name)}
                           </span>
                           <span className="text-[12px] md:text-[14px] text-black/40 mt-1 leading-tight md:hidden flex items-center gap-1">
-                            {getCountryFlagImg(winner.user_info?.country?.[0]) ? (
-                              <img 
-                                src={getCountryFlagImg(winner.user_info?.country?.[0])!} 
+                            {getCountryFlagImg(
+                              winner.user_info?.country?.[0],
+                            ) ? (
+                              <img
+                                src={
+                                  getCountryFlagImg(
+                                    winner.user_info?.country?.[0],
+                                  )!
+                                }
                                 alt=""
                                 className="w-[16px] h-[10px] object-cover rounded-sm inline-block shadow-sm"
                                 referrerPolicy="no-referrer"
                               />
                             ) : (
-                              <span>{getFlagEmoji(winner.user_info?.country?.[0])}</span>
+                              <span>
+                                {getFlagEmoji(winner.user_info?.country?.[0])}
+                              </span>
                             )}
-                            <span className="truncate max-w-[80px] xs:max-w-[110px] sm:max-w-none">{getCountryName(winner.user_info?.country?.[0])}</span>
+                            <span className="truncate max-w-[80px] xs:max-w-[110px] sm:max-w-none">
+                              {getCountryName(winner.user_info?.country?.[0])}
+                            </span>
                           </span>
                         </div>
                       </div>
@@ -225,28 +264,37 @@ export default function RanksPage() {
                     <td className="px-4 py-4 hidden md:table-cell text-black selection:bg-transparent">
                       <div className="flex items-center gap-2">
                         {getCountryFlagImg(winner.user_info?.country?.[0]) ? (
-                          <img 
-                            src={getCountryFlagImg(winner.user_info?.country?.[0])!} 
+                          <img
+                            src={
+                              getCountryFlagImg(winner.user_info?.country?.[0])!
+                            }
                             alt=""
                             className="w-[20px] h-[14px] object-cover rounded-sm inline-block shadow-sm"
                             referrerPolicy="no-referrer"
                           />
                         ) : (
-                          <span className="text-[18px] leading-none">{getFlagEmoji(winner.user_info?.country?.[0])}</span>
+                          <span className="text-[18px] leading-none">
+                            {getFlagEmoji(winner.user_info?.country?.[0])}
+                          </span>
                         )}
-                        <span>{getCountryName(winner.user_info?.country?.[0])}</span>
+                        <span>
+                          {getCountryName(winner.user_info?.country?.[0])}
+                        </span>
                       </div>
                     </td>
                     <td className="px-4 py-4 hidden md:table-cell text-black">
-                      {winner?.playtimes?.toString() || '0'}
+                      {winner?.playtimes?.toString() || "0"}
                     </td>
                     <td className="px-2 md:px-4 py-3 md:py-4 text-right pr-3 md:pr-6 whitespace-nowrap">
                       <div className="flex flex-col items-end justify-center whitespace-nowrap">
                         <span className="text-black text-[15px] md:text-[16px] font-semibold leading-tight whitespace-nowrap">
-                          {Number(Number(winner?.total_win_amount).toFixed(2)).toLocaleString()}&nbsp;{subTab === 'Bonus' ? 'USD' : subTab}
+                          {Number(
+                            Number(winner?.total_win_amount).toFixed(2),
+                          ).toLocaleString()}
+                          &nbsp;{subTab === "Bonus" ? "USD" : subTab}
                         </span>
                         <span className="text-[12px] md:text-[14px] text-zinc-400 mt-1 leading-tight md:hidden whitespace-nowrap">
-                          {winner?.playtimes?.toString() || '0'}P
+                          {winner?.playtimes?.toString() || "0"}P
                         </span>
                       </div>
                     </td>
@@ -254,7 +302,10 @@ export default function RanksPage() {
                 ))
               ) : (
                 <tr>
-                  <td colSpan={5} className="px-4 py-4 text-center text-black/40">
+                  <td
+                    colSpan={5}
+                    className="px-4 py-4 text-center text-black/40"
+                  >
                     No data
                   </td>
                 </tr>
@@ -269,21 +320,21 @@ export default function RanksPage() {
             <div className="text-sm text-black/40">
               Showing {totalItems} players
             </div>
-            
+
             {totalPages > 1 && (
               <div className="flex items-center gap-1 bg-transparent">
                 <button
                   onClick={goToPreviousPage}
                   disabled={!canGoToPreviousPage}
                   className={`w-8 h-8 md:w-9 md:h-9 rounded-lg flex items-center justify-center transition-colors ${
-                    !canGoToPreviousPage 
-                      ? "text-black/20 cursor-not-allowed bg-transparent" 
+                    !canGoToPreviousPage
+                      ? "text-black/20 cursor-not-allowed bg-transparent"
                       : "text-black/60 hover:bg-black/5 hover:text-black bg-transparent"
                   }`}
                 >
                   <ChevronLeft size={16} />
                 </button>
-                
+
                 <div className="flex items-center gap-1">
                   {pageNumbers.map((pageNumber, index) => (
                     <React.Fragment key={index}>
@@ -306,13 +357,13 @@ export default function RanksPage() {
                     </React.Fragment>
                   ))}
                 </div>
-                
+
                 <button
                   onClick={goToNextPage}
                   disabled={!canGoToNextPage}
                   className={`w-8 h-8 md:w-9 md:h-9 rounded-lg flex items-center justify-center transition-colors ${
-                    !canGoToNextPage 
-                      ? "text-black/20 cursor-not-allowed bg-transparent" 
+                    !canGoToNextPage
+                      ? "text-black/20 cursor-not-allowed bg-transparent"
                       : "text-black/60 hover:bg-black/5 hover:text-black bg-transparent"
                   }`}
                 >

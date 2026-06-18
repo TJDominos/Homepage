@@ -10,7 +10,11 @@ import {
 } from "lucide-react";
 import "./Footer.scss";
 import { useWltPrice } from "../hooks/useWltPrice";
-import { formatSmallPrice, formatChange, formatCurrencyCompact } from "../utils/format";
+import {
+  formatSmallPrice,
+  formatChange,
+  formatCurrencyCompact,
+} from "../utils/format";
 
 const Footer: React.FC = () => {
   const { stats } = useWltPrice();
@@ -28,7 +32,16 @@ const Footer: React.FC = () => {
             <p>
               Decentralized Blockchain Games
               <br />
-              Built on <a href="https://learn.internetcomputer.org/hc/en-us/articles/34209486239252-Chain-Key-Cryptography" target="_blank" rel="noreferrer" className="underline hover:text-purple-600 transition-colors">on-chain randomness</a> and public blockchain ledger
+              Built on{" "}
+              <a
+                href="https://learn.internetcomputer.org/hc/en-us/articles/34209486239252-Chain-Key-Cryptography"
+                target="_blank"
+                rel="noreferrer"
+                className="underline hover:text-purple-600 transition-colors"
+              >
+                on-chain randomness
+              </a>{" "}
+              and public blockchain ledger
             </p>
           </div>
 
@@ -172,11 +185,16 @@ const Footer: React.FC = () => {
         </div>
 
         <div className="home-footer-bottom flex flex-wrap items-center justify-center py-6 mt-8 mx-0 md:mx-0 w-full border-t border-black/10 gap-x-2 gap-y-1">
-          <p style={{ margin: '0' }}>© 2026 Randseed. All rights reserved.</p>
+          <p style={{ margin: "0" }}>© 2026 Randseed. All rights reserved.</p>
           <div className="flex items-center text-[14px] text-black/60 md:ml-2">
-            <span style={{ marginRight: '6px' }}>Powered by</span>
-            <div className="flex items-center" style={{ gap: '8px' }}>
-              <a href="https://internetcomputer.org" target="_blank" rel="noreferrer" className="flex items-center">
+            <span style={{ marginRight: "6px" }}>Powered by</span>
+            <div className="flex items-center" style={{ gap: "8px" }}>
+              <a
+                href="https://internetcomputer.org"
+                target="_blank"
+                rel="noreferrer"
+                className="flex items-center"
+              >
                 <img
                   src="/internet-computer-icp-logo.svg"
                   alt="ICP"
@@ -186,7 +204,12 @@ const Footer: React.FC = () => {
                   }}
                 />
               </a>
-              <a href="https://solana.com" target="_blank" rel="noreferrer" className="flex items-center">
+              <a
+                href="https://solana.com"
+                target="_blank"
+                rel="noreferrer"
+                className="flex items-center"
+              >
                 <img
                   src="/solana-sol-logo-horizontal.svg"
                   alt="Solana"
@@ -196,7 +219,12 @@ const Footer: React.FC = () => {
                   }}
                 />
               </a>
-              <a href="https://ethereum.org" target="_blank" rel="noreferrer" className="flex items-center">
+              <a
+                href="https://ethereum.org"
+                target="_blank"
+                rel="noreferrer"
+                className="flex items-center"
+              >
                 <img
                   src="/ethereum-eth-logo-full-horizontal.svg"
                   alt="EVM"

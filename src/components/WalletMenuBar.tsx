@@ -188,7 +188,7 @@ export const WalletMenuBar: React.FC<WalletMenuBarProps> = ({
   };
 
   return (
-    <div className="w-full flex justify-between items-center bg-white rounded-[24px] overflow-hidden p-4 sm:p-5 mb-6 shadow-sm border border-black/5 gap-2">
+    <div className="w-full flex justify-between items-center bg-white rounded-[24px] overflow-hidden p-4 mb-6 shadow-sm border border-black/5 gap-2">
       {tabs.map((tab) => {
         const isActive = activeTab === tab.id;
         return (

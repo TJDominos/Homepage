@@ -2,7 +2,11 @@ import { BadgeCheck, Share2 } from "lucide-react";
 import React from "react";
 import "./WinnerPopover.css";
 
-export default function WinnerPopoverContent({ userInfo, getAvatar, getCountry }: any) {
+export default function WinnerPopoverContent({
+  userInfo,
+  getAvatar,
+  getCountry,
+}: any) {
   if (!userInfo) return null;
 
   return (
@@ -10,17 +14,21 @@ export default function WinnerPopoverContent({ userInfo, getAvatar, getCountry }
       <div className="flex items-start justify-between">
         <div className="flex items-center space-x-4">
           <div className="relative">
-            <img 
-              src={getAvatar(userInfo.logo || '01')} 
-              alt="avatar" 
+            <img
+              src={getAvatar(userInfo.logo || "01")}
+              alt="avatar"
               className="w-full h-10 rounded-full border-16px border-[#5F40A1]"
             />
           </div>
           <div>
             <div className="flex items-center gap-4">
-              <h3 className="text-sm font-bold text-black">{userInfo.user_name || "Unknown"}</h3>
+              <h3 className="text-sm font-bold text-black">
+                {userInfo.user_name || "Unknown"}
+              </h3>
             </div>
-            <p className="text-sm text-black/60">{getCountry(userInfo.country?.[0] || "")}</p>
+            <p className="text-sm text-black/60">
+              {getCountry(userInfo.country?.[0] || "")}
+            </p>
           </div>
         </div>
         <button className="text-black/40 hover:text-black/60 transition-colors">
@@ -32,7 +40,11 @@ export default function WinnerPopoverContent({ userInfo, getAvatar, getCountry }
         <div className="flex justify-between text-sm">
           <span className="text-black/60">Member Since:</span>
           <span className="font-medium text-black">
-            {userInfo.create_time ? new Date(Number(userInfo.create_time / 1000000n)).toLocaleDateString() : 'N/A'}
+            {userInfo.create_time
+              ? new Date(
+                  Number(userInfo.create_time / 1000000n),
+                ).toLocaleDateString()
+              : "N/A"}
           </span>
         </div>
       </div>
