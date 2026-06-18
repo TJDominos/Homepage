@@ -73,237 +73,177 @@ export function MoneyPage({
         className={`money-content-wrapper max-w-[1024px] mx-auto px-4 w-full pb-4 z-20 relative pt-4`}
       >
         {/* User Info and Balances Row */}
-        {isDesktop ? (
-          <div className="w-full flex flex-row items-center pb-6">
-            {/* User Info (Left) */}
+        <div className="w-full flex flex-col sm:flex-row sm:items-center pb-6">
+          {/* User Info (Left) */}
+          <div className="w-full sm:w-auto flex justify-between items-center pb-6 sm:pb-0">
             <div
               className="flex flex-row items-center gap-3 shrink-0 cursor-pointer"
               onClick={userAccount ? onAccountClick : onSignInClick}
             >
-              <div className="relative w-[53px] h-[53px] rounded-full overflow-hidden shrink-0 bg-black/5 flex items-center justify-center text-slate-500">
-                <img
-                  src={getSysAvatar(profile?.avatarCode || "01")}
-                  alt="avatar"
-                  className="w-full h-full object-cover"
-                  onError={(e) => {
-                    (e.target as HTMLImageElement).style.display = "none";
-                  }}
-                />
-              </div>
-              {userAccount && (
-                <div className="flex flex-col justify-center">
-                  <span className="font-[600] text-[16px] text-slate-800 leading-tight">
-                    {profile?.username || userAccount.substring(0, 6)}
-                  </span>
-                  <button
-                    className="flex items-center mt-1"
-                    onClick={onAccountClick}
-                  >
-                    <Hexagon
-                      className="w-4 h-4 text-slate-600"
-                      strokeWidth={1.5}
-                      style={{ fill: "transparent" }}
+              <div className="relative w-[53px] h-[53px] mr-0 sm:mr-0 rounded-full shrink-0 flex items-center justify-center">
+                {!userAccount ? (
+                  <div className="w-full h-full rounded-full border-2 border-[#111] bg-[#f4f4f5] flex items-center justify-center overflow-hidden">
+                    <User size={26} className="text-slate-400" />
+                  </div>
+                ) : (
+                  <>
+                    <img
+                      src={getSysAvatar(profile?.avatarCode || "01")}
+                      alt="avatar"
+                      className="w-full h-full object-cover rounded-full border-2 border-[#111]"
+                      onError={(e) => {
+                        (e.target as HTMLImageElement).style.display = "none";
+                      }}
                     />
-                  </button>
-                </div>
-              )}
-            </div>
-
-            {/* Divider */}
-            <div className="w-[1px] h-12 bg-black/10 mx-8 shrink-0"></div>
-
-            {/* Balances (Right) */}
-            <div className="flex flex-row items-center justify-center gap-12 flex-1 overflow-x-auto hide-scrollbar">
-              {/* Balance */}
-              <div
-                className="flex flex-col items-center shrink-0 cursor-pointer"
-                onClick={() => handleModalOpen("balance")}
-              >
-                <div className="flex items-center gap-1 mb-1.5">
-                  <span className="text-[18px] font-bold text-[#111] font-mono leading-none tracking-tight">
-                    {userAccount ? "≈ $0.00" : "≈ $0.00"}
-                  </span>
-                  <ChevronRight
-                    className="w-[14px] h-[14px] text-slate-800 shrink-0"
-                    strokeWidth={2.5}
-                  />
-                </div>
-                <div className="flex items-center text-slate-600 font-normal text-[14px]">
-                  <span>Balance</span>
-                </div>
-              </div>
-
-              {/* Gcoin */}
-              <div
-                className="flex flex-col items-center shrink-0 cursor-pointer"
-                onClick={() => handleModalOpen("deposit")}
-              >
-                <div className="flex items-center gap-1 mb-1.5">
-                  <span className="text-[18px] font-bold text-[#111] font-mono leading-none tracking-tight">
-                    {userAccount ? "123,343.00" : "0.00"}
-                  </span>
-                  <ChevronRight
-                    className="w-[14px] h-[14px] text-slate-800 shrink-0"
-                    strokeWidth={2.5}
-                  />
-                </div>
-                <div className="flex items-center gap-1.5 text-slate-600 font-normal text-[14px]">
-                  <span>Gcoin</span>
-                  <RefreshCw className="w-[14px] h-[14px] text-purple-400 shrink-0" />
-                </div>
-              </div>
-
-              {/* Bonus */}
-              <div
-                className="flex flex-col items-center shrink-0 cursor-pointer"
-                onClick={() => handleModalOpen("bonus")}
-              >
-                <div className="flex items-center gap-1 mb-1.5">
-                  <span className="text-[18px] font-bold text-[#111] font-mono leading-none tracking-tight">
-                    {userAccount ? "12" : "0.00"}
-                  </span>
-                  <ChevronRight
-                    className="w-[14px] h-[14px] text-slate-800 shrink-0"
-                    strokeWidth={2.5}
-                  />
-                </div>
-                <div className="flex items-center text-slate-600 font-normal text-[14px]">
-                  <span>Bonus</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        ) : (
-          <div className="flex flex-col pb-6">
-            {/* Mobile Header Row */}
-            <div className="w-full flex justify-between items-center pb-6">
-              <div
-                className="flex items-center flex-1 overflow-hidden"
-                onClick={userAccount ? onAccountClick : onSignInClick}
-              >
-                <div className="relative w-[53px] h-[53px] mr-3 rounded-full shrink-0 flex items-center justify-center">
-                  <img
-                    src={getSysAvatar(profile?.avatarCode || "01")}
-                    alt="avatar"
-                    className="w-full h-full object-cover rounded-full border-2 border-[#111]"
-                    onError={(e) => {
-                      (e.target as HTMLImageElement).style.display = "none";
-                    }}
-                  />
-                  {userAccount && (
                     <div className="absolute -bottom-1 -right-1 w-[20px] h-[20px] bg-[#FFC107] border-[2px] border-white rounded-full flex items-center justify-center shadow-sm">
                       <Check className="w-3 h-3 text-white" strokeWidth={3} />
                     </div>
-                  )}
-                </div>
-                {userAccount && (
-                  <div className="flex items-center gap-2">
-                    <span className="font-bold text-[20px] text-[#111] leading-tight tracking-tight">
-                      {profile?.username || userAccount.substring(0, 6)}
-                    </span>
-                    <div className="flex items-center bg-gradient-to-r from-[#9370DB]/30 to-transparent pr-3 rounded-r-md">
-                      <div
-                        className="w-[20px] h-[20px] bg-[#9370DB] text-white flex items-center justify-center text-[11px] font-bold shadow-sm"
-                        style={{
-                          clipPath:
-                            "polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)",
-                        }}
-                      >
-                        S
-                      </div>
-                      <span className="text-[13px] font-medium text-[#7C3AED] ml-1">
-                        Staker
-                      </span>
-                    </div>
-                  </div>
+                  </>
                 )}
               </div>
+
               {userAccount && (
-                <button
-                  className="flex items-center justify-center shrink-0 bg-transparent rounded-full ml-2"
-                  onClick={onAccountClick}
-                >
-                  <svg
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="#111"
-                    strokeWidth="2.5"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  >
-                    <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" />
-                    <circle cx="12" cy="12" r="3" />
-                  </svg>
-                </button>
+                <div className="flex flex-col sm:justify-center">
+                  <div className="flex items-center gap-2">
+                    <span className="font-bold sm:font-[600] text-[20px] sm:text-[16px] text-slate-800 leading-tight">
+                      {profile?.username || userAccount.substring(0, 6)}
+                    </span>
+                    {!isDesktop && (
+                      <div className="flex items-center bg-gradient-to-r from-[#9370DB]/30 to-transparent pr-3 rounded-r-md">
+                        <div
+                          className="w-[20px] h-[20px] bg-[#9370DB] text-white flex items-center justify-center text-[11px] font-bold shadow-sm"
+                          style={{
+                            clipPath:
+                              "polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)",
+                          }}
+                        >
+                          S
+                        </div>
+                        <span className="text-[13px] font-medium text-[#7C3AED] ml-1">
+                          Staker
+                        </span>
+                      </div>
+                    )}
+                  </div>
+                  {isDesktop && (
+                    <button
+                      className="flex items-center mt-1"
+                      onClick={onAccountClick}
+                    >
+                      <Hexagon
+                        className="w-4 h-4 text-slate-600"
+                        strokeWidth={1.5}
+                        style={{ fill: "transparent" }}
+                      />
+                    </button>
+                  )}
+                </div>
               )}
             </div>
 
-            {/* Mobile Balances Row */}
-            <div className="flex items-center justify-between px-2">
-              {/* Balance */}
-              <div
-                className="flex flex-col items-center cursor-pointer"
-                onClick={() => handleModalOpen("balance")}
+            {/* Mobile Settings Icon */}
+            {!isDesktop && userAccount && (
+              <button
+                className="flex items-center justify-center shrink-0 bg-transparent rounded-full ml-2"
+                onClick={onAccountClick}
               >
-                <div className="flex items-center gap-1 mb-1">
-                  <span className="text-[18px] font-bold text-[#111] font-mono leading-none tracking-tight">
-                    {userAccount ? "≈ $0.00" : "≈ $0.00"}
-                  </span>
-                  <ChevronRight
-                    className="w-[14px] h-[14px] text-slate-800"
-                    strokeWidth={2.5}
-                  />
-                </div>
-                <span className="text-[14px] text-slate-600 font-normal">
-                  Balance
-                </span>
-              </div>
+                <svg
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="#111"
+                  strokeWidth="2.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" />
+                  <circle cx="12" cy="12" r="3" />
+                </svg>
+              </button>
+            )}
+          </div>
 
-              {/* Gcoin */}
-              <div
-                className="flex flex-col items-center cursor-pointer"
-                onClick={() => handleModalOpen("deposit")}
-              >
-                <div className="flex items-center gap-1 mb-1">
-                  <span className="text-[18px] font-bold text-[#111] font-mono leading-none tracking-tight truncate max-w-[100px]">
-                    {userAccount ? "0.00" : "0.00"}
-                  </span>
-                  <ChevronRight
-                    className="w-[14px] h-[14px] text-slate-800"
-                    strokeWidth={2.5}
-                  />
-                </div>
-                <div className="flex items-center gap-1">
-                  <span className="text-[14px] text-slate-600 font-normal">
-                    Gcoin
-                  </span>
-                  <RefreshCw className="w-3 h-3 text-[#A855F7]" />
-                </div>
-              </div>
+          {/* Divider */}
+          <div className="hidden sm:block w-[1px] h-12 bg-black/10 mx-8 shrink-0"></div>
 
-              {/* Bonus */}
-              <div
-                className="flex flex-col items-center cursor-pointer"
-                onClick={() => handleModalOpen("bonus")}
-              >
-                <div className="flex items-center gap-1 mb-1">
-                  <span className="text-[18px] font-bold text-[#111] font-mono leading-none tracking-tight">
-                    {userAccount ? "0.00" : "0.00"}
-                  </span>
-                  <ChevronRight
-                    className="w-[14px] h-[14px] text-slate-800"
-                    strokeWidth={2.5}
-                  />
-                </div>
-                <span className="text-[14px] text-slate-600 font-normal">
-                  Bonus
+          {/* Balances (Right) */}
+          <div className="flex flex-row items-center justify-between sm:justify-center gap-2 sm:gap-12 flex-1 overflow-x-auto hide-scrollbar px-2 sm:px-0">
+            {/* Balance */}
+            <div
+              className="flex flex-col items-center shrink-0 cursor-pointer"
+              onClick={() => handleModalOpen("balance")}
+            >
+              <div className="flex items-center gap-1 mb-1 sm:mb-1.5">
+                <span className="text-[18px] font-bold text-[#111] font-mono leading-none tracking-tight">
+                  {userAccount ? "≈ $0.00" : "≈ $0.00"}
                 </span>
+                <ChevronRight
+                  className="w-[14px] h-[14px] text-slate-800 shrink-0"
+                  strokeWidth={2.5}
+                />
+              </div>
+              <div className="flex items-center text-slate-600 font-normal text-[14px]">
+                <span>Balance</span>
+              </div>
+            </div>
+
+            {/* Gcoin */}
+            <div
+              className="flex flex-col items-center shrink-0 cursor-pointer"
+              onClick={() => handleModalOpen("deposit")}
+            >
+              <div className="flex items-center gap-1 mb-1 sm:mb-1.5">
+                <span className="text-[18px] font-bold text-[#111] font-mono leading-none tracking-tight">
+                  {userAccount ? "123,343.00" : "0.00"}
+                </span>
+                <ChevronRight
+                  className="w-[14px] h-[14px] text-slate-800 shrink-0"
+                  strokeWidth={2.5}
+                />
+              </div>
+              <div className="flex items-center gap-1 sm:gap-1.5 text-slate-600 font-normal text-[14px]">
+                <span>Gcoin</span>
+                <RefreshCw className="w-[14px] h-[14px] sm:w-[14px] sm:h-[14px] text-purple-400 shrink-0" />
+              </div>
+            </div>
+
+            {/* Bonus */}
+            <div
+              className="flex flex-col items-center shrink-0 cursor-pointer"
+              onClick={() => handleModalOpen("bonus")}
+            >
+              <div className="flex items-center gap-1 mb-1 sm:mb-1.5">
+                <span className="text-[18px] font-bold text-[#111] font-mono leading-none tracking-tight">
+                  {userAccount ? "12" : "0.00"}
+                </span>
+                <ChevronRight
+                  className="w-[14px] h-[14px] text-slate-800 shrink-0"
+                  strokeWidth={2.5}
+                />
+              </div>
+              <div className="flex items-center text-slate-600 font-normal text-[14px]">
+                <span>Bonus</span>
+              </div>
+            </div>
+
+            {/* WLT Amount */}
+            <div className="flex flex-col items-center shrink-0 cursor-pointer">
+              <div className="flex items-center gap-1 mb-1 sm:mb-1.5">
+                <span className="text-[18px] font-bold text-[#111] font-mono leading-none tracking-tight">
+                  {userAccount ? "0.00" : "0.00"}
+                </span>
+                <ChevronRight
+                  className="w-[14px] h-[14px] text-slate-800 shrink-0"
+                  strokeWidth={2.5}
+                />
+              </div>
+              <div className="flex items-center text-slate-600 font-normal text-[14px]">
+                <span>WLT</span>
               </div>
             </div>
           </div>
-        )}
+        </div>
 
         {/* Primary Wallet Actions */}
         <WalletMenuBar
