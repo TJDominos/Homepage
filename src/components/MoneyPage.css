@@ -1,11 +1,5 @@
 .money-page-container {
   font-family: var(--app-font-family);
-  background-color: #ffffff;
-  background-image: 
-    linear-gradient(177deg, rgba(255, 255, 255, 0.00) 7.99%, #fff 100%),
-    linear-gradient(272deg, #D5D6F7 1.78%, #E1E2F9 46.59%, #D3C3FB 99.68%);
-  background-size: 100% 314px, 100% 314px;
-  background-repeat: no-repeat;
   min-height: calc(min(100dvh, 100vh) - 60px);
 }
 
