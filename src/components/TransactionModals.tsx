@@ -33,13 +33,10 @@ export function TransactionModals({
 
   return (
     <div className="fixed inset-0 z-[100] flex items-end sm:items-center justify-center">
-      <div
-        className="absolute inset-0 bg-black/60 backdrop-blur-sm"
-        onClick={onClose}
-      ></div>
+      <div className="absolute inset-0 bg-black/30 backdrop-blur-md" onClick={onClose}></div>
 
       <div
-        className={`relative w-full max-w-[500px] bg-[#EAEAEA] rounded-t-2xl sm:rounded-2xl overflow-hidden flex flex-col pointer-events-auto transform transition-transform ${isDesktop ? "h-auto max-h-[90vh]" : "mt-auto pb-4"}`}
+        className={`relative w-full ${activeModal === "record" ? "max-w-[800px]" : "max-w-[500px]"} bg-[#EAEAEA] rounded-t-2xl sm:rounded-2xl overflow-hidden flex flex-col pointer-events-auto transform transition-transform ${isDesktop ? "h-auto max-h-[90vh]" : "mt-auto pb-4 h-[85vh] sm:h-auto"}`}
       >
         {/* Modals Header Shared (Optional back button based on step) */}
         <div className="relative pt-4 pb-2 px-4 flex items-center justify-between">
@@ -425,13 +422,7 @@ export function TransactionModals({
             </div>
           )}
 
-          {/* RECORD */}
-          {activeModal === "record" && (
-            <div className="flex flex-col items-center justify-center flex-1 py-8 text-black/50 text-[15px] font-medium">
-              <Activity size={32} className="mb-4 opacity-50" />
-              No records found
-            </div>
-          )}
+          {/* RECORD - removed as it's now in MoneyPage */}
         </div>
       </div>
     </div>

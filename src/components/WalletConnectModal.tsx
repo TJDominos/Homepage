@@ -9,7 +9,7 @@ import {
   Mail,
 } from "lucide-react";
 
-interface SignInModalProps {
+interface WalletConnectModalProps {
   isOpen: boolean;
   onClose: (verifiedId?: string) => void;
 }
@@ -112,7 +112,7 @@ const getWalletIcon = (w: any) => {
 
 type Step = "SELECT_WALLET" | "CONNECTING" | "PENDING" | "SUCCESS";
 
-export function SignInModal({ isOpen, onClose }: SignInModalProps) {
+export function WalletConnectModal({ isOpen, onClose }: WalletConnectModalProps) {
   const [wallets, setWallets] = useState<
     {
       id: string;
@@ -330,7 +330,7 @@ export function SignInModal({ isOpen, onClose }: SignInModalProps) {
     <AnimatePresence>
       {isOpen && (
         <div
-          className="fixed inset-0 z-[9999] flex items-end sm:items-center justify-center pointer-events-auto bg-black/60 backdrop-blur-sm px-4 pb-4 sm:pb-0"
+          className="fixed inset-0 z-[9999] flex items-end sm:items-center justify-center pointer-events-auto bg-black/30 backdrop-blur-md px-4 pb-4 sm:pb-0"
           onClick={() => {
             if (step === "SELECT_WALLET") {
               onClose();

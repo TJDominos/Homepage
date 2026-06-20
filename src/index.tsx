@@ -13,11 +13,12 @@ import BannerSection from "./components/BannerSection";
 import BottomNav from "./components/BottomNav";
 import TabSwitch from "./components/TabSwitch";
 import Footer from "./components/Footer";
-import { SignInModal } from "./components/SignInModal";
+import { WalletConnectModal } from "./components/WalletConnectModal";
 import { AccountInfoModal } from "./components/AccountInfoModal";
-import { RegistrationModal } from "./components/RegistrationModal";
+import { ProfileSettingModal } from "./components/ProfileSettingModal";
 import { MoneyPage } from "./components/MoneyPage";
 import RanksPage from "./components/RanksPage";
+import { UserInfoEdit } from "./components/UserInfoEdit";
 import { WltHeaderPrice } from "./components/WltHeaderPrice";
 import { getRandomSysAvatar, getSysAvatar } from "./utils/avatar";
 import svgPaths from "./imports/svg-401s87trfk";
@@ -41,10 +42,15 @@ function App() {
     | "rank";
   const setActiveTab = (tab: string) => navigate(`/${tab}`);
 
-  const [isSignInModalOpen, setSignInModalOpen] = useState(false);
+  const [isWalletConnectModalOpen, setWalletConnectModalOpen] = useState(false);
   const [isAccountModalOpen, setAccountModalOpen] = useState(false);
-  const [isRegistrationModalOpen, setRegistrationModalOpen] = useState(false);
+  const [isUserInfoModalOpen, setUserInfoModalOpen] = useState(false);
+  const [isProfileSettingModalOpen, setProfileSettingModalOpen] =
+    useState(false);
   const [userAccount, setUserAccount] = useState<string | null>(null);
+  const [pendingUserAccount, setPendingUserAccount] = useState<string | null>(
+    null,
+  );
   const [profile, setProfile] = useState<any>(() => {
     try {
       const saved = localStorage.getItem("user_profile_data");
@@ -93,8 +99,9 @@ function App() {
         <MoneyPage
           isDesktop={isDesktopView}
           userAccount={userAccount}
-          onSignInClick={() => setSignInModalOpen(true)}
+          onSignInClick={() => setWalletConnectModalOpen(true)}
           onAccountClick={() => setAccountModalOpen(true)}
+          onEditProfileClick={() => setUserInfoModalOpen(true)}
           profile={profile}
         />
       );
@@ -245,7 +252,7 @@ function App() {
             ) : (
               <button
                 className="signin-btn"
-                onClick={() => setSignInModalOpen(true)}
+                onClick={() => setWalletConnectModalOpen(true)}
               >
                 <Wallet size={16} /> Sign In
               </button>
@@ -391,21 +398,29 @@ function App() {
         <TabSwitch activePage={activeTab} setActivePage={setActiveTab as any} />
       )}
 
-      <SignInModal
-        isOpen={isSignInModalOpen}
+      <WalletConnectModal
+        isOpen={isWalletConnectModalOpen}
         onClose={(accountId) => {
-          setSignInModalOpen(false);
+          setWalletConnectModalOpen(false);
           if (typeof accountId === "string") {
-            setUserAccount(accountId);
-            setRegistrationModalOpen(true);
+            setPendingUserAccount(accountId);
+            setProfileSettingModalOpen(true);
           }
         }}
       />
 
-      <RegistrationModal
-        isOpen={isRegistrationModalOpen}
-        onClose={() => setRegistrationModalOpen(false)}
-        onSubmit={(data) => setProfile(data)}
+      <ProfileSettingModal
+        isOpen={isProfileSettingModalOpen}
+        onClose={() => {
+          setProfileSettingModalOpen(false);
+          setPendingUserAccount(null);
+        }}
+        onSubmit={(data) => {
+          setProfile(data);
+          setUserAccount(pendingUserAccount);
+          setProfileSettingModalOpen(false);
+        }}
+        userAccount={pendingUserAccount}
       />
 
       {userAccount && (
@@ -414,6 +429,19 @@ function App() {
           onClose={() => setAccountModalOpen(false)}
           userAccount={userAccount}
           profileInfo={profile || undefined}
+        />
+      )}
+
+      {userAccount && (
+        <UserInfoEdit
+          isOpen={isUserInfoModalOpen}
+          onClose={() => setUserInfoModalOpen(false)}
+          onSubmit={(data) => {
+            setProfile(data);
+            localStorage.setItem("user_profile_data", JSON.stringify(data));
+          }}
+          userAccount={userAccount}
+          profile={profile}
         />
       )}
     </div>

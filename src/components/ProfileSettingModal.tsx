@@ -3,19 +3,21 @@ import { motion, AnimatePresence } from "motion/react";
 import { ChevronLeft, User, ChevronDown, X } from "lucide-react";
 import { getSysAvatar } from "../utils/avatar";
 
-interface RegistrationModalProps {
+interface ProfileSettingModalProps {
   isOpen: boolean;
   onClose: () => void;
   onSubmit?: (data: any) => void;
+  userAccount?: string | null;
 }
 
 type Step = "PROFILE" | "VERIFY";
 
-export function RegistrationModal({
+export function ProfileSettingModal({
   isOpen,
   onClose,
   onSubmit,
-}: RegistrationModalProps) {
+  userAccount,
+}: ProfileSettingModalProps) {
   const [step, setStep] = useState<Step>("PROFILE");
   const [name, setName] = useState("");
   const [selectedAvatar, setSelectedAvatar] = useState("");
@@ -156,7 +158,7 @@ export function RegistrationModal({
   return (
     <AnimatePresence>
       {isOpen && (
-        <div className="fixed inset-0 z-[9999] flex items-center justify-center pointer-events-auto bg-black/60 backdrop-blur-sm px-4">
+        <div className="fixed inset-0 z-[9999] flex items-center justify-center pointer-events-auto bg-black/30 backdrop-blur-md px-4">
           <motion.div
             onClick={(e) => e.stopPropagation()}
             initial={{ opacity: 0, y: 50, scale: 0.95 }}
@@ -175,7 +177,7 @@ export function RegistrationModal({
                     <ChevronLeft
                       strokeWidth={2.5}
                       size={20}
-                      className="mr-4 text-black"
+                      className="mr-1 text-black"
                     />
                     <span className="text-[14px] font-medium text-black">
                       Profile Setting
@@ -184,14 +186,14 @@ export function RegistrationModal({
                 </div>
 
                 <div className="px-4 pb-4">
-                  <div className="bg-[#e4e5f0] border border-white/40 rounded-2xl p-4 shadow-sm font-sans flex flex-col gap-4">
+                  <div className="bg-[#e4e5f0] border border-white/40 rounded-2xl p-3 shadow-sm font-sans flex flex-col gap-2.5">
                     {/* Avatar Selection */}
                     <div>
-                      <div className="text-[14px] text-black mb-1.5 font-medium tracking-tight">
+                      <div className="text-[13px] text-black mb-1 font-medium tracking-tight">
                         Avatar
                       </div>
-                      <div className="flex items-center gap-4">
-                        <div className="w-[70px] h-[70px] rounded-full border-[1.5px] border-black flex items-center justify-center overflow-hidden bg-white shrink-0">
+                      <div className="flex items-center gap-3">
+                        <div className="w-[48px] h-[48px] rounded-full border-[1.5px] border-black flex items-center justify-center overflow-hidden bg-white shrink-0">
                           {selectedAvatar ? (
                             <img
                               src={
@@ -208,7 +210,7 @@ export function RegistrationModal({
                               }}
                             />
                           ) : (
-                            <User className="w-8 h-8 text-black/10" />
+                            <User className="w-6 h-6 text-black/10" />
                           )}
                         </div>
                         <button
@@ -232,7 +234,7 @@ export function RegistrationModal({
                             };
                             input.click();
                           }}
-                          className="px-4 py-1.5 border border-black rounded-[20px] text-[13px] font-medium text-black hover:bg-black/5 active:bg-black/10 transition-all bg-transparent"
+                          className="px-3 py-1 border border-black rounded-[20px] text-[12px] font-medium text-black hover:bg-black/5 active:bg-black/10 transition-all bg-transparent"
                         >
                           Upload
                         </button>
@@ -241,7 +243,7 @@ export function RegistrationModal({
 
                     {/* Name */}
                     <div>
-                      <div className="text-[14px] font-medium mb-2.5 text-black tracking-tight">
+                      <div className="text-[13px] font-medium mb-1 pt-1 text-black tracking-tight">
                         <span className="text-red-500 mr-1">*</span>Name
                       </div>
                       <div className="relative">
@@ -252,9 +254,9 @@ export function RegistrationModal({
                             setName(e.target.value.substring(0, 30))
                           }
                           placeholder="Please enter your name"
-                          className="w-full bg-[#d7d9e5] text-black placeholder-slate-400 text-[14px] rounded-2xl px-4 py-2.5 outline-none transition-all pr-4"
+                          className="w-full bg-[#d7d9e5] text-black placeholder-slate-400 text-[13px] rounded-xl px-4 py-2 outline-none transition-all pr-4"
                         />
-                        <span className="absolute right-4 top-1/2 -translate-y-1/2 text-[14px] text-slate-400 pointer-events-none tracking-tight">
+                        <span className="absolute right-4 top-1/2 -translate-y-1/2 text-[13px] text-slate-400 pointer-events-none tracking-tight">
                           {name.length}/30
                         </span>
                       </div>
@@ -262,7 +264,7 @@ export function RegistrationModal({
 
                     {/* Email */}
                     <div>
-                      <div className="text-[14px] font-medium mb-2.5 text-black tracking-tight">
+                      <div className="text-[13px] font-medium mb-1 text-black tracking-tight">
                         <span className="text-red-500 mr-1">*</span>Email
                       </div>
                       <input
@@ -270,44 +272,41 @@ export function RegistrationModal({
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                         placeholder="Please enter"
-                        className="w-full bg-[#d7d9e5] text-black placeholder-slate-400 text-[14px] rounded-2xl px-4 py-2.5 outline-none transition-all"
+                        className="w-full bg-[#d7d9e5] text-black placeholder-slate-400 text-[13px] rounded-xl px-4 py-2 outline-none transition-all"
                       />
                     </div>
 
-                    {/* Subscribe */}
-                    <label className="flex items-start gap-4 cursor-pointer group mt-0">
-                      <div
-                        className={`w-5 h-5 rounded-md flex items-center justify-center shrink-0 transition-colors mt-1 ${subscribe ? "bg-[#7E57C2]" : "border-[2px] border-black/30"}`}
-                      >
-                        {subscribe && (
-                          <svg
-                            width="10"
-                            height="10"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="white"
-                            strokeWidth="3"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                          >
-                            <polyline points="20 6 9 17 4 12"></polyline>
-                          </svg>
-                        )}
+                    {/* Wallet address */}
+                    <div>
+                      <div className="text-[13px] font-medium mb-1 pt-1 text-black tracking-tight flex justify-between">
+                        <span>Wallet address</span>
                       </div>
-                      <span className="text-[14px] text-black tracking-tight leading-snug">
-                        Subscribe for special offers and promotions.
-                      </span>
-                      <input
-                        type="checkbox"
-                        className="hidden"
-                        checked={subscribe}
-                        onChange={(e) => setSubscribe(e.target.checked)}
-                      />
-                    </label>
+                      {userAccount ? (
+                        <input
+                          type="text"
+                          value={userAccount}
+                          readOnly
+                          className="w-full bg-[#d7d9e5] text-slate-500 text-[13px] rounded-xl px-4 py-2 outline-none font-mono cursor-not-allowed"
+                        />
+                      ) : (
+                        <div className="flex items-center gap-2 w-full bg-[#d7d9e5] text-slate-500 text-[13px] rounded-xl px-4 py-2 outline-none transition-all">
+                          <span className="flex-1 opacity-60">
+                            Not connected
+                          </span>
+                          <button
+                            type="button"
+                            className="text-[#7E57C2] font-medium text-[13px] hover:underline"
+                            onClick={() => (window.location.href = "/")}
+                          >
+                            Connect
+                          </button>
+                        </div>
+                      )}
+                    </div>
 
                     {/* Bio */}
                     <div>
-                      <div className="text-[14px] font-medium mb-2.5 text-black tracking-tight">
+                      <div className="text-[13px] font-medium mb-1 text-black tracking-tight">
                         Bio
                       </div>
                       <div className="relative">
@@ -324,9 +323,9 @@ export function RegistrationModal({
                             }
                           }}
                           placeholder="Please enter"
-                          className="w-full bg-[#d7d9e5] text-black placeholder-slate-400 text-[14px] rounded-2xl px-4 py-2.5 min-h-[44px] max-h-[80px] outline-none transition-all resize-none"
+                          className="w-full bg-[#d7d9e5] text-black placeholder-slate-400 text-[13px] rounded-xl px-4 py-2 min-h-[44px] max-h-[60px] outline-none transition-all resize-none"
                         />
-                        <span className="absolute right-4 bottom-3 text-[14px] text-slate-400 pointer-events-none tracking-tight">
+                        <span className="absolute right-4 bottom-2 text-[13px] text-slate-400 pointer-events-none tracking-tight">
                           {bio.trim() === ""
                             ? 0
                             : bio.trim().split(/\s+/).length}
@@ -337,14 +336,14 @@ export function RegistrationModal({
 
                     {/* Location */}
                     <div>
-                      <div className="text-[14px] font-medium mb-2.5 text-black tracking-tight">
+                      <div className="text-[13px] font-medium mb-1 text-black tracking-tight">
                         <span className="text-red-500 mr-1">*</span>Location
                       </div>
                       <div className="relative">
                         <select
                           value={location}
                           onChange={(e) => setLocation(e.target.value)}
-                          className="w-full appearance-none bg-[#d7d9e5] text-[#7E57C2] font-medium text-[14px] rounded-2xl px-4 py-2.5 outline-none transition-all pr-4"
+                          className="w-full appearance-none bg-[#d7d9e5] text-[#7E57C2] font-medium text-[13px] rounded-xl px-4 py-2 outline-none transition-all pr-4"
                         >
                           <option value="Japan">Japan</option>
                           <option value="USA">USA</option>
@@ -358,23 +357,32 @@ export function RegistrationModal({
                       </div>
                     </div>
 
-                    {/* Notifications */}
-                    <div className="flex items-center justify-between pt-4">
-                      <div className="text-[14px] font-medium text-black tracking-tight">
-                        Enable notifications
+                    {/* Notifications & Subscribe */}
+                    <div className="flex items-start justify-between pt-1">
+                      <div className="flex flex-col">
+                        <div className="text-[13px] font-medium text-black tracking-tight">
+                          Enable notifications
+                        </div>
+                        <div className="text-[11px] text-black/65 tracking-tight mt-0.5">
+                          Subscribe for special offers and promotions.
+                        </div>
                       </div>
                       <button
-                        onClick={() => setNotifications(!notifications)}
-                        className={`w-[44px] h-[24px] rounded-full transition-colors relative flex items-center shrink-0 ${notifications ? "bg-[#7E57C2]" : "bg-[#d0d4e3]"}`}
+                        onClick={() => {
+                          const newVal = !notifications;
+                          setNotifications(newVal);
+                          setSubscribe(newVal);
+                        }}
+                        className={`w-[40px] h-[22px] rounded-full transition-colors relative flex items-center shrink-0 mt-0.5 ${notifications ? "bg-[#7E57C2]" : "bg-[#d0d4e3]"}`}
                       >
                         <div
-                          className={`absolute left-[2px] w-[20px] h-[20px] bg-white rounded-full shadow-sm transition-transform ${notifications ? "translate-x-[20px]" : "translate-x-0"}`}
+                          className={`absolute left-[2px] w-[18px] h-[18px] bg-white rounded-full shadow-sm transition-transform ${notifications ? "translate-x-[18px]" : "translate-x-0"}`}
                         ></div>
                       </button>
                     </div>
 
                     {/* Footer / Links */}
-                    <div className="space-y-4 pt-4">
+                    <div className="space-y-3 pt-2">
                       <a
                         href="#"
                         className="text-[14px] text-[#7E57C2] underline underline-offset-2 hover:opacity-80 block tracking-tight text-center transition-opacity"
@@ -398,7 +406,7 @@ export function RegistrationModal({
                     onClick={() => setStep("PROFILE")}
                     className="hover:opacity-80 transition-opacity flex items-center font-medium text-black"
                   >
-                    <ChevronLeft strokeWidth={2.5} size={24} className="mr-4" />
+                    <ChevronLeft strokeWidth={2.5} size={24} className="mr-1" />
                     <span className="text-[14px] font-medium">Verify</span>
                   </button>
                   <button
@@ -410,17 +418,17 @@ export function RegistrationModal({
                 </div>
 
                 <div className="px-4 pb-4 flex-1">
-                  <h2 className="text-[14px] font-bold text-black mb-4">
+                  <h2 className="text-[13px] font-bold text-black mb-3">
                     Send verification code to Email
                   </h2>
 
-                  <div className="space-y-4">
+                  <div className="space-y-3">
                     <div className="relative">
                       <input
                         type="text"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
-                        className="w-full bg-[#e8e9ef] text-[#5F40A1] placeholder-[#a6abbd] text-[13px] rounded-2xl pl-4 pr-24 py-3 outline-none transition-all font-medium"
+                        className="w-full bg-[#e8e9ef] text-[#5F40A1] placeholder-[#a6abbd] text-[13px] rounded-xl pl-4 pr-24 py-2.5 outline-none transition-all font-medium"
                       />
                       <button
                         onClick={handleSendCode}
@@ -440,7 +448,7 @@ export function RegistrationModal({
                           setVerifyStatus("idle");
                         }}
                         placeholder="Enter the code"
-                        className="w-full bg-[#e8e9ef] text-[#5F40A1] placeholder-[#a6abbd] text-[13px] rounded-2xl px-4 py-3 outline-none transition-all font-medium"
+                        className="w-full bg-[#e8e9ef] text-[#5F40A1] placeholder-[#a6abbd] text-[13px] rounded-xl px-4 py-2.5 outline-none transition-all font-medium"
                       />
                       <div className="h-[20px]">
                         {verifyStatus === "error" &&
@@ -473,7 +481,7 @@ export function RegistrationModal({
                             }, 1500);
                           }
                         }}
-                        className={`w-[120px] h-[40px] flex mx-auto items-center justify-center rounded-[20px] text-[14px] font-medium transition-colors ${verifyCode ? "bg-black text-white hover:bg-black/90" : "bg-[#e2e4e8] text-slate-400 cursor-not-allowed"}`}
+                        className={`w-[120px] h-[36px] flex mx-auto items-center justify-center rounded-[20px] text-[13px] font-medium transition-colors ${verifyCode ? "bg-black text-white hover:bg-black/90" : "bg-[#e2e4e8] text-slate-400 cursor-not-allowed"}`}
                       >
                         Submit
                       </button>
@@ -501,7 +509,7 @@ export function RegistrationModal({
           {/* Confirm Exit Overlay */}
           <AnimatePresence>
             {showConfirmExit && (
-              <div className="fixed inset-0 z-[10000] flex items-center justify-center bg-black/60 backdrop-blur-sm pointer-events-auto px-4">
+              <div className="fixed inset-0 z-[10000] flex items-center justify-center bg-black/30 backdrop-blur-md pointer-events-auto px-4">
                 <motion.div
                   initial={{ opacity: 0, scale: 0.9 }}
                   animate={{ opacity: 1, scale: 1 }}
@@ -519,7 +527,8 @@ export function RegistrationModal({
                       Exit the page
                     </h3>
                     <p className="text-[14px] leading-[1.4] text-slate-600 mb-4">
-                      If you exit the page, the filled in content will be lost
+                      If you exit the page, the filled in content will be lost,
+                      and the sign up process will be aborted.
                     </p>
                     <div className="flex items-center gap-4 justify-center mt-6">
                       <button
