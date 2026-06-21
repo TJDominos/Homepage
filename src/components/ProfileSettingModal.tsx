@@ -254,7 +254,7 @@ export function ProfileSettingModal({
                             setName(e.target.value.substring(0, 30))
                           }
                           placeholder="Please enter your name"
-                          className="w-full bg-[#d7d9e5] text-black placeholder-slate-400 text-[13px] rounded-xl px-4 py-2 outline-none transition-all pr-4"
+                          className="w-full bg-[#d7d9e5] text-[#7E57C2] placeholder-slate-400 text-[13px] rounded-xl px-4 py-2 outline-none transition-all pr-4"
                         />
                         <span className="absolute right-4 top-1/2 -translate-y-1/2 text-[13px] text-slate-400 pointer-events-none tracking-tight">
                           {name.length}/30
@@ -270,9 +270,18 @@ export function ProfileSettingModal({
                       <input
                         type="email"
                         value={email}
-                        onChange={(e) => setEmail(e.target.value)}
+                        onChange={(e) => {
+                          if (!userAccount?.startsWith("email-")) {
+                            setEmail(e.target.value);
+                          }
+                        }}
+                        readOnly={!!userAccount?.startsWith("email-")}
                         placeholder="Please enter"
-                        className="w-full bg-[#d7d9e5] text-black placeholder-slate-400 text-[13px] rounded-xl px-4 py-2 outline-none transition-all"
+                        className={`w-full text-[13px] rounded-xl px-4 py-2 outline-none transition-all ${
+                          userAccount?.startsWith("email-")
+                            ? "bg-[#e8e9ef] text-slate-400"
+                            : "bg-[#d7d9e5] text-[#7E57C2] placeholder-slate-400"
+                        }`}
                       />
                     </div>
 
@@ -281,15 +290,17 @@ export function ProfileSettingModal({
                       <div className="text-[13px] font-medium mb-1 pt-1 text-black tracking-tight flex justify-between">
                         <span>Wallet address</span>
                       </div>
-                      {userAccount ? (
+                      {userAccount &&
+                      !userAccount.startsWith("email-") &&
+                      !userAccount.startsWith("ii-") ? (
                         <input
                           type="text"
                           value={userAccount}
                           readOnly
-                          className="w-full bg-[#d7d9e5] text-slate-500 text-[13px] rounded-xl px-4 py-2 outline-none font-mono cursor-not-allowed"
+                          className="w-full bg-[#e8e9ef] text-slate-400 text-[13px] rounded-xl px-4 py-2 outline-none font-mono"
                         />
                       ) : (
-                        <div className="flex items-center gap-2 w-full bg-[#d7d9e5] text-slate-500 text-[13px] rounded-xl px-4 py-2 outline-none transition-all">
+                        <div className="flex items-center gap-2 w-full bg-[#e8e9ef] text-slate-400 text-[13px] rounded-xl px-4 py-2 outline-none transition-all">
                           <span className="flex-1 opacity-60">
                             Not connected
                           </span>
@@ -323,7 +334,7 @@ export function ProfileSettingModal({
                             }
                           }}
                           placeholder="Please enter"
-                          className="w-full bg-[#d7d9e5] text-black placeholder-slate-400 text-[13px] rounded-xl px-4 py-2 min-h-[44px] max-h-[60px] outline-none transition-all resize-none"
+                          className="w-full bg-[#d7d9e5] text-[#7E57C2] placeholder-slate-400 text-[13px] rounded-xl px-4 py-2 min-h-[44px] max-h-[60px] outline-none transition-all resize-none"
                         />
                         <span className="absolute right-4 bottom-2 text-[13px] text-slate-400 pointer-events-none tracking-tight">
                           {bio.trim() === ""
