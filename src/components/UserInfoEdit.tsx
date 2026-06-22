@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router";
-import { ChevronLeft, User, Power, ChevronDown, X } from "lucide-react";
+import { ChevronLeft, User, Power, ChevronDown, X, Wallet } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-import "./MoneyPage.css";
+import "../money-page/MoneyPage.css";
 
 // Reusing same options as RegistrationModal
 const avatarOptions = [
@@ -241,12 +241,21 @@ export function UserInfoEdit({
                     {userAccount &&
                     !userAccount.startsWith("email-") &&
                     !userAccount.startsWith("ii-") ? (
-                      <input
-                        type="text"
-                        value={userAccount}
-                        readOnly
-                        className="w-full bg-[#e8e9ef] text-slate-400 text-[13px] rounded-xl px-4 py-2 outline-none font-mono"
-                      />
+                      <div className="relative">
+                        <div className="absolute left-3 top-1/2 -translate-y-1/2 flex items-center justify-center text-[10px] font-bold bg-[#d0d4e3] text-[#7E57C2] px-1.5 rounded">
+                          {userAccount.startsWith("0x") ? "ETH" : "SOL"}
+                        </div>
+                        <input
+                          type="text"
+                          value={
+                            userAccount.length > 11
+                              ? `${userAccount.slice(0, 6)}...${userAccount.slice(-5)}`
+                              : userAccount
+                          }
+                          readOnly
+                          className="w-full bg-[#e8e9ef] text-slate-400 text-[13px] rounded-xl pl-12 pr-4 py-2 outline-none font-mono"
+                        />
+                      </div>
                     ) : (
                       <div className="flex items-center gap-2 w-full bg-[#e8e9ef] text-slate-400 text-[13px] rounded-xl px-4 py-2 outline-none transition-all">
                         <span className="flex-1 opacity-60">Not connected</span>

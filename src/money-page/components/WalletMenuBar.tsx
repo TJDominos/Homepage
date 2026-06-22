@@ -203,7 +203,7 @@ export const WalletMenuBar: React.FC<WalletMenuBarProps> = ({
               {renderIcon(tab.id, isActive)}
             </div>
             <span
-              className={`text-[12px] sm:text-[13px] leading-[1.2] whitespace-nowrap text-center ${isActive ? "font-bold text-[#111]" : "font-medium text-slate-500"}`}
+              className={`text-[14px] leading-[1.2] whitespace-nowrap text-center ${isActive ? "font-[600] text-[#111]" : "font-medium text-slate-500"}`}
             >
               {tab.label}
             </span>

@@ -6,6 +6,17 @@ import { getSysAvatar } from "../utils/avatar";
 import { ChevronLeft, ChevronRight, MoreHorizontal } from "lucide-react";
 import { AccountInfoModal, UserProfileInfo } from "./AccountInfoModal";
 
+function formatBonusAmount(amount: string | number | undefined) {
+  if (!amount) return "0.00";
+  const num = Number(amount);
+  if (num >= 1000000) {
+    return (num / 1000000).toFixed(2) + "M";
+  } else if (num >= 1000) {
+    return (num / 1000).toFixed(2) + "K";
+  }
+  return num.toFixed(2);
+}
+
 export default function RanksPage() {
   const [itemsPerPage, setItemsPerPage] = useState(10);
   const [totalItems, setTotalItems] = useState(0);
@@ -147,7 +158,7 @@ export default function RanksPage() {
     <div className="w-full max-w-[1024px] mx-auto px-4 pt-4 pb-4 fade-in-up">
       <div className="mb-4">
         <h1 className="text-[16px] font-bold text-black mb-3 text-left">
-          Winning Ranks
+          Winnings & Rewards
         </h1>
         <div className="flex items-center gap-2">
           {["Bonus", "WLT", "Gcoin"].map((tab) => (
@@ -178,7 +189,7 @@ export default function RanksPage() {
                 <th className="px-4 py-4 hidden md:table-cell">Country</th>
                 <th className="px-4 py-4 hidden md:table-cell">Total Plays</th>
                 <th className="px-2 md:px-4 py-3 md:py-4 text-right pr-3 md:pr-6 whitespace-nowrap">
-                  Winnings
+                  {subTab === "WLT" ? "Rewards" : "Winnings"}
                 </th>
               </tr>
             </thead>
@@ -288,10 +299,16 @@ export default function RanksPage() {
                     <td className="px-2 md:px-4 py-3 md:py-4 text-right pr-3 md:pr-6 whitespace-nowrap">
                       <div className="flex flex-col items-end justify-center whitespace-nowrap">
                         <span className="text-black text-[15px] md:text-[16px] font-semibold leading-tight whitespace-nowrap">
-                          {Number(
-                            Number(winner?.total_win_amount).toFixed(2),
-                          ).toLocaleString()}
-                          &nbsp;{subTab === "Bonus" ? "USD" : subTab}
+                          {subTab === "Bonus" ? (
+                            formatBonusAmount(winner?.total_win_amount)
+                          ) : (
+                            <>
+                              {Number(
+                                Number(winner?.total_win_amount).toFixed(2),
+                              ).toLocaleString()}
+                              &nbsp;{subTab}
+                            </>
+                          )}
                         </span>
                         <span className="text-[12px] md:text-[14px] text-zinc-400 mt-1 leading-tight md:hidden whitespace-nowrap">
                           {winner?.playtimes?.toString() || "0"}P

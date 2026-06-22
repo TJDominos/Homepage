@@ -16,7 +16,7 @@ import Footer from "./components/Footer";
 import { WalletConnectModal } from "./components/WalletConnectModal";
 import { AccountInfoModal } from "./components/AccountInfoModal";
 import { ProfileSettingModal } from "./components/ProfileSettingModal";
-import { MoneyPage } from "./components/MoneyPage";
+import { MoneyPage } from "./money-page/MoneyPage";
 import RanksPage from "./components/RanksPage";
 import { UserInfoEdit } from "./components/UserInfoEdit";
 import { WltHeaderPrice } from "./components/WltHeaderPrice";
