@@ -128,11 +128,11 @@ export function BonusTab({ isDesktop }: BonusTabProps) {
                         }}
                       >
                         <Gift
-                          className="w-[32px] h-[32px] text-blue-500"
+                          className="w-[40px] h-[40px] text-blue-500"
                           strokeWidth={1.5}
                         />
                       </motion.div>
-                      <h3 className="text-[18px] font-semibold text-slate-800 mb-6">
+                      <h3 className="text-[16px] font-semibold text-black mb-6">
                         Claim Bonus Code
                       </h3>
                       <div className="w-full flex-1 flex flex-col justify-end gap-3 mt-auto">
@@ -311,14 +311,14 @@ export function BonusTab({ isDesktop }: BonusTabProps) {
                         }}
                       >
                         <ArrowUpCircle
-                          className="w-[32px] h-[32px] text-green-500"
+                          className="w-[40px] h-[40px] text-green-500"
                           strokeWidth={1.5}
                         />
                       </motion.div>
-                      <h3 className="text-[18px] font-semibold text-slate-800 mb-1">
+                      <h3 className="text-[16px] font-semibold text-black mb-1">
                         Top up bonus
                       </h3>
-                      <p className="text-[13px] text-black/50 mb-4 flex-1">
+                      <p className="text-[12px] font-normal text-black/65 mb-4 flex-1">
                         Exchange WLT or Gcoin to Bonus
                       </p>
                       <div className="w-full flex-1 flex flex-col justify-end gap-3 mt-auto">
@@ -545,14 +545,14 @@ export function BonusTab({ isDesktop }: BonusTabProps) {
                         }}
                       >
                         <ArrowRightLeft
-                          className="w-[32px] h-[32px] text-purple-500"
+                          className="w-[40px] h-[40px] text-purple-500"
                           strokeWidth={1.5}
                         />
                       </motion.div>
-                      <h3 className="text-[18px] font-semibold text-slate-800 mb-1">
+                      <h3 className="text-[16px] font-semibold text-black mb-1">
                         Swap WLT
                       </h3>
-                      <p className="text-[13px] text-black/50 mb-4 flex-1">
+                      <p className="text-[12px] font-normal text-black/65 mb-4 flex-1">
                         Convert Bonus to WLT
                       </p>
                       <div className="w-full flex-1 flex flex-col justify-end gap-3 mt-auto">

@@ -9,6 +9,7 @@ import {
   ChevronRight,
   Activity,
 } from "lucide-react";
+import { WltLogo } from "../../components/WltLogo";
 
 interface TransactionModalsProps {
   activeModal: "deposit" | "withdraw" | "record" | "bonus" | null;
@@ -143,14 +144,14 @@ export function TransactionModals({
                   <span className="flex items-center gap-3">
                     <div className="w-6 h-6 shrink-0 rounded-full overflow-hidden flex items-center justify-center bg-transparent">
                       <img
-                        src="/solana-logo.png"
+                        src="/solana-sol-logo-horizontal.svg"
                         alt="SOL"
+                        className="w-full h-full object-contain"
                         onError={(e) => {
                           e.currentTarget.style.display = "none";
                           e.currentTarget.parentElement!.innerHTML =
                             '<div class="w-full h-full bg-black"></div>';
                         }}
-                        className="w-full h-full object-contain"
                       />
                     </div>
                     SOLANA
@@ -245,8 +246,8 @@ export function TransactionModals({
               >
                 <div className="flex flex-col gap-1">
                   <span className="font-semibold text-black flex items-center gap-2 text-[15px]">
-                    <div className="w-5 h-5 shrink-0 flex items-center justify-center border border-black/10 rounded-full bg-white overflow-hidden">
-                      <div className="w-[10px] h-[10px] bg-gradient-to-tr from-purple-500 to-blue-500 rounded-[2px] transform rotate-45"></div>
+                    <div className="w-5 h-5 shrink-0 flex items-center justify-center rounded-full bg-transparent overflow-hidden">
+                      <WltLogo className="w-5 h-5" />
                     </div>
                     WLT
                   </span>
@@ -296,14 +297,14 @@ export function TransactionModals({
                     <span className="flex items-center gap-2">
                       <div className="w-5 h-5 shrink-0 rounded-full overflow-hidden flex items-center justify-center bg-transparent">
                         <img
-                          src="/solana-logo.png"
+                          src="/solana-sol-logo-horizontal.svg"
                           alt="SOL"
+                          className="w-full h-full object-contain"
                           onError={(e) => {
                             e.currentTarget.style.display = "none";
                             e.currentTarget.parentElement!.innerHTML =
                               '<div class="w-full h-full bg-black"></div>';
                           }}
-                          className="w-full h-full object-contain"
                         />
                       </div>
                       SOLANA

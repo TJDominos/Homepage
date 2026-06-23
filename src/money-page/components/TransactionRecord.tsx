@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { ChevronDown, Activity, Inbox } from "lucide-react";
+import React, { useState, useCallback } from "react";
+import { ChevronDown, Activity, Inbox, Loader2 } from "lucide-react";
 
 interface TransactionRecordProps {
   isDesktop?: boolean;
@@ -11,13 +11,13 @@ const CATEGORIES = [
   "Win",
   "Play",
   "Refund",
-  "Convert",
+  "Swap",
   "Deposit",
   "Withdraw",
   "Staking",
 ];
 
-const CURRENCIES = ["All Currency", "ICP", "Gcoin", "Bonus", "WLT"];
+const CURRENCIES = ["All Assets", "ICP", "Gcoin", "Bonus", "WLT"];
 
 const TIMES = [
   "All Time",
@@ -28,7 +28,7 @@ const TIMES = [
   "Feb 2026",
 ];
 
-const MOCK_RECORDS = [
+const INITIAL_MOCK_RECORDS = [
   {
     type: "Win",
     game: "Plinko",
@@ -83,27 +83,49 @@ export function TransactionRecord({
 }: TransactionRecordProps) {
   const [timeFilter, setTimeFilter] = useState("All Time");
   const [categoryFilter, setCategoryFilter] = useState("All Category");
-  const [currencyFilter, setCurrencyFilter] = useState("All Currency");
+  const [currencyFilter, setCurrencyFilter] = useState("All Assets");
 
   const [showTimeDropdown, setShowTimeDropdown] = useState(false);
   const [showCategoryDropdown, setShowCategoryDropdown] = useState(false);
   const [showCurrencyDropdown, setShowCurrencyDropdown] = useState(false);
 
+  const [records, setRecords] = useState(INITIAL_MOCK_RECORDS);
+  const [isLoadingMore, setIsLoadingMore] = useState(false);
+  const [hasMore, setHasMore] = useState(true);
+
+  // Filter records by category
+  const filteredRecords =
+    categoryFilter === "All Category"
+      ? records
+      : records.filter((r) => r.type === categoryFilter);
+
+  const handleScroll = useCallback((e: React.UIEvent<HTMLDivElement>) => {
+    const { scrollTop, scrollHeight, clientHeight } = e.currentTarget;
+    if (scrollHeight - scrollTop <= clientHeight + 10 && !isLoadingMore && hasMore && userAccount) {
+      setIsLoadingMore(true);
+      // Simulate network request for paginated data
+      setTimeout(() => {
+        setRecords(prev => [...prev, ...INITIAL_MOCK_RECORDS]);
+        setIsLoadingMore(false);
+        // Let's cap it at a few reloads for mock
+        if (records.length > 20) {
+          setHasMore(false);
+        }
+      }, 800);
+    }
+  }, [isLoadingMore, hasMore, userAccount, records.length]);
+
   return (
     <div
       className={`flex flex-col w-full h-full ${isDesktop ? "px-2 pb-2" : ""}`}
     >
-      <div
-        className={`flex ${isDesktop ? "flex-row gap-6" : "flex-col gap-6"} pb-6 relative z-0`}
-      >
-        {/* Left Column (Filters + Summary) */}
-        <div
-          className={`flex flex-col gap-4 shrink-0 ${isDesktop ? "w-1/2" : "w-full"}`}
-        >
-          {/* Filters */}
-          <div className="flex items-center gap-2 relative z-10 w-full overflow-visible">
+      <div className="flex flex-col gap-6 pb-6 relative z-0 h-full">
+        {/* Top Section: Filters + Summary */}
+        <div className="flex flex-col bg-[#f0f2f5] rounded-2xl p-4 sm:p-5 border border-black/5 gap-4 shrink-0">
+          {/* Time & Currency Filters */}
+          <div className="flex items-center gap-4 relative w-full overflow-visible z-10">
             {/* Time Filter */}
-            <div className="relative flex-1 min-w-0">
+            <div className="relative flex-1 min-w-[120px] max-w-[200px]">
               <button
                 onClick={() => {
                   setShowTimeDropdown(!showTimeDropdown);
@@ -123,6 +145,8 @@ export function TransactionRecord({
                       onClick={() => {
                         setTimeFilter(t);
                         setShowTimeDropdown(false);
+                        setRecords(INITIAL_MOCK_RECORDS);
+                        setHasMore(true);
                       }}
                       className={`w-full text-left px-3 py-2 text-[13px] hover:bg-black/5 ${timeFilter === t ? "bg-black/5 text-black font-semibold" : "text-black/70"}`}
                     >
@@ -133,39 +157,8 @@ export function TransactionRecord({
               )}
             </div>
 
-            {/* Category Filter */}
-            <div className="relative flex-1 min-w-0">
-              <button
-                onClick={() => {
-                  setShowCategoryDropdown(!showCategoryDropdown);
-                  setShowTimeDropdown(false);
-                  setShowCurrencyDropdown(false);
-                }}
-                className="flex w-full items-center justify-between gap-1 bg-black/5 hover:bg-black/10 px-3 py-2 rounded-xl text-[13px] text-black transition-colors"
-              >
-                <span className="truncate">{categoryFilter}</span>
-                <ChevronDown size={14} className="text-black/40 shrink-0" />
-              </button>
-              {showCategoryDropdown && (
-                <div className="absolute top-full left-0 mt-1 w-[160px] bg-white rounded-xl shadow-[0_4px_12px_rgba(0,0,0,0.1)] border border-black/5 py-1 z-50 max-h-[250px] overflow-y-auto">
-                  {CATEGORIES.map((c) => (
-                    <button
-                      key={c}
-                      onClick={() => {
-                        setCategoryFilter(c);
-                        setShowCategoryDropdown(false);
-                      }}
-                      className={`w-full text-left px-3 py-2 text-[13px] hover:bg-black/5 ${categoryFilter === c ? "bg-black/5 text-black font-semibold" : "text-black/70"}`}
-                    >
-                      {c}
-                    </button>
-                  ))}
-                </div>
-              )}
-            </div>
-
             {/* Currency Filter */}
-            <div className="relative flex-1 min-w-0">
+            <div className="relative flex-1 min-w-[120px] max-w-[200px]">
               <button
                 onClick={() => {
                   setShowCurrencyDropdown(!showCurrencyDropdown);
@@ -178,13 +171,15 @@ export function TransactionRecord({
                 <ChevronDown size={14} className="text-black/40 shrink-0" />
               </button>
               {showCurrencyDropdown && (
-                <div className="absolute top-full right-0 mt-1 w-full bg-white rounded-xl shadow-[0_4px_12px_rgba(0,0,0,0.1)] border border-black/5 py-1 z-50">
+                <div className="absolute top-full left-0 mt-1 w-full bg-white rounded-xl shadow-[0_4px_12px_rgba(0,0,0,0.1)] border border-black/5 py-1 z-50">
                   {CURRENCIES.map((c) => (
                     <button
                       key={c}
                       onClick={() => {
                         setCurrencyFilter(c);
                         setShowCurrencyDropdown(false);
+                        setRecords(INITIAL_MOCK_RECORDS);
+                        setHasMore(true);
                       }}
                       className={`w-full text-left px-3 py-2 text-[13px] hover:bg-black/5 ${currencyFilter === c ? "bg-black/5 text-black font-semibold" : "text-black/70"}`}
                     >
@@ -196,85 +191,209 @@ export function TransactionRecord({
             </div>
           </div>
 
-          <div className="bg-[#f0f2f5] rounded-2xl p-4 sm:p-5 border border-black/5 w-full">
-            <div className="grid grid-cols-2 gap-x-6 gap-y-4">
-              {/* Left Column Stats */}
-              <div className="flex flex-col gap-3">
-                <div className="flex justify-between items-center text-sm mb-1">
-                  <span className="text-black font-semibold">Income</span>
-                  <span className="text-black font-semibold">
-                    {userAccount ? "+1976.63" : "-"}
-                  </span>
-                </div>
-                <div className="flex justify-between items-center text-sm pl-2">
-                  <span className="text-black/50">Win</span>
-                  <span className="text-black font-medium">
-                    {userAccount ? "+691.41" : "-"}
-                  </span>
-                </div>
-                <div className="flex justify-between items-center text-sm pl-2">
-                  <span className="text-black/50">Deposit</span>
-                  <span className="text-black font-medium">
-                    {userAccount ? "+1184.55" : "-"}
-                  </span>
-                </div>
-                <div className="flex justify-between items-center text-sm pl-2">
-                  <span className="text-black/50">Reward</span>
-                  <span className="text-black font-medium">
-                    {userAccount ? "+100.00" : "-"}
-                  </span>
-                </div>
-                <div className="flex justify-between items-center text-sm pl-2">
-                  <span className="text-black/50">Refund</span>
-                  <span className="text-black font-medium">
-                    {userAccount ? "+0.67" : "-"}
-                  </span>
-                </div>
+          {/* Mobile Stats Grid (2 columns) */}
+          <div className="grid grid-cols-2 gap-x-6 pt-2 border-t border-black/5 relative z-0 md:hidden">
+            {/* Left Column: Income */}
+            <div className="flex flex-col gap-3">
+              <div className="flex justify-between items-center text-sm mb-1">
+                <span className="text-black font-semibold">Income</span>
+                <span className="text-black font-semibold">
+                  {userAccount ? "+1976.63" : "-"}
+                </span>
               </div>
+              <div className="flex justify-between items-center text-sm pl-2">
+                <span className="text-black/50">Win</span>
+                <span className="text-black font-medium">
+                  {userAccount ? "+691.41" : "-"}
+                </span>
+              </div>
+              <div className="flex justify-between items-center text-sm pl-2">
+                <span className="text-black/50">Refund</span>
+                <span className="text-black font-medium">
+                  {userAccount ? "+0.67" : "-"}
+                </span>
+              </div>
+              <div className="flex justify-between items-center text-sm pl-2">
+                <span className="text-black/50">Deposit</span>
+                <span className="text-black font-medium">
+                  {userAccount ? "+1184.55" : "-"}
+                </span>
+              </div>
+              <div className="flex justify-between items-center text-sm pl-2">
+                <span className="text-black/50">Bonus</span>
+                <span className="text-black font-medium">
+                  {userAccount ? "+100.00" : "-"}
+                </span>
+              </div>
+            </div>
 
-              {/* Right Column Stats */}
-              <div className="flex flex-col gap-3">
-                <div className="flex justify-between items-center text-sm mb-1">
-                  <span className="text-black font-semibold">Spending</span>
-                  <span className="text-black font-semibold">
-                    {userAccount ? "-1969.26" : "-"}
-                  </span>
-                </div>
-                <div className="flex justify-between items-center text-sm pl-2">
-                  <span className="text-black/50">Play</span>
-                  <span className="text-black font-medium">
-                    {userAccount ? "-773.32" : "-"}
-                  </span>
-                </div>
-                <div className="flex justify-between items-center text-sm pl-2">
-                  <span className="text-black/50">Withdraw</span>
-                  <span className="text-black font-medium">
-                    {userAccount ? "-295.71" : "-"}
-                  </span>
-                </div>
-                <div className="flex justify-between items-center text-sm pl-2">
-                  <span className="text-black/50">Staking</span>
-                  <span className="text-black font-medium">
-                    {userAccount ? "-900.23" : "-"}
-                  </span>
-                </div>
-                <div className="flex justify-between items-center text-sm pl-2">
-                  <span className="text-black/50">Convert</span>
-                  <span className="text-black font-medium">
-                    {userAccount ? "0.00" : "-"}
-                  </span>
-                </div>
+            {/* Right Column: Spending */}
+            <div className="flex flex-col gap-3">
+              <div className="flex justify-between items-center text-sm mb-1">
+                <span className="text-black font-semibold">Spending</span>
+                <span className="text-black font-semibold">
+                  {userAccount ? "-1969.26" : "-"}
+                </span>
+              </div>
+              <div className="flex justify-between items-center text-sm pl-2">
+                <span className="text-black/50">Play</span>
+                <span className="text-black font-medium">
+                  {userAccount ? "-773.32" : "-"}
+                </span>
+              </div>
+              <div className="flex justify-between items-center text-sm pl-2">
+                <span className="text-black/50">Swap</span>
+                <span className="text-black font-medium">
+                  {userAccount ? "0.00" : "-"}
+                </span>
+              </div>
+              <div className="flex justify-between items-center text-sm pl-2">
+                <span className="text-black/50">Withdraw</span>
+                <span className="text-black font-medium">
+                  {userAccount ? "-295.71" : "-"}
+                </span>
+              </div>
+              <div className="flex justify-between items-center text-sm pl-2">
+                <span className="text-black/50">Staking</span>
+                <span className="text-black font-medium">
+                  {userAccount ? "-900.23" : "-"}
+                </span>
+              </div>
+            </div>
+          </div>
+
+          {/* Desktop Stats Grid (4 columns) */}
+          <div className="hidden md:grid grid-cols-4 gap-x-6 gap-y-4 pt-2 border-t border-black/5 relative z-0">
+            {/* Col 1: Income total + Win */}
+            <div className="flex flex-col gap-3">
+              <div className="flex justify-between items-center text-sm mb-1">
+                <span className="text-black font-semibold">Income</span>
+                <span className="text-black font-semibold">
+                  {userAccount ? "+1976.63" : "-"}
+                </span>
+              </div>
+              <div className="flex justify-between items-center text-sm pl-2">
+                <span className="text-black/50">Win</span>
+                <span className="text-black font-medium">
+                  {userAccount ? "+691.41" : "-"}
+                </span>
+              </div>
+              <div className="flex justify-between items-center text-sm pl-2">
+                <span className="text-black/50">Refund</span>
+                <span className="text-black font-medium">
+                  {userAccount ? "+0.67" : "-"}
+                </span>
+              </div>
+            </div>
+
+            {/* Col 2: Income rest */}
+            <div className="flex flex-col gap-3">
+              <div className="flex justify-between items-center text-sm mb-1 opacity-0 pointer-events-none hidden md:flex">
+                <span className="text-black font-semibold">Placeholder</span>
+                <span className="text-black font-semibold">-</span>
+              </div>
+              <div className="flex justify-between items-center text-sm pl-2">
+                <span className="text-black/50">Deposit</span>
+                <span className="text-black font-medium">
+                  {userAccount ? "+1184.55" : "-"}
+                </span>
+              </div>
+              <div className="flex justify-between items-center text-sm pl-2">
+                <span className="text-black/50">Bonus</span>
+                <span className="text-black font-medium">
+                  {userAccount ? "+100.00" : "-"}
+                </span>
+              </div>
+            </div>
+
+            {/* Col 3: Spending total + Play */}
+            <div className="flex flex-col gap-3 mt-4 md:mt-0">
+              <div className="flex justify-between items-center text-sm mb-1">
+                <span className="text-black font-semibold">Spending</span>
+                <span className="text-black font-semibold">
+                  {userAccount ? "-1969.26" : "-"}
+                </span>
+              </div>
+              <div className="flex justify-between items-center text-sm pl-2">
+                <span className="text-black/50">Play</span>
+                <span className="text-black font-medium">
+                  {userAccount ? "-773.32" : "-"}
+                </span>
+              </div>
+              <div className="flex justify-between items-center text-sm pl-2">
+                <span className="text-black/50">Swap</span>
+                <span className="text-black font-medium">
+                  {userAccount ? "0.00" : "-"}
+                </span>
+              </div>
+            </div>
+
+            {/* Col 4: Spending rest */}
+            <div className="flex flex-col gap-3 mt-4 md:mt-0">
+              <div className="flex justify-between items-center text-sm mb-1 opacity-0 pointer-events-none hidden md:flex">
+                <span className="text-black font-semibold">Placeholder</span>
+                <span className="text-black font-semibold">-</span>
+              </div>
+              <div className="flex justify-between items-center text-sm pl-2">
+                <span className="text-black/50">Withdraw</span>
+                <span className="text-black font-medium">
+                  {userAccount ? "-295.71" : "-"}
+                </span>
+              </div>
+              <div className="flex justify-between items-center text-sm pl-2">
+                <span className="text-black/50">Staking</span>
+                <span className="text-black font-medium">
+                  {userAccount ? "-900.23" : "-"}
+                </span>
               </div>
             </div>
           </div>
         </div>
 
-        {/* Right Column (Detail List) */}
-        <div className="flex-1 flex flex-col bg-[#f0f2f5] rounded-2xl p-4 sm:p-5 border border-black/5">
-          <h3 className="text-[16px] font-bold text-black mb-4 shrink-0">
-            Detail
-          </h3>
-          <div className="flex flex-col flex-1 overflow-y-auto hide-scrollbar space-y-4">
+        {/* Detail Zone */}
+        <div className="flex-1 flex flex-col bg-[#f0f2f5] rounded-2xl p-4 sm:p-5 border border-black/5 min-h-0 relative z-0">
+          <div className="flex items-center justify-between mb-4 shrink-0 relative z-10 w-full overflow-visible">
+            <h3 className="text-[16px] font-bold text-black shrink-0">
+              Detail
+            </h3>
+            {/* Category Filter */}
+            <div className="relative min-w-[120px] max-w-[200px]">
+              <button
+                onClick={() => {
+                  setShowCategoryDropdown(!showCategoryDropdown);
+                  setShowTimeDropdown(false);
+                  setShowCurrencyDropdown(false);
+                }}
+                className="flex w-full items-center justify-between gap-1 bg-black/5 hover:bg-black/10 px-3 py-2 rounded-xl text-[13px] text-black transition-colors"
+              >
+                <span className="truncate">{categoryFilter}</span>
+                <ChevronDown size={14} className="text-black/40 shrink-0" />
+              </button>
+              {showCategoryDropdown && (
+                <div className="absolute top-full right-0 mt-1 w-[160px] bg-white rounded-xl shadow-[0_4px_12px_rgba(0,0,0,0.1)] border border-black/5 py-1 z-50 max-h-[250px] overflow-y-auto">
+                  {CATEGORIES.map((c) => (
+                    <button
+                      key={c}
+                      onClick={() => {
+                        setCategoryFilter(c);
+                        setShowCategoryDropdown(false);
+                        setRecords(INITIAL_MOCK_RECORDS);
+                        setHasMore(true);
+                      }}
+                      className={`w-full text-left px-3 py-2 text-[13px] hover:bg-black/5 ${categoryFilter === c ? "bg-black/5 text-black font-semibold" : "text-black/70"}`}
+                    >
+                      {c}
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
+          </div>
+
+          <div 
+            className="flex flex-col flex-1 overflow-y-auto hide-scrollbar relative z-0"
+            onScroll={handleScroll}
+          >
             {!userAccount ? (
               <div className="flex flex-col items-center justify-center flex-1 min-h-[250px] opacity-30">
                 <Inbox
@@ -286,39 +405,59 @@ export function TransactionRecord({
                   No Information
                 </span>
               </div>
+            ) : filteredRecords.length === 0 ? (
+              <div className="flex flex-col items-center justify-center flex-1 min-h-[250px] opacity-30">
+                <span className="text-[14px] font-medium text-black">
+                  No matches found
+                </span>
+              </div>
             ) : (
-              MOCK_RECORDS.map((record, idx) => (
-                <div
-                  key={idx}
-                  className="flex justify-between items-center pb-4 border-b border-black/5 last:border-0 last:pb-0"
-                >
-                  <div className="flex flex-col gap-1">
-                    <span className="text-[15px] font-semibold text-black flex items-center gap-2">
-                      {record.type}
-                      {record.game && (
-                        <span className="text-[12px] font-normal text-black/40 bg-black/5 px-2 py-0.5 rounded-full">
-                          {record.game}
-                        </span>
-                      )}
-                      {record.detail && (
-                        <span className="text-[12px] font-normal text-black/40 bg-black/5 px-2 py-0.5 rounded-full">
-                          {record.detail}
-                        </span>
-                      )}
-                    </span>
-                    <span className="text-[13px] text-black/40">
-                      {record.date}
-                    </span>
+              <div className="space-y-4">
+                {filteredRecords.map((record, idx) => (
+                  <div
+                    key={idx}
+                    className="flex justify-between items-center pb-4 border-b border-black/5 last:border-0 last:pb-0"
+                  >
+                    <div className="flex flex-col gap-1">
+                      <span className="text-[15px] font-semibold text-black flex items-center gap-2">
+                        {record.type}
+                        {record.game && (
+                          <span className="text-[12px] font-normal text-black/40 bg-black/5 px-2 py-0.5 rounded-full">
+                            {record.game}
+                          </span>
+                        )}
+                        {record.detail && (
+                          <span className="text-[12px] font-normal text-black/40 bg-black/5 px-2 py-0.5 rounded-full">
+                            {record.detail}
+                          </span>
+                        )}
+                      </span>
+                      <span className="text-[13px] text-black/40">
+                        {record.date}
+                      </span>
+                    </div>
+                    <div className="flex flex-col items-end gap-1">
+                      <span
+                        className={`text-[14px] font-medium ${record.usdAmount.startsWith("+") ? "text-green-600" : "text-black/60"}`}
+                      >
+                        {record.usdAmount}/{record.tokenAmount}
+                      </span>
+                    </div>
                   </div>
-                  <div className="flex flex-col items-end gap-1">
-                    <span
-                      className={`text-[14px] font-medium ${record.usdAmount.startsWith("+") ? "text-green-600" : "text-black/60"}`}
-                    >
-                      {record.usdAmount}/{record.tokenAmount}
-                    </span>
+                ))}
+
+                {isLoadingMore && (
+                  <div className="flex justify-center items-center py-4 text-black/40">
+                    <Loader2 size={24} className="animate-spin" />
                   </div>
-                </div>
-              ))
+                )}
+                
+                {!hasMore && filteredRecords.length > 0 && (
+                  <div className="flex justify-center items-center pt-2 pb-4 text-black/40 text-[13px] font-medium">
+                    No more records
+                  </div>
+                )}
+              </div>
             )}
           </div>
         </div>
@@ -326,3 +465,4 @@ export function TransactionRecord({
     </div>
   );
 }
+

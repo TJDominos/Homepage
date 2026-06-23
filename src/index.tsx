@@ -4,7 +4,8 @@ import { BrowserRouter, useNavigate, useLocation } from "react-router";
 import { ErrorBoundary } from "./ErrorBoundary";
 import { useHomeData } from "./api/home";
 import type { Banner, Game } from "./api/home";
-import { Shell, Wallet, User, Trophy } from "lucide-react";
+import { WltLogo } from "./components/WltLogo";
+import { Wallet, User, Trophy } from "lucide-react";
 
 import BannerSkeleton from "./components/BannerSkeleton";
 import GamesSkeleton from "./components/GamesSkeleton";
@@ -207,7 +208,7 @@ function App() {
               onClick={() => setActiveTab("play")}
             >
               <div className="flex items-center justify-center shrink-0">
-                <Shell className="text-purple-600 w-8 h-8 md:w-[32px] md:h-[32px]" />
+                <WltLogo className="w-8 h-8 md:w-[32px] md:h-[32px]" />
               </div>
             </div>
             <span
@@ -387,10 +388,8 @@ function App() {
       >
         {renderActiveTabContent(isDesktop)}
 
-        {activeTab === "play" && (
-          <>
-            <Footer />
-          </>
+        {["money", "play", "rank", "history"].includes(activeTab) && (
+          <Footer />
         )}
       </div>
 

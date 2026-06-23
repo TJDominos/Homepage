@@ -11,8 +11,9 @@ import {
 } from "lucide-react";
 import { useWltPrice } from "../../hooks/useWltPrice";
 import { WltLogo } from "../../components/WltLogo";
+import { AddressInput } from "../components/AddressInput";
 
-interface DepositTabProps {
+interface WithdrawTabProps {
   isDesktop: boolean;
 }
 
@@ -68,14 +69,16 @@ const AssetIcon = ({ type }: { type: string }) => {
   return null;
 };
 
-export function DepositTab({ isDesktop }: DepositTabProps) {
+export function WithdrawTab({ isDesktop }: WithdrawTabProps) {
   const { stats } = useWltPrice();
   const [asset, setAsset] = useState<"WLT" | "Gcoin">("WLT");
   const [crypto, setCrypto] = useState<"WLT" | "USDC" | "USDT">("WLT");
   const [network, setNetwork] = useState<string>("SOL");
   const [showNetworkDropdown, setShowNetworkDropdown] = useState(false);
-  const [showAssetDropdown, setShowAssetDropdown] = useState(false);
   const [showCryptoDropdown, setShowCryptoDropdown] = useState(false);
+  const [showAssetDropdown, setShowAssetDropdown] = useState(false);
+  const [address, setAddress] = useState("");
+  const [amount, setAmount] = useState("");
   const [showStatus, setShowStatus] = useState(false);
   const [faqExpanded, setFaqExpanded] = useState(false);
 
@@ -87,6 +90,7 @@ export function DepositTab({ isDesktop }: DepositTabProps) {
       setCrypto("USDC");
       setNetwork("SOL");
     }
+    setAmount("");
   }, [asset]);
 
   useEffect(() => {
@@ -100,87 +104,86 @@ export function DepositTab({ isDesktop }: DepositTabProps) {
       ? ALL_NETWORKS.filter((n) => n.id === "SOL")
       : ALL_NETWORKS;
 
-  const getAddress = () => {
-    switch (network) {
-      case "ETH":
-        return "0x71C7656EC7ab88b098defB751B7401B5f6d8976F";
-      case "BSC":
-        return "0x89D24A6b4CcB1B6fAA2625fE562bDD9a23260359";
-      case "SOL":
-      default:
-        return "FfTfJwqG7wPnsgXm4WsjCHD";
-    }
-  };
-
-  const address = getAddress();
-  const shortAddress =
-    address.length > 15
-      ? `${address.substring(0, 6)}...${address.substring(address.length - 5)}`
-      : address;
-
   const rightColumnContent = (
-    <div className="flex flex-col mt-2 mb-6 w-full max-w-2xl">
+    <div className="flex flex-col mt-2 mb-6 w-full max-w-2xl mx-auto">
       <div className="bg-[#EAEAEA] rounded-3xl p-5 md:p-6 flex flex-col w-full shadow-sm">
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 mb-4 w-full">
-          <div className="flex items-center gap-2 text-[15px]">
-            <span className="text-black font-semibold">Your Address:</span>
-            <span className="text-[#6A3FE6] font-bold truncate">
-              {shortAddress}
-            </span>
-            <button
-              className="text-[#6A3FE6] hover:opacity-80 shrink-0"
-              onClick={() => navigator.clipboard.writeText(address)}
-            >
-              <Copy size={18} />
-            </button>
+        <div className="flex flex-col gap-2 mb-6">
+          <label className="text-[15px] font-semibold text-black">
+            Withdraw Address
+          </label>
+          <div className="w-full">
+            <AddressInput value={address} onChange={setAddress} />
           </div>
+        </div>
 
-          <div className="flex items-center justify-between md:justify-end gap-3 w-full md:w-auto">
-            {/* Exchange rate note under address, above barcode */}
-            <div className="flex items-center gap-2 text-black/60 text-[12px] bg-black/5 px-3 py-1.5 rounded-full font-medium shrink-0">
-              {asset === "WLT" ? (
-                <span>1 WLT ≈ ${stats?.price?.toFixed(4) || "0.0000"}</span>
-              ) : (
-                <span>1 USDC = 10 Gcoin</span>
-              )}
+        <div className="flex flex-col gap-2 mb-6 w-full">
+          <label className="text-[15px] font-semibold text-black">
+            Withdraw Amount
+          </label>
+          <div className="flex items-center gap-1 sm:gap-2 w-full">
+            <input
+              type="text"
+              placeholder="Minimum 20"
+              value={amount}
+              onChange={(e) => setAmount(e.target.value)}
+              className="flex-1 min-w-0 bg-black/5 border border-transparent rounded-full px-3 sm:px-4 h-8 outline-none text-[14px] text-black placeholder-black/40 transition-all font-medium focus:border-black focus:bg-transparent"
+            />
+            <div className="bg-black/5 border border-transparent px-3 sm:px-4 h-8 flex items-center justify-center rounded-full text-black/40 text-[14px] font-medium shrink-0">
+              {asset}
             </div>
-
-            {/* Check Status small button */}
-            <button
-              className="bg-[#111] hover:bg-black text-white font-semibold py-1.5 px-4 rounded-full shadow-sm transition-all text-[12px] shrink-0 z-50 relative"
-              onClick={() => {
-                setShowStatus(true);
-                setShowAssetDropdown(false);
-                setShowCryptoDropdown(false);
-                setShowNetworkDropdown(false);
-              }}
-            >
-              Check Status
+            <button className="bg-[#111] hover:bg-black text-white px-4 sm:px-5 h-8 flex items-center justify-center rounded-full text-[14px] font-bold transition-all shrink-0">
+              Max
             </button>
           </div>
         </div>
 
-        <div className="w-[140px] h-[140px] mx-auto bg-white rounded-xl shadow-sm mb-4 p-2.5 flex justify-center items-center">
-          <img
-            src={`https://api.qrserver.com/v1/create-qr-code/?size=140x140&data=${encodeURIComponent(address)}`}
-            alt="QR Code"
-            className="w-full h-full object-contain"
-          />
+        <div className="flex flex-wrap items-center gap-x-1 gap-y-1 text-[13px] text-black/40 mb-2 font-medium px-2">
+          <span className="whitespace-nowrap">
+            Total {asset} {asset === "WLT" ? "0.00" : "123322"}
+          </span>
+          <span className="hidden sm:inline">,</span>
+          <span className="whitespace-nowrap mx-1">
+            Network free 0.5 {crypto}
+          </span>
+          <div className="w-4 h-4 rounded-full bg-black/10 flex items-center justify-center ml-1 text-[10px] shrink-0 font-bold text-black/50">
+            ?
+          </div>
         </div>
 
-        <p className="text-[12px] font-normal text-black/65 px-2 mb-2 text-center">
-          Deposits under $1.00 won't show up until they total $1.00 or more.
-          {asset === "Gcoin" &&
-            " USDC auto-converts to Gcoin, withdrawable anytime as USDC. "}
-          Refresh your balance if it seems wrong, or contact{" "}
+        {parseFloat(amount || "0") > (asset === "WLT" ? 0 : 123322) && (
+          <div className="text-red-500 font-medium text-[13px] px-2 mb-6">
+            Insufficient balance
+          </div>
+        )}
+
+        <div
+          className={`${parseFloat(amount || "0") > (asset === "WLT" ? 0 : 123322) ? "mt-2" : "mt-6"}`}
+        >
+          <button
+            className="w-[120px] h-[40px] flex items-center justify-center mx-auto bg-[#111] hover:bg-black text-white font-bold rounded-full shadow-sm transition-all text-[15px] mb-4"
+            onClick={() => {
+              setShowStatus(true);
+              setShowAssetDropdown(false);
+              setShowCryptoDropdown(false);
+              setShowNetworkDropdown(false);
+            }}
+          >
+            Withdraw
+          </button>
+        </div>
+
+        <div className="flex flex-col items-center text-center gap-2 px-2 mt-2">
           <a
             href="mailto:support@randseed.org"
-            className="text-[#6A3FE6] hover:underline"
+            className="text-black/60 hover:text-black hover:underline font-medium text-[13px] underline decoration-black/30 underline-offset-4"
           >
             support@randseed.org
-          </a>{" "}
-          for help.
-        </p>
+          </a>
+          <p className="text-[13px] text-black/40 font-medium leading-relaxed max-w-[90%] mt-4 mx-auto">
+            If you have trouble to withdraw or have not received your
+            withdrawal, please contact us with your withdrawal address.
+          </p>
+        </div>
       </div>
     </div>
   );
@@ -190,7 +193,7 @@ export function DepositTab({ isDesktop }: DepositTabProps) {
       <div className="flex flex-col gap-1.5">
         <div className="flex items-center gap-3">
           <h2 className="text-[16px] font-[600] text-slate-800">
-            On-chain Deposit
+            On-chain Withdrawal
           </h2>
           <div className="flex items-center gap-1.5 bg-black/5 px-2.5 py-1 rounded-full">
             <div
@@ -206,7 +209,7 @@ export function DepositTab({ isDesktop }: DepositTabProps) {
           </div>
         </div>
         <p className="text-[12px] font-normal text-black/65">
-          Deposit is processed through the blockchain networks Wrong address
+          Withdraw is processed through the blockchain networks Wrong address
           will result in the loss of funds
         </p>
       </div>
@@ -243,7 +246,7 @@ export function DepositTab({ isDesktop }: DepositTabProps) {
                     <button
                       key={a}
                       onClick={() => {
-                        setAsset(a as "WLT" | "Gcoin");
+                        setAsset(a as any);
                         setShowAssetDropdown(false);
                       }}
                       className={`flex items-center w-full px-3 py-2 hover:bg-black/5 transition-colors gap-2 ${asset === a ? "bg-black/5" : ""}`}
@@ -351,7 +354,7 @@ export function DepositTab({ isDesktop }: DepositTabProps) {
                         setNetwork(net.id);
                         setShowNetworkDropdown(false);
                       }}
-                      className={`flex items-center w-full px-4 py-3 hover:bg-black/5 transition-colors gap-3 ${network === net.id ? "bg-black/5" : ""}`}
+                      className={`flex items-center w-full px-3 py-2 hover:bg-black/5 transition-colors gap-3 ${network === net.id ? "bg-black/5" : ""}`}
                     >
                       <div className="w-6 h-6 rounded-full overflow-hidden bg-[#555] flex items-center justify-center p-0.5 shrink-0">
                         {net.logo ? (
@@ -378,8 +381,7 @@ export function DepositTab({ isDesktop }: DepositTabProps) {
         </div>
       </div>
 
-      {/* Auxiliary Information */}
-      <div className="flex flex-col md:flex-row gap-2 w-full max-w-5xl items-start">
+      <div className="flex flex-col md:flex-row gap-6 w-full max-w-5xl items-start">
         <div className="flex-1 w-full max-w-2xl">
           {rightColumnContent}
 
@@ -393,7 +395,7 @@ export function DepositTab({ isDesktop }: DepositTabProps) {
                   <div className="flex items-center gap-2">
                     <HelpCircle size={18} className="text-black/50" />
                     <span className="text-[14px] font-semibold text-black">
-                      Where is my deposit?
+                      What is the network fee?
                     </span>
                   </div>
                   <ChevronDown
@@ -403,8 +405,8 @@ export function DepositTab({ isDesktop }: DepositTabProps) {
                 </div>
                 {faqExpanded && (
                   <span className="text-[12px] text-black/50 leading-relaxed pb-3 pt-1">
-                    It may take a few minutes for the network to verify your
-                    deposit. Once verified, it will show in your balance.
+                    The network fee is a small amount of crypto required to
+                    process your transaction on the blockchain.
                   </span>
                 )}
               </div>
@@ -422,27 +424,15 @@ export function DepositTab({ isDesktop }: DepositTabProps) {
             <div className="absolute left-[11px] top-4 bottom-4 w-[2px] bg-black/10 z-0"></div>
 
             <div className="flex gap-4 relative z-10">
-              <div className="w-6 h-6 rounded-full bg-[#111] text-white flex items-center justify-center shrink-0 border-2 border-[#f0f2f5] shadow-sm">
-                <svg
-                  className="w-3.5 h-3.5"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={3}
-                    d="M5 13l4 4L19 7"
-                  />
-                </svg>
+              <div className="w-6 h-6 rounded-full bg-black/10 flex items-center justify-center shrink-0 border-2 border-[#f0f2f5]">
+                <div className="w-1.5 h-1.5 rounded-full bg-black/20"></div>
               </div>
               <div className="flex flex-col mt-0.5">
-                <span className="text-[13px] font-bold text-black">
-                  No Transaction Detected
+                <span className="text-[13px] font-bold text-black/40">
+                  Request Submitted
                 </span>
                 <span className="text-[12px] text-black/50 mt-0.5">
-                  Please initiate a deposit first
+                  Your transaction has been submitted
                 </span>
               </div>
             </div>
@@ -453,10 +443,10 @@ export function DepositTab({ isDesktop }: DepositTabProps) {
               </div>
               <div className="flex flex-col mt-0.5">
                 <span className="text-[13px] font-bold text-black/40">
-                  Deposit Processing
+                  Network Confirming
                 </span>
                 <span className="text-[12px] text-black/30 mt-0.5">
-                  Detecting on-chain transaction
+                  Awaiting blockchain confirmations
                 </span>
               </div>
             </div>
@@ -467,7 +457,7 @@ export function DepositTab({ isDesktop }: DepositTabProps) {
               </div>
               <div className="flex flex-col mt-0.5">
                 <span className="text-[13px] font-bold text-black/40">
-                  Deposit Completed
+                  Completed
                 </span>
                 <span className="text-[12px] text-black/30 mt-0.5">
                   Funds processed successfully
@@ -500,27 +490,15 @@ export function DepositTab({ isDesktop }: DepositTabProps) {
                 <div className="absolute left-[11px] top-4 bottom-4 w-[2px] bg-black/10 z-0"></div>
 
                 <div className="flex gap-4 relative z-10">
-                  <div className="w-6 h-6 rounded-full bg-[#111] text-white flex items-center justify-center shrink-0 border-2 border-white shadow-sm">
-                    <svg
-                      className="w-3.5 h-3.5"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={3}
-                        d="M5 13l4 4L19 7"
-                      />
-                    </svg>
+                  <div className="w-6 h-6 rounded-full bg-black/10 flex items-center justify-center shrink-0 border-2 border-white">
+                    <div className="w-1.5 h-1.5 rounded-full bg-black/20"></div>
                   </div>
                   <div className="flex flex-col mt-0.5">
-                    <span className="text-[13px] font-bold text-black">
-                      No Transaction Detected
+                    <span className="text-[13px] font-bold text-black/40">
+                      Request Submitted
                     </span>
                     <span className="text-[12px] text-black/50 mt-0.5">
-                      Please initiate a deposit first
+                      Your transaction has been submitted
                     </span>
                   </div>
                 </div>
@@ -531,10 +509,10 @@ export function DepositTab({ isDesktop }: DepositTabProps) {
                   </div>
                   <div className="flex flex-col mt-0.5">
                     <span className="text-[13px] font-bold text-black/40">
-                      Deposit Processing
+                      Network Confirming
                     </span>
                     <span className="text-[12px] text-black/30 mt-0.5">
-                      Detecting on-chain transaction
+                      Awaiting blockchain confirmations
                     </span>
                   </div>
                 </div>
@@ -545,7 +523,7 @@ export function DepositTab({ isDesktop }: DepositTabProps) {
                   </div>
                   <div className="flex flex-col mt-0.5">
                     <span className="text-[13px] font-bold text-black/40">
-                      Deposit Completed
+                      Completed
                     </span>
                     <span className="text-[12px] text-black/30 mt-0.5">
                       Funds processed successfully

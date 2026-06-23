@@ -23,6 +23,7 @@ import { RewardsTab } from "./tabs/RewardsTab";
 import { RecordTab } from "./tabs/RecordTab";
 import { BonusTab } from "./tabs/BonusTab";
 import { DepositTab } from "./tabs/DepositTab";
+import { WithdrawTab } from "./tabs/WithdrawTab";
 import "../money-page/MoneyPage.css";
 
 interface MoneyPageProps {
@@ -220,8 +221,9 @@ export function MoneyPage({
                   strokeWidth={2.5}
                 />
               </div>
-              <div className="flex items-center text-slate-600 font-normal text-[14px]">
+              <div className="flex items-center gap-1 sm:gap-1.5 text-slate-600 font-normal text-[14px]">
                 <span>WLT</span>
+                <RefreshCw className="w-[14px] h-[14px] sm:w-[14px] sm:h-[14px] text-purple-400 shrink-0" />
               </div>
             </div>
           </div>
@@ -256,10 +258,15 @@ export function MoneyPage({
           <DepositTab isDesktop={isDesktop} />
         )}
 
+        {activeMenu === "withdraw" && (
+          <WithdrawTab isDesktop={isDesktop} />
+        )}
+
         {activeMenu !== "rewards" &&
           activeMenu !== "record" &&
           activeMenu !== "bonus" &&
-          activeMenu !== "deposit" && (
+          activeMenu !== "deposit" &&
+          activeMenu !== "withdraw" && (
             <div className="flex flex-col items-center justify-center py-20 text-slate-400">
               <span className="capitalize text-lg font-medium mb-2">
                 {activeMenu} Content
