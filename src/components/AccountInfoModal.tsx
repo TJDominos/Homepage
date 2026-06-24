@@ -62,7 +62,9 @@ export function AccountInfoModal({
   return (
     <AnimatePresence>
       {isOpen && (
-        <div className="fixed inset-x-0 bottom-0 z-[100] flex justify-center pointer-events-none p-4 sm:p-6 pb-6 sm:pb-8">
+        <div 
+          className="fixed inset-x-0 z-[100] flex justify-center pointer-events-none px-4 sm:px-6 pb-[calc(60px+env(safe-area-inset-bottom)+12px)] sm:pb-8 bottom-0"
+        >
           <div
             className="fixed inset-0 pointer-events-auto"
             onClick={() => onClose()}

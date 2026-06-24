@@ -295,6 +295,36 @@ export function WithdrawTab({ isDesktop }: WithdrawTabProps) {
     </div>
   );
 
+  const faqContent = (
+    <div className="bg-[#f0f2f5] rounded-3xl py-2 px-6 flex flex-col mt-2 md:mt-0">
+      <div className="flex flex-col">
+        <div
+          className="flex flex-col cursor-pointer"
+          onClick={() => setFaqExpanded(!faqExpanded)}
+        >
+          <div className="flex items-center justify-between py-3">
+            <div className="flex items-center gap-2">
+              <HelpCircle size={18} className="text-black/50" />
+              <span className="text-[14px] font-semibold text-black">
+                What is the network fee?
+              </span>
+            </div>
+            <ChevronDown
+              size={16}
+              className={`text-black/50 transition-transform ${faqExpanded ? "rotate-180" : ""}`}
+            />
+          </div>
+          {faqExpanded && (
+            <span className="text-[12px] text-black/50 leading-relaxed pb-3 pt-1">
+              The network fee is a small amount of crypto required to process
+              your transaction on the blockchain.
+            </span>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+
   return (
     <div className={`mt-6 gap-2 flex flex-col`}>
       <div className="flex flex-col gap-1.5">
@@ -492,7 +522,12 @@ export function WithdrawTab({ isDesktop }: WithdrawTabProps) {
       </div>
 
       <div className="flex flex-col md:flex-row gap-2 md:gap-6 w-full max-w-5xl items-start">
-        <div className="flex-1 w-full max-w-2xl">{rightColumnContent}</div>
+        <div className="flex-1 w-full max-w-2xl">
+          {rightColumnContent}
+          <div className="hidden md:block w-full max-w-2xl mx-auto mt-2">
+            {faqContent}
+          </div>
+        </div>
 
         {/* Right Column: Transactions and FAQ */}
         <div className="flex flex-col w-full md:w-[320px] shrink-0 gap-1">
@@ -642,33 +677,7 @@ export function WithdrawTab({ isDesktop }: WithdrawTabProps) {
             </div>
           </div>
 
-          <div className="bg-[#f0f2f5] rounded-3xl py-2 px-6 flex flex-col mt-2 md:mt-0">
-            <div className="flex flex-col">
-              <div
-                className="flex flex-col cursor-pointer"
-                onClick={() => setFaqExpanded(!faqExpanded)}
-              >
-                <div className="flex items-center justify-between py-3">
-                  <div className="flex items-center gap-2">
-                    <HelpCircle size={18} className="text-black/50" />
-                    <span className="text-[14px] font-semibold text-black">
-                      What is the network fee?
-                    </span>
-                  </div>
-                  <ChevronDown
-                    size={16}
-                    className={`text-black/50 transition-transform ${faqExpanded ? "rotate-180" : ""}`}
-                  />
-                </div>
-                {faqExpanded && (
-                  <span className="text-[12px] text-black/50 leading-relaxed pb-3 pt-1">
-                    The network fee is a small amount of crypto required to
-                    process your transaction on the blockchain.
-                  </span>
-                )}
-              </div>
-            </div>
-          </div>
+          <div className="md:hidden">{faqContent}</div>
         </div>
       </div>
     </div>

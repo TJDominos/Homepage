@@ -4,8 +4,8 @@ import svgPaths from "../../imports/svg-401s87trfk";
 import { Trophy } from "lucide-react";
 
 interface TabSwitchProps {
-  activePage: 'money' | 'play' | 'rank' | 'history' | string;
-  setActivePage: (page: 'money' | 'play' | 'rank' | 'history' | string) => void;
+  activePage: 'money' | 'play' | 'rank' | 'payout' | string;
+  setActivePage: (page: 'money' | 'play' | 'rank' | 'payout' | string) => void;
 }
 
 const TabSwitch = ({ activePage, setActivePage }: TabSwitchProps) => {
@@ -62,19 +62,19 @@ const TabSwitch = ({ activePage, setActivePage }: TabSwitchProps) => {
           </button>
           
           <button
-            onClick={() => setActivePage("history")}
-            className={activePage === "history" ? "nav-link active" : "nav-link"}
+            onClick={() => setActivePage("payout")}
+            className={activePage === "payout" ? "nav-link active" : "nav-link"}
           >
-            <div className="tab-icon history">
+            <div className="tab-icon payout">
               <svg className="w-full h-full" viewBox="0 0 27 27" fill="none">
                 <path 
                   d={svgPaths.p2891d1d0} 
                   fill="currentColor" 
-                  fillOpacity={activePage === 'history' ? '1' : '0.65'} 
+                  fillOpacity={activePage === 'payout' ? '1' : '0.65'} 
                 />
               </svg>
             </div>
-            <div className="label">History</div>
+            <div className="label">Payout</div>
           </button>
         </div>
       </div>

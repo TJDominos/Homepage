@@ -3,7 +3,12 @@ import { usePagination } from "../hooks/usePagination";
 import { pay_center, user } from "../api/ranksMock";
 import { COUNTRY_REGION_LIST } from "./country-region";
 import { getSysAvatar } from "../utils/avatar";
-import { ChevronLeft, ChevronRight, MoreHorizontal } from "lucide-react";
+import {
+  ChevronLeft,
+  ChevronRight,
+  MoreHorizontal,
+  ChevronDown,
+} from "lucide-react";
 import { AccountInfoModal, UserProfileInfo } from "./AccountInfoModal";
 
 function formatBonusAmount(amount: string | number | undefined) {
@@ -27,6 +32,23 @@ export default function RanksPage() {
   );
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [subTab, setSubTab] = useState("Bonus");
+  const [timeFilter, setTimeFilter] = useState("Today");
+  const [isTimeDropdownOpen, setIsTimeDropdownOpen] = useState(false);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent | TouchEvent) => {
+      const target = event.target as HTMLElement;
+      if (!target.closest(".dropdown-container")) {
+        setIsTimeDropdownOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    document.addEventListener("touchstart", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener("touchstart", handleClickOutside);
+    };
+  }, []);
 
   const {
     currentPage,
@@ -160,20 +182,68 @@ export default function RanksPage() {
         <h1 className="text-[16px] font-bold text-black mb-3 text-left">
           Winnings & Rewards
         </h1>
-        <div className="flex items-center gap-2">
-          {["Bonus", "WLT", "Gcoin"].map((tab) => (
-            <button
-              key={tab}
-              onClick={() => setSubTab(tab)}
-              className={`w-[80px] h-[28px] rounded-2xl text-sm font-medium transition-colors flex items-center justify-center ${
-                subTab === tab
-                  ? "bg-black text-white"
-                  : "bg-black/5 text-black/60 hover:text-black hover:bg-black/10"
-              }`}
-            >
-              {tab}
-            </button>
-          ))}
+        <div className="flex flex-row items-center justify-between gap-2">
+          <div className="flex items-center gap-1.5 sm:gap-2">
+            {["Bonus", "WLT", "Gcoin"].map((tab) => (
+              <button
+                key={tab}
+                onClick={() => setSubTab(tab)}
+                className={`w-[60px] sm:w-[80px] h-[28px] rounded-2xl text-[12px] sm:text-sm font-medium transition-colors flex items-center justify-center ${
+                  subTab === tab
+                    ? "bg-black text-white"
+                    : "bg-black/5 text-black/60 hover:text-black hover:bg-black/10"
+                }`}
+              >
+                {tab}
+              </button>
+            ))}
+          </div>
+
+          <div className="flex items-center">
+            {/* Desktop Segmented Control */}
+            <div className="hidden sm:flex items-center bg-[#e5e7eb] rounded-lg p-1">
+              {["Today", "Weekly", "Monthly", "All"].map((tf) => (
+                <button
+                  key={tf}
+                  onClick={() => setTimeFilter(tf)}
+                  className={`px-4 py-1.5 text-[14px] font-medium rounded-md transition-colors ${
+                    timeFilter === tf
+                      ? "bg-white text-black shadow-sm"
+                      : "text-black/60 hover:text-black hover:bg-black/5"
+                  }`}
+                >
+                  {tf}
+                </button>
+              ))}
+            </div>
+
+            {/* Mobile Dropdown */}
+            <div className="sm:hidden relative w-[100px] dropdown-container">
+              <button
+                onClick={() => setIsTimeDropdownOpen(!isTimeDropdownOpen)}
+                className="flex w-full items-center justify-between gap-1 bg-transparent py-2 px-1 text-[13px] text-black transition-colors"
+              >
+                <span className="truncate">{timeFilter}</span>
+                <ChevronDown size={14} className="text-black/40 shrink-0" />
+              </button>
+              {isTimeDropdownOpen && (
+                <div className="absolute top-full right-0 mt-1 w-full bg-white rounded-xl shadow-[0_4px_12px_rgba(0,0,0,0.1)] border border-black/5 py-1 z-50">
+                  {["Today", "Weekly", "Monthly", "All"].map((tf) => (
+                    <button
+                      key={tf}
+                      onClick={() => {
+                        setTimeFilter(tf);
+                        setIsTimeDropdownOpen(false);
+                      }}
+                      className={`w-full text-center px-1 py-2 text-[13px] hover:bg-black/5 ${timeFilter === tf ? "bg-black/5 text-black font-semibold" : "text-black/70"}`}
+                    >
+                      {tf}
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
+          </div>
         </div>
       </div>
 

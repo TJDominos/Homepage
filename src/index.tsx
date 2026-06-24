@@ -5,7 +5,7 @@ import { ErrorBoundary } from "./ErrorBoundary";
 import { useHomeData } from "./api/home";
 import type { Banner, Game } from "./api/home";
 import { WltLogo } from "./components/WltLogo";
-import { Wallet, User, Trophy } from "lucide-react";
+import { Wallet, User, Trophy, ChevronLeft } from "lucide-react";
 
 import BannerSkeleton from "./components/BannerSkeleton";
 import GamesSkeleton from "./components/GamesSkeleton";
@@ -34,12 +34,12 @@ function App() {
   const navigate = useNavigate();
 
   const path = location.pathname.replace("/", "");
-  const validTabs = ["money", "play", "inbox", "history", "rank"];
+  const validTabs = ["money", "play", "inbox", "payout", "rank"];
   const activeTab = (validTabs.includes(path) ? path : "play") as
     | "money"
     | "play"
     | "inbox"
-    | "history"
+    | "payout"
     | "rank";
   const setActiveTab = (tab: string) => navigate(`/${tab}`);
 
@@ -118,10 +118,10 @@ function App() {
     if (activeTab === "rank") {
       return <RanksPage />;
     }
-    if (activeTab === "history") {
+    if (activeTab === "payout") {
       return (
         <div className="text-center py-20 flex-1">
-          <h2 className="text-3xl font-bold text-black mb-4">History Page</h2>
+          <h2 className="text-3xl font-bold text-black mb-4">Payout Page</h2>
           <p className="text-black/65">Coming soon...</p>
         </div>
       );
@@ -201,7 +201,7 @@ function App() {
       className={`home-page flex flex-col relative${isDesktop ? " desktop-mode" : ""}`}
     >
       <div className="home-header">
-        <div className="home-header-content py-[12px] md:py-[10px] px-2">
+        <div className="home-header-content py-[12px] md:py-[10px] px-2 md:px-4">
           <div className="flex items-center gap-2 md:gap-3 justify-start">
             <div
               className="flex items-center justify-center shrink-0 cursor-pointer"
@@ -287,7 +287,7 @@ function App() {
                 { id: "money", label: "Money" },
                 { id: "play", label: "Play" },
                 { id: "rank", label: "Rank" },
-                { id: "history", label: "History" },
+                { id: "payout", label: "Payout" },
               ].map((tab) => (
                 <button
                   key={tab.id}
@@ -363,7 +363,7 @@ function App() {
                         strokeWidth={activeTab === "rank" ? 2 : 1.5}
                       />
                     )}
-                    {tab.id === "history" && (
+                    {tab.id === "payout" && (
                       <svg
                         className="w-full h-full"
                         viewBox="0 0 27 27"
@@ -383,14 +383,14 @@ function App() {
 
       <div
         className={
-          isDesktop ? "desktop-home-content flex flex-col flex-1" : "flex-1 pb-[80px]"
+          isDesktop
+            ? "desktop-home-content flex flex-col flex-1"
+            : "flex-1 pb-[80px]"
         }
       >
         {renderActiveTabContent(isDesktop)}
 
-        {["money", "play", "rank", "history"].includes(activeTab) && (
-          <Footer />
-        )}
+        {["money", "play", "rank", "payout"].includes(activeTab) && <Footer />}
       </div>
 
       {!isDesktop && (

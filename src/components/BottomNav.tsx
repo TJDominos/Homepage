@@ -2,7 +2,7 @@ import React from "react";
 import svgPaths from "../imports/svg-401s87trfk";
 import "./BottomNav.scss";
 
-type BottomNavTab = "money" | "play" | "inbox" | "history";
+type BottomNavTab = "money" | "play" | "inbox" | "payout";
 
 interface BottomNavProps {
   activeTab?: BottomNavTab;
@@ -98,9 +98,9 @@ const navItems: Array<{
     ),
   },
   {
-    id: "history",
-    label: "History",
-    href: "/history",
+    id: "payout",
+    label: "Payout",
+    href: "/payout",
     icon: (active) => (
       <svg
         className="tab-svg"

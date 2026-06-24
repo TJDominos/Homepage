@@ -89,21 +89,21 @@ export function TransactionRecord({
   const [showCategoryDropdown, setShowCategoryDropdown] = useState(false);
   const [showCurrencyDropdown, setShowCurrencyDropdown] = useState(false);
 
-  const dropdownsRef = useRef<HTMLDivElement>(null);
-
   useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (
-        dropdownsRef.current &&
-        !dropdownsRef.current.contains(event.target as Node)
-      ) {
+    const handleClickOutside = (event: MouseEvent | TouchEvent) => {
+      const target = event.target as HTMLElement;
+      if (!target.closest(".dropdown-container")) {
         setShowTimeDropdown(false);
         setShowCategoryDropdown(false);
         setShowCurrencyDropdown(false);
       }
     };
     document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
+    document.addEventListener("touchstart", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener("touchstart", handleClickOutside);
+    };
   }, []);
 
   const [records, setRecords] = useState(INITIAL_MOCK_RECORDS);
@@ -140,33 +140,43 @@ export function TransactionRecord({
     [isLoadingMore, hasMore, userAccount, records.length],
   );
 
+  const formatAmount = (num: number, isPositive: boolean) => {
+    if (!userAccount) return "-";
+    const sign = num === 0 ? "" : isPositive ? "+" : "-";
+    if (currencyFilter === "All Assets") {
+      return `${sign}$${num.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+    } else {
+      if (num >= 1000) {
+        return `${sign}${(num / 1000).toFixed(1).replace(/\.0$/, "")}K`;
+      }
+      return `${sign}${num.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+    }
+  };
+
   return (
     <div
       className={`flex flex-col w-full h-full ${isDesktop ? "px-2 pb-2" : ""}`}
     >
       <div className="flex flex-col gap-6 pb-6 relative z-0 h-full">
         {/* Top Section: Filters + Summary */}
-        <div
-          className="flex flex-col bg-[#f0f2f5] rounded-2xl p-4 sm:p-5 border border-black/5 gap-4 shrink-0"
-          ref={dropdownsRef}
-        >
+        <div className="flex flex-col bg-[#f0f2f5] rounded-2xl p-4 sm:p-5 border border-black/5 gap-4 shrink-0">
           {/* Time & Currency Filters */}
           <div className="flex items-center gap-4 relative w-full overflow-visible z-10">
             {/* Time Filter */}
-            <div className="relative flex-1 min-w-[120px] max-w-[200px]">
+            <div className="relative dropdown-container">
               <button
                 onClick={() => {
                   setShowTimeDropdown(!showTimeDropdown);
                   setShowCategoryDropdown(false);
                   setShowCurrencyDropdown(false);
                 }}
-                className="flex w-full items-center justify-between gap-1 bg-black/5 hover:bg-black/10 px-3 py-2 rounded-xl text-[13px] text-black transition-colors"
+                className="flex items-center gap-1.5 bg-black/5 hover:bg-black/10 px-3 py-2 rounded-xl text-[13px] text-black transition-colors"
               >
                 <span className="truncate">{timeFilter}</span>
                 <ChevronDown size={14} className="text-black/40 shrink-0" />
               </button>
               {showTimeDropdown && (
-                <div className="absolute top-full left-0 mt-1 w-full bg-white rounded-xl shadow-[0_4px_12px_rgba(0,0,0,0.1)] border border-black/5 py-1 z-50 max-h-[250px] overflow-y-auto">
+                <div className="absolute top-full left-0 mt-1 min-w-[100px] w-auto whitespace-nowrap bg-white rounded-xl shadow-[0_4px_12px_rgba(0,0,0,0.1)] border border-black/5 py-1 z-50 max-h-[250px] overflow-y-auto">
                   {TIMES.map((t) => (
                     <button
                       key={t}
@@ -186,20 +196,20 @@ export function TransactionRecord({
             </div>
 
             {/* Currency Filter */}
-            <div className="relative flex-1 min-w-[120px] max-w-[200px]">
+            <div className="relative dropdown-container">
               <button
                 onClick={() => {
                   setShowCurrencyDropdown(!showCurrencyDropdown);
                   setShowTimeDropdown(false);
                   setShowCategoryDropdown(false);
                 }}
-                className="flex w-full items-center justify-between gap-1 bg-black/5 hover:bg-black/10 px-3 py-2 rounded-xl text-[13px] text-black transition-colors"
+                className="flex items-center gap-1.5 bg-black/5 hover:bg-black/10 px-3 py-2 rounded-xl text-[13px] text-black transition-colors"
               >
                 <span className="truncate">{currencyFilter}</span>
                 <ChevronDown size={14} className="text-black/40 shrink-0" />
               </button>
               {showCurrencyDropdown && (
-                <div className="absolute top-full left-0 mt-1 w-full bg-white rounded-xl shadow-[0_4px_12px_rgba(0,0,0,0.1)] border border-black/5 py-1 z-50">
+                <div className="absolute top-full left-0 mt-1 min-w-[100px] w-auto whitespace-nowrap bg-white rounded-xl shadow-[0_4px_12px_rgba(0,0,0,0.1)] border border-black/5 py-1 z-50">
                   {CURRENCIES.map((c) => (
                     <button
                       key={c}
@@ -226,31 +236,31 @@ export function TransactionRecord({
               <div className="flex justify-between items-center text-sm mb-1">
                 <span className="text-black font-semibold">Income</span>
                 <span className="text-black font-semibold">
-                  {userAccount ? "+1976.63" : "-"}
+                  {formatAmount(1976.63, true)}
                 </span>
               </div>
               <div className="flex justify-between items-center text-sm pl-2">
                 <span className="text-black/50">Win</span>
                 <span className="text-black font-medium">
-                  {userAccount ? "+691.41" : "-"}
+                  {formatAmount(691.41, true)}
                 </span>
               </div>
               <div className="flex justify-between items-center text-sm pl-2">
                 <span className="text-black/50">Refund</span>
                 <span className="text-black font-medium">
-                  {userAccount ? "+0.67" : "-"}
+                  {formatAmount(0.67, true)}
                 </span>
               </div>
               <div className="flex justify-between items-center text-sm pl-2">
                 <span className="text-black/50">Deposit</span>
                 <span className="text-black font-medium">
-                  {userAccount ? "+1184.55" : "-"}
+                  {formatAmount(1184.55, true)}
                 </span>
               </div>
               <div className="flex justify-between items-center text-sm pl-2">
                 <span className="text-black/50">Bonus</span>
                 <span className="text-black font-medium">
-                  {userAccount ? "+100.00" : "-"}
+                  {formatAmount(100.0, true)}
                 </span>
               </div>
             </div>
@@ -260,31 +270,31 @@ export function TransactionRecord({
               <div className="flex justify-between items-center text-sm mb-1">
                 <span className="text-black font-semibold">Spending</span>
                 <span className="text-black font-semibold">
-                  {userAccount ? "-1969.26" : "-"}
+                  {formatAmount(1969.26, false)}
                 </span>
               </div>
               <div className="flex justify-between items-center text-sm pl-2">
                 <span className="text-black/50">Play</span>
                 <span className="text-black font-medium">
-                  {userAccount ? "-773.32" : "-"}
+                  {formatAmount(773.32, false)}
                 </span>
               </div>
               <div className="flex justify-between items-center text-sm pl-2">
                 <span className="text-black/50">Swap</span>
                 <span className="text-black font-medium">
-                  {userAccount ? "0.00" : "-"}
+                  {formatAmount(0.0, false)}
                 </span>
               </div>
               <div className="flex justify-between items-center text-sm pl-2">
                 <span className="text-black/50">Withdraw</span>
                 <span className="text-black font-medium">
-                  {userAccount ? "-295.71" : "-"}
+                  {formatAmount(295.71, false)}
                 </span>
               </div>
               <div className="flex justify-between items-center text-sm pl-2">
                 <span className="text-black/50">Staking</span>
                 <span className="text-black font-medium">
-                  {userAccount ? "-900.23" : "-"}
+                  {formatAmount(900.23, false)}
                 </span>
               </div>
             </div>
@@ -297,19 +307,19 @@ export function TransactionRecord({
               <div className="flex justify-between items-center text-sm mb-1">
                 <span className="text-black font-semibold">Income</span>
                 <span className="text-black font-semibold">
-                  {userAccount ? "+1976.63" : "-"}
+                  {formatAmount(1976.63, true)}
                 </span>
               </div>
               <div className="flex justify-between items-center text-sm pl-2">
                 <span className="text-black/50">Win</span>
                 <span className="text-black font-medium">
-                  {userAccount ? "+691.41" : "-"}
+                  {formatAmount(691.41, true)}
                 </span>
               </div>
               <div className="flex justify-between items-center text-sm pl-2">
                 <span className="text-black/50">Refund</span>
                 <span className="text-black font-medium">
-                  {userAccount ? "+0.67" : "-"}
+                  {formatAmount(0.67, true)}
                 </span>
               </div>
             </div>
@@ -323,13 +333,13 @@ export function TransactionRecord({
               <div className="flex justify-between items-center text-sm pl-2">
                 <span className="text-black/50">Deposit</span>
                 <span className="text-black font-medium">
-                  {userAccount ? "+1184.55" : "-"}
+                  {formatAmount(1184.55, true)}
                 </span>
               </div>
               <div className="flex justify-between items-center text-sm pl-2">
                 <span className="text-black/50">Bonus</span>
                 <span className="text-black font-medium">
-                  {userAccount ? "+100.00" : "-"}
+                  {formatAmount(100.0, true)}
                 </span>
               </div>
             </div>
@@ -339,19 +349,19 @@ export function TransactionRecord({
               <div className="flex justify-between items-center text-sm mb-1">
                 <span className="text-black font-semibold">Spending</span>
                 <span className="text-black font-semibold">
-                  {userAccount ? "-1969.26" : "-"}
+                  {formatAmount(1969.26, false)}
                 </span>
               </div>
               <div className="flex justify-between items-center text-sm pl-2">
                 <span className="text-black/50">Play</span>
                 <span className="text-black font-medium">
-                  {userAccount ? "-773.32" : "-"}
+                  {formatAmount(773.32, false)}
                 </span>
               </div>
               <div className="flex justify-between items-center text-sm pl-2">
                 <span className="text-black/50">Swap</span>
                 <span className="text-black font-medium">
-                  {userAccount ? "0.00" : "-"}
+                  {formatAmount(0.0, false)}
                 </span>
               </div>
             </div>
@@ -365,13 +375,13 @@ export function TransactionRecord({
               <div className="flex justify-between items-center text-sm pl-2">
                 <span className="text-black/50">Withdraw</span>
                 <span className="text-black font-medium">
-                  {userAccount ? "-295.71" : "-"}
+                  {formatAmount(295.71, false)}
                 </span>
               </div>
               <div className="flex justify-between items-center text-sm pl-2">
                 <span className="text-black/50">Staking</span>
                 <span className="text-black font-medium">
-                  {userAccount ? "-900.23" : "-"}
+                  {formatAmount(900.23, false)}
                 </span>
               </div>
             </div>
@@ -385,20 +395,20 @@ export function TransactionRecord({
               Detail
             </h3>
             {/* Category Filter */}
-            <div className="relative min-w-[120px] max-w-[200px]">
+            <div className="relative dropdown-container">
               <button
                 onClick={() => {
                   setShowCategoryDropdown(!showCategoryDropdown);
                   setShowTimeDropdown(false);
                   setShowCurrencyDropdown(false);
                 }}
-                className="flex w-full items-center justify-between gap-1 bg-black/5 hover:bg-black/10 px-3 py-2 rounded-xl text-[13px] text-black transition-colors"
+                className="flex items-center gap-1.5 bg-black/5 hover:bg-black/10 px-3 py-2 rounded-xl text-[13px] text-black transition-colors"
               >
                 <span className="truncate">{categoryFilter}</span>
                 <ChevronDown size={14} className="text-black/40 shrink-0" />
               </button>
               {showCategoryDropdown && (
-                <div className="absolute top-full right-0 mt-1 w-[160px] bg-white rounded-xl shadow-[0_4px_12px_rgba(0,0,0,0.1)] border border-black/5 py-1 z-50 max-h-[250px] overflow-y-auto">
+                <div className="absolute top-full right-0 mt-1 min-w-[100px] w-auto whitespace-nowrap bg-white rounded-xl shadow-[0_4px_12px_rgba(0,0,0,0.1)] border border-black/5 py-1 z-50 max-h-[250px] overflow-y-auto">
                   {CATEGORIES.map((c) => (
                     <button
                       key={c}
