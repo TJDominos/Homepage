@@ -34,7 +34,10 @@ export function TransactionModals({
 
   return (
     <div className="fixed inset-0 z-[100] flex items-end sm:items-center justify-center">
-      <div className="absolute inset-0 bg-black/30 backdrop-blur-md" onClick={onClose}></div>
+      <div
+        className="absolute inset-0 bg-black/30 backdrop-blur-md"
+        onClick={onClose}
+      ></div>
 
       <div
         className={`relative w-full ${activeModal === "record" ? "max-w-[800px]" : "max-w-[500px]"} bg-[#EAEAEA] rounded-t-2xl sm:rounded-2xl overflow-hidden flex flex-col pointer-events-auto transform transition-transform ${isDesktop ? "h-auto max-h-[90vh]" : "mt-auto pb-4 h-[85vh] sm:h-auto"}`}

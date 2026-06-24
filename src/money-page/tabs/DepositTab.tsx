@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { createPortal } from "react-dom";
 import {
   Copy,
@@ -19,7 +19,7 @@ interface DepositTabProps {
 const ALL_NETWORKS = [
   {
     id: "SOL",
-    name: "Solana",
+    name: "SOL",
     time: "≈ 1 mins",
     confirmations: "1 Confirmation/s",
     logo: "/solana-sol-logo-horizontal.svg",
@@ -27,7 +27,7 @@ const ALL_NETWORKS = [
   },
   {
     id: "ETH",
-    name: "Ethereum (ERC20)",
+    name: "ETH (ERC20)",
     time: "≈ 2 mins",
     confirmations: "6 Confirmation/s",
     logo: "/ethereum-eth-logo-full-horizontal.svg",
@@ -35,7 +35,7 @@ const ALL_NETWORKS = [
   },
   {
     id: "BSC",
-    name: "BNB Smart Chain (BEP20)",
+    name: "BSC (BEP20)",
     time: "≈ 1 mins",
     confirmations: "1 Confirmation/s",
     isPaused: true,
@@ -76,8 +76,131 @@ export function DepositTab({ isDesktop }: DepositTabProps) {
   const [showNetworkDropdown, setShowNetworkDropdown] = useState(false);
   const [showAssetDropdown, setShowAssetDropdown] = useState(false);
   const [showCryptoDropdown, setShowCryptoDropdown] = useState(false);
-  const [showStatus, setShowStatus] = useState(false);
   const [faqExpanded, setFaqExpanded] = useState(false);
+  const [expandedTx, setExpandedTx] = useState<string | null>(null);
+
+  const dropdownsRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        dropdownsRef.current &&
+        !dropdownsRef.current.contains(event.target as Node)
+      ) {
+        setShowAssetDropdown(false);
+        setShowCryptoDropdown(false);
+        setShowNetworkDropdown(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 5;
+
+  const [txs] = useState([
+    {
+      id: "1",
+      date: "2026-06-23",
+      time: "14:30:22",
+      amount: "+100.00",
+      currency: "USDC",
+      status: "Completed",
+      network: "SOL",
+      fromAddress: "7aY9wR2bN8cK3vM1zX5qT8jP4xL6hF2d",
+      address: "8x8eF3a2M1kP5rT7qY9wN2bX4zL6cK8j",
+      txid: "4xAb2cK8jL6hF2dN8cK3vM1zX5qT8jP4xL6hF2d",
+    },
+    {
+      id: "2",
+      date: "2026-06-22",
+      time: "09:15:00",
+      amount: "+50.00",
+      currency: "USDT",
+      status: "Processing",
+      network: "ETH",
+      fromAddress: "0x1a2B3c4D5e6F7g8H9i0J1k2L3m4N5o6P",
+      address: "0x4b2C3d4E5f6G7h8I9j0K1l2M3n4O5p6Q",
+      txid: "0x1a2b3c4d5e6f7g8h9i0j1k2l3m4n5o6p7q8r9s0t1u2v3w4x5y6z",
+    },
+    {
+      id: "3",
+      date: "2026-06-21",
+      time: "11:20:05",
+      amount: "+200.00",
+      currency: "WLT",
+      status: "Failed",
+      network: "BSC",
+      fromAddress: "0x9z8Y7x6W5v4U3t2S1r0Q9p8O7n6M5l4K",
+      address: "0x1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6q",
+      txid: "0x9a8b7c6d5e4f3g2h1i0j9k8l7m6n5o4p3q2r1s0t9u8v7w6x5y4z",
+    },
+    {
+      id: "4",
+      date: "2026-06-20",
+      time: "18:45:33",
+      amount: "+150.00",
+      currency: "USDC",
+      status: "Completed",
+      network: "SOL",
+      fromAddress: "3mN4o5P6qQ7r8S9tT0u1V2wX3yZ4aB5c",
+      address: "8x8eF3a2M1kP5rT7qY9wN2bX4zL6cK8j",
+      txid: "2yB4cD6eF8gH0iJ2kL4mN6oP8qR0sT2u",
+    },
+    {
+      id: "5",
+      date: "2026-06-19",
+      time: "10:10:10",
+      amount: "+25.00",
+      currency: "USDT",
+      status: "Completed",
+      network: "ETH",
+      fromAddress: "0x2c3D4e5F6g7H8i9J0k1L2m3N4o5P6q7R",
+      address: "0x4b2C3d4E5f6G7h8I9j0K1l2M3n4O5p6Q",
+      txid: "0x3d4e5f6g7h8i9j0k1l2m3n4o5p6q7r8s9t0u1v2w3x4y5z",
+    },
+    {
+      id: "6",
+      date: "2026-06-18",
+      time: "15:22:45",
+      amount: "+300.00",
+      currency: "WLT",
+      status: "Completed",
+      network: "BSC",
+      fromAddress: "0x4e5F6g7H8i9J0k1L2m3N4o5P6q7R8s9T",
+      address: "0x1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6q",
+      txid: "0x5f6g7h8i9j0k1l2m3n4o5p6q7r8s9t0u1v2w3x4y5z6a7b8c",
+    },
+  ]);
+
+  const totalPages = Math.ceil(txs.length / itemsPerPage);
+  const paginatedTxs = txs.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage,
+  );
+
+  const getExplorerUrl = (
+    network: string,
+    type: "tx" | "address",
+    value: string,
+  ) => {
+    if (network === "ETH") {
+      return type === "tx"
+        ? `https://etherscan.io/tx/${value}`
+        : `https://etherscan.io/address/${value}`;
+    }
+    if (network === "SOL") {
+      return type === "tx"
+        ? `https://solscan.io/tx/${value}`
+        : `https://solscan.io/account/${value}`;
+    }
+    return type === "tx"
+      ? `https://bscscan.com/tx/${value}`
+      : `https://bscscan.com/address/${value}`;
+  };
 
   useEffect(() => {
     if (asset === "WLT") {
@@ -119,7 +242,7 @@ export function DepositTab({ isDesktop }: DepositTabProps) {
       : address;
 
   const rightColumnContent = (
-    <div className="flex flex-col mt-2 mb-6 w-full max-w-2xl">
+    <div className="flex flex-col mt-1 mb-1 w-full max-w-2xl">
       <div className="bg-[#EAEAEA] rounded-3xl p-5 md:p-6 flex flex-col w-full shadow-sm">
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 mb-4 w-full">
           <div className="flex items-center gap-2 text-[15px]">
@@ -145,18 +268,7 @@ export function DepositTab({ isDesktop }: DepositTabProps) {
               )}
             </div>
 
-            {/* Check Status small button */}
-            <button
-              className="bg-[#111] hover:bg-black text-white font-semibold py-1.5 px-4 rounded-full shadow-sm transition-all text-[12px] shrink-0 z-50 relative"
-              onClick={() => {
-                setShowStatus(true);
-                setShowAssetDropdown(false);
-                setShowCryptoDropdown(false);
-                setShowNetworkDropdown(false);
-              }}
-            >
-              Check Status
-            </button>
+            {/* No Check Status button */}
           </div>
         </div>
 
@@ -214,7 +326,10 @@ export function DepositTab({ isDesktop }: DepositTabProps) {
         className={`flex flex-col md:flex-row gap-6 w-full max-w-5xl items-start`}
       >
         <div className="flex-1 w-full max-w-2xl">
-          <div className="flex flex-wrap items-start gap-4 relative z-20 pb-1 w-full">
+          <div
+            className="flex flex-wrap items-start gap-4 relative z-20 pb-1 w-full"
+            ref={dropdownsRef}
+          >
             {/* Asset Select */}
             <div className="flex flex-col gap-1 relative shrink-0 min-w-[110px] flex-auto sm:flex-none">
               <label className="text-[13px] font-normal text-black">
@@ -379,11 +494,164 @@ export function DepositTab({ isDesktop }: DepositTabProps) {
       </div>
 
       {/* Auxiliary Information */}
-      <div className="flex flex-col md:flex-row gap-2 w-full max-w-5xl items-start">
-        <div className="flex-1 w-full max-w-2xl">
-          {rightColumnContent}
+      <div className="flex flex-col md:flex-row gap-2 md:gap-6 w-full max-w-5xl items-start">
+        <div className="flex-1 w-full max-w-2xl">{rightColumnContent}</div>
 
-          <div className="bg-[#f0f2f5] rounded-3xl py-2 px-6 flex flex-col mt-2 md:mt-2">
+        {/* Right Column: Transactions and FAQ */}
+        <div className="flex flex-col w-full md:w-[320px] shrink-0 gap-1">
+          {/* Transactions - Always inline on mobile and desktop */}
+          <div className="flex flex-col relative inset-auto bg-[#f0f2f5] rounded-3xl p-6 shadow-sm overflow-visible h-fit">
+            <h3 className="text-[16px] font-bold text-black mb-4 flex items-center gap-2">
+              <Activity size={18} className="text-black/50" />
+              Transactions
+            </h3>
+            <div className="flex flex-col gap-3 w-full">
+              {paginatedTxs.map((tx) => (
+                <div
+                  key={tx.id}
+                  className="bg-white rounded-2xl p-4 shadow-sm border border-black/5 flex flex-col transition-all"
+                >
+                  <div
+                    className="flex justify-between items-start"
+                    onClick={() =>
+                      setExpandedTx(expandedTx === tx.id ? null : tx.id)
+                    }
+                    style={{ cursor: "pointer" }}
+                  >
+                    <div className="flex flex-col">
+                      <span className="text-[14px] font-bold text-black">
+                        {tx.amount} {tx.currency}
+                      </span>
+                      <span className="text-[12px] text-black/50 mt-0.5">
+                        {tx.date} {tx.time} · {tx.network}
+                      </span>
+                    </div>
+                    <div className="flex items-center gap-1.5 mt-0.5">
+                      {tx.status === "Completed" && (
+                        <span className="text-[12px] font-semibold text-emerald-600">
+                          Completed
+                        </span>
+                      )}
+                      {tx.status === "Failed" && (
+                        <span className="text-[12px] font-semibold text-red-500">
+                          Failed
+                        </span>
+                      )}
+                      {tx.status === "Processing" && (
+                        <>
+                          <span className="text-[12px] font-semibold text-blue-500">
+                            Processing
+                          </span>
+                          <svg
+                            width="14"
+                            height="14"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            strokeWidth="2"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            className="text-blue-500 shrink-0"
+                          >
+                            <circle cx="12" cy="12" r="10" />
+                            <path
+                              d="M12 12L12 6"
+                              className="animate-spin"
+                              style={{
+                                transformOrigin: "12px 12px",
+                                animationDuration: "1.5s",
+                                animationTimingFunction: "linear",
+                              }}
+                            />
+                            <path d="M12 12L16 12" />
+                          </svg>
+                        </>
+                      )}
+                    </div>
+                  </div>
+                  {expandedTx === tx.id && (
+                    <div className="flex flex-col gap-3 pt-3 border-t border-black/5 mt-3">
+                      <div className="flex flex-col">
+                        <span className="text-[11px] text-black/50 mb-0.5">
+                          From Address
+                        </span>
+                        <a
+                          href={getExplorerUrl(
+                            tx.network,
+                            "address",
+                            tx.fromAddress,
+                          )}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="text-[12px] text-black font-medium break-all hover:underline"
+                          onClick={(e) => e.stopPropagation()}
+                        >
+                          {tx.fromAddress}
+                        </a>
+                      </div>
+                      <div className="flex flex-col">
+                        <span className="text-[11px] text-black/50 mb-0.5">
+                          Deposit Address
+                        </span>
+                        <a
+                          href={getExplorerUrl(
+                            tx.network,
+                            "address",
+                            tx.address,
+                          )}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="text-[12px] text-black font-medium break-all hover:underline"
+                          onClick={(e) => e.stopPropagation()}
+                        >
+                          {tx.address}
+                        </a>
+                      </div>
+                      <div className="flex flex-col">
+                        <span className="text-[11px] text-black/50 mb-0.5">
+                          TxID
+                        </span>
+                        <a
+                          href={getExplorerUrl(tx.network, "tx", tx.txid)}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="text-[12px] text-blue-600 font-medium break-all hover:underline"
+                          onClick={(e) => e.stopPropagation()}
+                        >
+                          {tx.txid}
+                        </a>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              ))}
+
+              {/* Pagination Controls */}
+              {totalPages > 1 && (
+                <div className="flex items-center justify-between mt-2 pt-2 border-t border-black/5">
+                  <button
+                    disabled={currentPage === 1}
+                    onClick={() => setCurrentPage((p) => p - 1)}
+                    className="px-3 py-1 bg-black/5 disabled:opacity-50 hover:bg-black/10 rounded-full text-[12px] font-medium transition-colors"
+                  >
+                    Prev
+                  </button>
+                  <span className="text-[12px] text-black/50 font-medium">
+                    {currentPage} / {totalPages}
+                  </span>
+                  <button
+                    disabled={currentPage === totalPages}
+                    onClick={() => setCurrentPage((p) => p + 1)}
+                    className="px-3 py-1 bg-black/5 disabled:opacity-50 hover:bg-black/10 rounded-full text-[12px] font-medium transition-colors"
+                  >
+                    Next
+                  </button>
+                </div>
+              )}
+            </div>
+          </div>
+
+          <div className="bg-[#f0f2f5] rounded-3xl py-2 px-6 flex flex-col mt-2 md:mt-0">
             <div className="flex flex-col">
               <div
                 className="flex flex-col cursor-pointer"
@@ -411,152 +679,7 @@ export function DepositTab({ isDesktop }: DepositTabProps) {
             </div>
           </div>
         </div>
-
-        {/* Processing Status - Right space (Desktop inline, Mobile is Portaled below) */}
-        <div className="hidden md:flex flex-col w-full md:w-[320px] shrink-0 gap-2 mt-4 md:mt-0 relative inset-auto bg-[#f0f2f5] rounded-3xl p-6 shadow-sm overflow-visible">
-          <h3 className="text-[16px] font-bold text-black mb-4 flex items-center gap-2">
-            <Activity size={18} className="text-black/50" />
-            Processing Status
-          </h3>
-          <div className="flex flex-col gap-4 relative">
-            <div className="absolute left-[11px] top-4 bottom-4 w-[2px] bg-black/10 z-0"></div>
-
-            <div className="flex gap-4 relative z-10">
-              <div className="w-6 h-6 rounded-full bg-[#111] text-white flex items-center justify-center shrink-0 border-2 border-[#f0f2f5] shadow-sm">
-                <svg
-                  className="w-3.5 h-3.5"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={3}
-                    d="M5 13l4 4L19 7"
-                  />
-                </svg>
-              </div>
-              <div className="flex flex-col mt-0.5">
-                <span className="text-[13px] font-bold text-black">
-                  No Transaction Detected
-                </span>
-                <span className="text-[12px] text-black/50 mt-0.5">
-                  Please initiate a deposit first
-                </span>
-              </div>
-            </div>
-
-            <div className="flex gap-4 relative z-10">
-              <div className="w-6 h-6 rounded-full bg-black/10 flex items-center justify-center shrink-0 border-2 border-[#f0f2f5]">
-                <div className="w-1.5 h-1.5 rounded-full bg-black/20"></div>
-              </div>
-              <div className="flex flex-col mt-0.5">
-                <span className="text-[13px] font-bold text-black/40">
-                  Deposit Processing
-                </span>
-                <span className="text-[12px] text-black/30 mt-0.5">
-                  Detecting on-chain transaction
-                </span>
-              </div>
-            </div>
-
-            <div className="flex gap-4 relative z-10">
-              <div className="w-6 h-6 rounded-full bg-black/10 flex items-center justify-center shrink-0 border-2 border-[#f0f2f5]">
-                <div className="w-1.5 h-1.5 rounded-full bg-black/20"></div>
-              </div>
-              <div className="flex flex-col mt-0.5">
-                <span className="text-[13px] font-bold text-black/40">
-                  Deposit Completed
-                </span>
-                <span className="text-[12px] text-black/30 mt-0.5">
-                  Funds processed successfully
-                </span>
-              </div>
-            </div>
-          </div>
-        </div>
       </div>
-
-      {/* Mobile Processing Status Overlay */}
-      {showStatus &&
-        typeof document !== "undefined" &&
-        createPortal(
-          <div className="md:hidden">
-            <div
-              className="fixed inset-0 bg-black/20 z-[9990] backdrop-blur-sm"
-              onClick={() => setShowStatus(false)}
-            />
-            <div className="fixed inset-x-0 bottom-0 z-[9991] bg-white p-6 pt-4 rounded-t-3xl shadow-[0_-20px_40px_rgba(0,0,0,0.15)] max-h-[80vh] overflow-y-auto flex flex-col">
-              <div
-                className="w-12 h-1.5 bg-black/10 rounded-full mx-auto mb-6 shrink-0 cursor-pointer"
-                onClick={() => setShowStatus(false)}
-              />
-              <h3 className="text-[16px] font-bold text-black mb-4 flex items-center gap-2">
-                <Activity size={18} className="text-black/50" />
-                Processing Status
-              </h3>
-              <div className="flex flex-col gap-4 relative">
-                <div className="absolute left-[11px] top-4 bottom-4 w-[2px] bg-black/10 z-0"></div>
-
-                <div className="flex gap-4 relative z-10">
-                  <div className="w-6 h-6 rounded-full bg-[#111] text-white flex items-center justify-center shrink-0 border-2 border-white shadow-sm">
-                    <svg
-                      className="w-3.5 h-3.5"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={3}
-                        d="M5 13l4 4L19 7"
-                      />
-                    </svg>
-                  </div>
-                  <div className="flex flex-col mt-0.5">
-                    <span className="text-[13px] font-bold text-black">
-                      No Transaction Detected
-                    </span>
-                    <span className="text-[12px] text-black/50 mt-0.5">
-                      Please initiate a deposit first
-                    </span>
-                  </div>
-                </div>
-
-                <div className="flex gap-4 relative z-10">
-                  <div className="w-6 h-6 rounded-full bg-black/10 flex items-center justify-center shrink-0 border-2 border-white">
-                    <div className="w-1.5 h-1.5 rounded-full bg-black/20"></div>
-                  </div>
-                  <div className="flex flex-col mt-0.5">
-                    <span className="text-[13px] font-bold text-black/40">
-                      Deposit Processing
-                    </span>
-                    <span className="text-[12px] text-black/30 mt-0.5">
-                      Detecting on-chain transaction
-                    </span>
-                  </div>
-                </div>
-
-                <div className="flex gap-4 relative z-10">
-                  <div className="w-6 h-6 rounded-full bg-black/10 flex items-center justify-center shrink-0 border-2 border-white">
-                    <div className="w-1.5 h-1.5 rounded-full bg-black/20"></div>
-                  </div>
-                  <div className="flex flex-col mt-0.5">
-                    <span className="text-[13px] font-bold text-black/40">
-                      Deposit Completed
-                    </span>
-                    <span className="text-[12px] text-black/30 mt-0.5">
-                      Funds processed successfully
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>,
-          document.body,
-        )}
     </div>
   );
 }

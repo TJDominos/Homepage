@@ -383,7 +383,7 @@ function App() {
 
       <div
         className={
-          isDesktop ? "desktop-home-content flex flex-col flex-1" : "flex-1"
+          isDesktop ? "desktop-home-content flex flex-col flex-1" : "flex-1 pb-[80px]"
         }
       >
         {renderActiveTabContent(isDesktop)}

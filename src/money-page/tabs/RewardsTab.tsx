@@ -174,7 +174,9 @@ export function RewardsTab({
                       <div className="w-12 h-12 bg-blue-50 rounded-full flex items-center justify-center mb-2">
                         <div className="w-6 h-6 rounded-full bg-blue-400"></div>
                       </div>
-                      <span className="text-[13px] font-bold">$WLT Airdrop</span>
+                      <span className="text-[13px] font-bold">
+                        $WLT Airdrop
+                      </span>
                     </div>
                   </div>
 
@@ -215,7 +217,8 @@ export function RewardsTab({
 
                   <div className="flex justify-end pt-4 border-t border-black/10">
                     <button className="text-[14px] text-black/60 flex items-center gap-1 hover:text-black">
-                      invited <span className="font-bold text-black mx-1">0</span>{" "}
+                      invited{" "}
+                      <span className="font-bold text-black mx-1">0</span>{" "}
                       friends <ChevronRight className="w-4 h-4" />
                     </button>
                   </div>

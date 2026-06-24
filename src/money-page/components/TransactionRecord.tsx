@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useRef, useEffect } from "react";
 import { ChevronDown, Activity, Inbox, Loader2 } from "lucide-react";
 
 interface TransactionRecordProps {
@@ -89,6 +89,23 @@ export function TransactionRecord({
   const [showCategoryDropdown, setShowCategoryDropdown] = useState(false);
   const [showCurrencyDropdown, setShowCurrencyDropdown] = useState(false);
 
+  const dropdownsRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        dropdownsRef.current &&
+        !dropdownsRef.current.contains(event.target as Node)
+      ) {
+        setShowTimeDropdown(false);
+        setShowCategoryDropdown(false);
+        setShowCurrencyDropdown(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
   const [records, setRecords] = useState(INITIAL_MOCK_RECORDS);
   const [isLoadingMore, setIsLoadingMore] = useState(false);
   const [hasMore, setHasMore] = useState(true);
@@ -99,21 +116,29 @@ export function TransactionRecord({
       ? records
       : records.filter((r) => r.type === categoryFilter);
 
-  const handleScroll = useCallback((e: React.UIEvent<HTMLDivElement>) => {
-    const { scrollTop, scrollHeight, clientHeight } = e.currentTarget;
-    if (scrollHeight - scrollTop <= clientHeight + 10 && !isLoadingMore && hasMore && userAccount) {
-      setIsLoadingMore(true);
-      // Simulate network request for paginated data
-      setTimeout(() => {
-        setRecords(prev => [...prev, ...INITIAL_MOCK_RECORDS]);
-        setIsLoadingMore(false);
-        // Let's cap it at a few reloads for mock
-        if (records.length > 20) {
-          setHasMore(false);
-        }
-      }, 800);
-    }
-  }, [isLoadingMore, hasMore, userAccount, records.length]);
+  const handleScroll = useCallback(
+    (e: React.UIEvent<HTMLDivElement>) => {
+      const { scrollTop, scrollHeight, clientHeight } = e.currentTarget;
+      if (
+        scrollHeight - scrollTop <= clientHeight + 10 &&
+        !isLoadingMore &&
+        hasMore &&
+        userAccount
+      ) {
+        setIsLoadingMore(true);
+        // Simulate network request for paginated data
+        setTimeout(() => {
+          setRecords((prev) => [...prev, ...INITIAL_MOCK_RECORDS]);
+          setIsLoadingMore(false);
+          // Let's cap it at a few reloads for mock
+          if (records.length > 20) {
+            setHasMore(false);
+          }
+        }, 800);
+      }
+    },
+    [isLoadingMore, hasMore, userAccount, records.length],
+  );
 
   return (
     <div
@@ -121,7 +146,10 @@ export function TransactionRecord({
     >
       <div className="flex flex-col gap-6 pb-6 relative z-0 h-full">
         {/* Top Section: Filters + Summary */}
-        <div className="flex flex-col bg-[#f0f2f5] rounded-2xl p-4 sm:p-5 border border-black/5 gap-4 shrink-0">
+        <div
+          className="flex flex-col bg-[#f0f2f5] rounded-2xl p-4 sm:p-5 border border-black/5 gap-4 shrink-0"
+          ref={dropdownsRef}
+        >
           {/* Time & Currency Filters */}
           <div className="flex items-center gap-4 relative w-full overflow-visible z-10">
             {/* Time Filter */}
@@ -390,7 +418,7 @@ export function TransactionRecord({
             </div>
           </div>
 
-          <div 
+          <div
             className="flex flex-col flex-1 overflow-y-auto hide-scrollbar relative z-0"
             onScroll={handleScroll}
           >
@@ -451,7 +479,7 @@ export function TransactionRecord({
                     <Loader2 size={24} className="animate-spin" />
                   </div>
                 )}
-                
+
                 {!hasMore && filteredRecords.length > 0 && (
                   <div className="flex justify-center items-center pt-2 pb-4 text-black/40 text-[13px] font-medium">
                     No more records
@@ -465,4 +493,3 @@ export function TransactionRecord({
     </div>
   );
 }
-
