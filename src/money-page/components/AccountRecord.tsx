@@ -1,23 +1,25 @@
 import React, { useState, useCallback, useRef, useEffect } from "react";
 import { ChevronDown, Activity, Inbox, Loader2 } from "lucide-react";
 
-interface TransactionRecordProps {
+interface AccountRecordProps {
   isDesktop?: boolean;
   userAccount?: string | null;
 }
 
 const CATEGORIES = [
   "All Category",
-  "Win",
+  "Buy",
+  "Deposit",
   "Play",
   "Refund",
-  "Swap",
-  "Deposit",
-  "Withdraw",
+  "Reward",
+  "Sell",
   "Staking",
+  "Win",
+  "Withdraw",
 ];
 
-const CURRENCIES = ["All Assets", "ICP", "Gcoin", "Bonus", "WLT"];
+const CURRENCIES = ["All Assets", "Bonus", "Gcoin", "ICP", "WLT"];
 
 const TIMES = [
   "All Time",
@@ -77,10 +79,7 @@ const INITIAL_MOCK_RECORDS = [
   },
 ];
 
-export function TransactionRecord({
-  isDesktop,
-  userAccount,
-}: TransactionRecordProps) {
+export function AccountRecord({ isDesktop, userAccount }: AccountRecordProps) {
   const [timeFilter, setTimeFilter] = useState("All Time");
   const [categoryFilter, setCategoryFilter] = useState("All Category");
   const [currencyFilter, setCurrencyFilter] = useState("All Assets");
@@ -163,20 +162,23 @@ export function TransactionRecord({
           {/* Time & Currency Filters */}
           <div className="flex items-center gap-4 relative w-full overflow-visible z-10">
             {/* Time Filter */}
-            <div className="relative dropdown-container">
+            <div className="relative dropdown-container min-w-[120px]">
               <button
                 onClick={() => {
                   setShowTimeDropdown(!showTimeDropdown);
                   setShowCategoryDropdown(false);
                   setShowCurrencyDropdown(false);
                 }}
-                className="flex items-center gap-1.5 bg-black/5 hover:bg-black/10 px-3 py-2 rounded-xl text-[13px] text-black transition-colors"
+                className="relative flex items-center justify-center w-full bg-black/5 hover:bg-black/10 px-8 py-2 rounded-xl text-[13px] text-black transition-colors"
               >
-                <span className="truncate">{timeFilter}</span>
-                <ChevronDown size={14} className="text-black/40 shrink-0" />
+                <span className="truncate text-center">{timeFilter}</span>
+                <ChevronDown
+                  size={14}
+                  className="absolute right-3 text-black/40"
+                />
               </button>
               {showTimeDropdown && (
-                <div className="absolute top-full left-0 mt-1 min-w-[100px] w-auto whitespace-nowrap bg-white rounded-xl shadow-[0_4px_12px_rgba(0,0,0,0.1)] border border-black/5 py-1 z-50 max-h-[250px] overflow-y-auto">
+                <div className="absolute top-full left-0 mt-1 w-full flex flex-col bg-white rounded-xl shadow-[0_4px_12px_rgba(0,0,0,0.1)] border border-black/5 py-1 z-50 max-h-[250px] overflow-y-auto overflow-x-hidden">
                   {TIMES.map((t) => (
                     <button
                       key={t}
@@ -186,7 +188,7 @@ export function TransactionRecord({
                         setRecords(INITIAL_MOCK_RECORDS);
                         setHasMore(true);
                       }}
-                      className={`w-full text-left px-3 py-2 text-[13px] hover:bg-black/5 ${timeFilter === t ? "bg-black/5 text-black font-semibold" : "text-black/70"}`}
+                      className={`w-full text-center px-3 py-2 text-[13px] hover:bg-black/5 ${timeFilter === t ? "bg-black/5 text-black font-semibold" : "text-black/70"}`}
                     >
                       {t}
                     </button>
@@ -196,20 +198,23 @@ export function TransactionRecord({
             </div>
 
             {/* Currency Filter */}
-            <div className="relative dropdown-container">
+            <div className="relative dropdown-container min-w-[120px]">
               <button
                 onClick={() => {
                   setShowCurrencyDropdown(!showCurrencyDropdown);
                   setShowTimeDropdown(false);
                   setShowCategoryDropdown(false);
                 }}
-                className="flex items-center gap-1.5 bg-black/5 hover:bg-black/10 px-3 py-2 rounded-xl text-[13px] text-black transition-colors"
+                className="relative flex items-center justify-center w-full bg-black/5 hover:bg-black/10 px-8 py-2 rounded-xl text-[13px] text-black transition-colors"
               >
-                <span className="truncate">{currencyFilter}</span>
-                <ChevronDown size={14} className="text-black/40 shrink-0" />
+                <span className="truncate text-center">{currencyFilter}</span>
+                <ChevronDown
+                  size={14}
+                  className="absolute right-3 text-black/40"
+                />
               </button>
               {showCurrencyDropdown && (
-                <div className="absolute top-full left-0 mt-1 min-w-[100px] w-auto whitespace-nowrap bg-white rounded-xl shadow-[0_4px_12px_rgba(0,0,0,0.1)] border border-black/5 py-1 z-50">
+                <div className="absolute top-full left-0 mt-1 w-full flex flex-col bg-white rounded-xl shadow-[0_4px_12px_rgba(0,0,0,0.1)] border border-black/5 py-1 z-50 overflow-hidden">
                   {CURRENCIES.map((c) => (
                     <button
                       key={c}
@@ -219,7 +224,7 @@ export function TransactionRecord({
                         setRecords(INITIAL_MOCK_RECORDS);
                         setHasMore(true);
                       }}
-                      className={`w-full text-left px-3 py-2 text-[13px] hover:bg-black/5 ${currencyFilter === c ? "bg-black/5 text-black font-semibold" : "text-black/70"}`}
+                      className={`w-full text-center px-3 py-2 text-[13px] hover:bg-black/5 ${currencyFilter === c ? "bg-black/5 text-black font-semibold" : "text-black/70"}`}
                     >
                       {c}
                     </button>
@@ -240,15 +245,9 @@ export function TransactionRecord({
                 </span>
               </div>
               <div className="flex justify-between items-center text-sm pl-2">
-                <span className="text-black/50">Win</span>
+                <span className="text-black/50">Buy</span>
                 <span className="text-black font-medium">
-                  {formatAmount(691.41, true)}
-                </span>
-              </div>
-              <div className="flex justify-between items-center text-sm pl-2">
-                <span className="text-black/50">Refund</span>
-                <span className="text-black font-medium">
-                  {formatAmount(0.67, true)}
+                  {formatAmount(0.0, true)}
                 </span>
               </div>
               <div className="flex justify-between items-center text-sm pl-2">
@@ -258,9 +257,21 @@ export function TransactionRecord({
                 </span>
               </div>
               <div className="flex justify-between items-center text-sm pl-2">
-                <span className="text-black/50">Bonus</span>
+                <span className="text-black/50">Refund</span>
+                <span className="text-black font-medium">
+                  {formatAmount(0.67, true)}
+                </span>
+              </div>
+              <div className="flex justify-between items-center text-sm pl-2">
+                <span className="text-black/50">Reward</span>
                 <span className="text-black font-medium">
                   {formatAmount(100.0, true)}
+                </span>
+              </div>
+              <div className="flex justify-between items-center text-sm pl-2">
+                <span className="text-black/50">Win</span>
+                <span className="text-black font-medium">
+                  {formatAmount(691.41, true)}
                 </span>
               </div>
             </div>
@@ -280,15 +291,9 @@ export function TransactionRecord({
                 </span>
               </div>
               <div className="flex justify-between items-center text-sm pl-2">
-                <span className="text-black/50">Swap</span>
+                <span className="text-black/50">Sell</span>
                 <span className="text-black font-medium">
                   {formatAmount(0.0, false)}
-                </span>
-              </div>
-              <div className="flex justify-between items-center text-sm pl-2">
-                <span className="text-black/50">Withdraw</span>
-                <span className="text-black font-medium">
-                  {formatAmount(295.71, false)}
                 </span>
               </div>
               <div className="flex justify-between items-center text-sm pl-2">
@@ -297,12 +302,18 @@ export function TransactionRecord({
                   {formatAmount(900.23, false)}
                 </span>
               </div>
+              <div className="flex justify-between items-center text-sm pl-2">
+                <span className="text-black/50">Withdraw</span>
+                <span className="text-black font-medium">
+                  {formatAmount(295.71, false)}
+                </span>
+              </div>
             </div>
           </div>
 
           {/* Desktop Stats Grid (4 columns) */}
           <div className="hidden md:grid grid-cols-4 gap-x-6 gap-y-4 pt-2 border-t border-black/5 relative z-0">
-            {/* Col 1: Income total + Win */}
+            {/* Col 1: Income total + Buy */}
             <div className="flex flex-col gap-3">
               <div className="flex justify-between items-center text-sm mb-1">
                 <span className="text-black font-semibold">Income</span>
@@ -311,9 +322,15 @@ export function TransactionRecord({
                 </span>
               </div>
               <div className="flex justify-between items-center text-sm pl-2">
-                <span className="text-black/50">Win</span>
+                <span className="text-black/50">Buy</span>
                 <span className="text-black font-medium">
-                  {formatAmount(691.41, true)}
+                  {formatAmount(0.0, true)}
+                </span>
+              </div>
+              <div className="flex justify-between items-center text-sm pl-2">
+                <span className="text-black/50">Deposit</span>
+                <span className="text-black font-medium">
+                  {formatAmount(1184.55, true)}
                 </span>
               </div>
               <div className="flex justify-between items-center text-sm pl-2">
@@ -331,15 +348,15 @@ export function TransactionRecord({
                 <span className="text-black font-semibold">-</span>
               </div>
               <div className="flex justify-between items-center text-sm pl-2">
-                <span className="text-black/50">Deposit</span>
+                <span className="text-black/50">Reward</span>
                 <span className="text-black font-medium">
-                  {formatAmount(1184.55, true)}
+                  {formatAmount(100.0, true)}
                 </span>
               </div>
               <div className="flex justify-between items-center text-sm pl-2">
-                <span className="text-black/50">Bonus</span>
+                <span className="text-black/50">Win</span>
                 <span className="text-black font-medium">
-                  {formatAmount(100.0, true)}
+                  {formatAmount(691.41, true)}
                 </span>
               </div>
             </div>
@@ -359,7 +376,7 @@ export function TransactionRecord({
                 </span>
               </div>
               <div className="flex justify-between items-center text-sm pl-2">
-                <span className="text-black/50">Swap</span>
+                <span className="text-black/50">Sell</span>
                 <span className="text-black font-medium">
                   {formatAmount(0.0, false)}
                 </span>
@@ -373,15 +390,15 @@ export function TransactionRecord({
                 <span className="text-black font-semibold">-</span>
               </div>
               <div className="flex justify-between items-center text-sm pl-2">
-                <span className="text-black/50">Withdraw</span>
-                <span className="text-black font-medium">
-                  {formatAmount(295.71, false)}
-                </span>
-              </div>
-              <div className="flex justify-between items-center text-sm pl-2">
                 <span className="text-black/50">Staking</span>
                 <span className="text-black font-medium">
                   {formatAmount(900.23, false)}
+                </span>
+              </div>
+              <div className="flex justify-between items-center text-sm pl-2">
+                <span className="text-black/50">Withdraw</span>
+                <span className="text-black font-medium">
+                  {formatAmount(295.71, false)}
                 </span>
               </div>
             </div>
@@ -395,20 +412,23 @@ export function TransactionRecord({
               Detail
             </h3>
             {/* Category Filter */}
-            <div className="relative dropdown-container">
+            <div className="relative dropdown-container min-w-[120px]">
               <button
                 onClick={() => {
                   setShowCategoryDropdown(!showCategoryDropdown);
                   setShowTimeDropdown(false);
                   setShowCurrencyDropdown(false);
                 }}
-                className="flex items-center gap-1.5 bg-black/5 hover:bg-black/10 px-3 py-2 rounded-xl text-[13px] text-black transition-colors"
+                className="relative flex items-center justify-center w-full bg-black/5 hover:bg-black/10 px-8 py-2 rounded-xl text-[13px] text-black transition-colors"
               >
-                <span className="truncate">{categoryFilter}</span>
-                <ChevronDown size={14} className="text-black/40 shrink-0" />
+                <span className="truncate text-center">{categoryFilter}</span>
+                <ChevronDown
+                  size={14}
+                  className="absolute right-3 text-black/40"
+                />
               </button>
               {showCategoryDropdown && (
-                <div className="absolute top-full right-0 mt-1 min-w-[100px] w-auto whitespace-nowrap bg-white rounded-xl shadow-[0_4px_12px_rgba(0,0,0,0.1)] border border-black/5 py-1 z-50 max-h-[250px] overflow-y-auto">
+                <div className="absolute top-full right-0 mt-1 w-full flex flex-col bg-white rounded-xl shadow-[0_4px_12px_rgba(0,0,0,0.1)] border border-black/5 py-1 z-50 max-h-[250px] overflow-y-auto overflow-x-hidden">
                   {CATEGORIES.map((c) => (
                     <button
                       key={c}
@@ -418,7 +438,7 @@ export function TransactionRecord({
                         setRecords(INITIAL_MOCK_RECORDS);
                         setHasMore(true);
                       }}
-                      className={`w-full text-left px-3 py-2 text-[13px] hover:bg-black/5 ${categoryFilter === c ? "bg-black/5 text-black font-semibold" : "text-black/70"}`}
+                      className={`w-full text-center px-3 py-2 text-[13px] hover:bg-black/5 ${categoryFilter === c ? "bg-black/5 text-black font-semibold" : "text-black/70"}`}
                     >
                       {c}
                     </button>

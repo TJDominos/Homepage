@@ -1,5 +1,5 @@
 import React from "react";
-import { TransactionRecord } from "../components/TransactionRecord";
+import { AccountRecord } from "../components/AccountRecord";
 
 interface RecordTabProps {
   isDesktop: boolean;
@@ -15,7 +15,7 @@ export function RecordTab({ isDesktop, userAccount }: RecordTabProps) {
         </h2>
       </div>
       <div className="flex-1 overflow-hidden mt-1">
-        <TransactionRecord isDesktop={isDesktop} userAccount={userAccount} />
+        <AccountRecord isDesktop={isDesktop} userAccount={userAccount} />
       </div>
     </div>
   );

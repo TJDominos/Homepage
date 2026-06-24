@@ -554,7 +554,7 @@ export function BonusTab({ isDesktop }: BonusTabProps) {
                   Swap WLT
                 </h3>
                 <p className="text-[12px] font-normal text-black/65 mb-4 flex-1">
-                  Convert Bonus to WLT
+                  Exchange Bonus to WLT
                 </p>
                 <div className="w-full flex-1 flex flex-col justify-end gap-3 mt-auto">
                   <div className="flex flex-col w-full">
