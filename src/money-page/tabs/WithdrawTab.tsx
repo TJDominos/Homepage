@@ -81,6 +81,9 @@ export function WithdrawTab({ isDesktop }: WithdrawTabProps) {
   const [amount, setAmount] = useState("");
   const [faqExpanded, setFaqExpanded] = useState(false);
   const [expandedTx, setExpandedTx] = useState<string | null>(null);
+  const [wltBalanceType, setWltBalanceType] = useState<"available" | "locked">(
+    "available",
+  );
 
   const dropdownsRef = useRef<HTMLDivElement>(null);
 
@@ -190,9 +193,27 @@ export function WithdrawTab({ isDesktop }: WithdrawTabProps) {
         </div>
 
         <div className="flex flex-col mb-2 w-full">
-          <label className="text-[15px] font-semibold text-black mb-1.5">
-            Withdraw Amount
-          </label>
+          <div className="flex items-center justify-between mb-1.5">
+            <label className="text-[15px] font-semibold text-black">
+              Withdraw Amount
+            </label>
+            {asset === "WLT" && (
+              <div className="flex items-center bg-black/5 rounded-full p-0.5">
+                <button
+                  onClick={() => setWltBalanceType("available")}
+                  className={`px-3 py-1 rounded-full text-[12px] font-semibold transition-all ${wltBalanceType === "available" ? "bg-[#6A3FE6] text-white shadow-sm" : "text-black/50"}`}
+                >
+                  Available
+                </button>
+                <button
+                  onClick={() => setWltBalanceType("locked")}
+                  className={`px-3 py-1 rounded-full text-[12px] font-semibold transition-all ${wltBalanceType === "locked" ? "bg-[#6A3FE6] text-white shadow-sm" : "text-black/50"}`}
+                >
+                  Locked
+                </button>
+              </div>
+            )}
+          </div>
           <div className="flex items-center gap-1 sm:gap-2 w-full">
             <input
               type="text"
@@ -220,24 +241,49 @@ export function WithdrawTab({ isDesktop }: WithdrawTabProps) {
             </button>
           </div>
 
-          <div className="flex flex-wrap items-center gap-x-1 gap-y-0.5 text-[12px] text-black/65 font-normal px-2 mt-1">
-            <span className="whitespace-nowrap">
-              Balance: {asset === "WLT" ? "0.00" : "123.3K"} {asset}
-            </span>
-            <span className="hidden sm:inline">,</span>
-            <span className="whitespace-nowrap mx-1">
-              Network fee: 0.5 {crypto}
-            </span>
-            <div className="w-4 h-4 rounded-full bg-black/10 flex items-center justify-center ml-1 text-[10px] shrink-0 font-bold text-black/50">
-              ?
-            </div>
-          </div>
+          <div className="flex flex-col gap-1 mt-1 px-2 text-[12px] text-black/65 font-normal">
+            {asset === "WLT" ? (
+              <>
+                <div className="flex items-center">
+                  <span className="whitespace-nowrap">
+                    Available Balance: 0.00 WLT
+                  </span>
+                </div>
+                <div className="flex flex-wrap items-center gap-x-1 gap-y-0.5">
+                  <span className="whitespace-nowrap">
+                    Locked Balance: 0.00 WLT
+                  </span>
+                  <span className="hidden sm:inline">,</span>
+                  <span className="whitespace-nowrap mx-1">
+                    Network fee: 0.5 {crypto}
+                  </span>
+                  <div className="w-4 h-4 rounded-full bg-black/10 flex items-center justify-center ml-1 text-[10px] shrink-0 font-bold text-black/50">
+                    ?
+                  </div>
+                </div>
+              </>
+            ) : (
+              <div className="flex flex-wrap items-center gap-x-1 gap-y-0.5">
+                <span className="whitespace-nowrap">
+                  Balance: 123.3K {asset}
+                </span>
+                <span className="hidden sm:inline">,</span>
+                <span className="whitespace-nowrap mx-1">
+                  Network fee: 0.5 {crypto}
+                </span>
+                <div className="w-4 h-4 rounded-full bg-black/10 flex items-center justify-center ml-1 text-[10px] shrink-0 font-bold text-black/50">
+                  ?
+                </div>
+              </div>
+            )}
 
-          {asset === "WLT" && (
-            <div className="text-[12px] text-[#6A3FE6] font-medium px-2 mt-1 leading-snug">
-              30-day lockup + 360-day linear vesting on WLT withdrawal.
-            </div>
-          )}
+            {asset === "WLT" && (
+              <div className="text-[12px] text-[#6A3FE6] font-medium leading-snug">
+                *Locked Balance can be withdrawn subject to 30-day lockup +
+                360-day linear vesting.
+              </div>
+            )}
+          </div>
         </div>
 
         {parseFloat(amount.replace(/,/g, "") || "0") >

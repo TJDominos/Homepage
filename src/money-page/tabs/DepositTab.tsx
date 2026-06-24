@@ -281,9 +281,9 @@ export function DepositTab({ isDesktop }: DepositTabProps) {
         </div>
 
         <p className="text-[12px] font-normal text-black/65 px-2 mb-2 text-center">
-          Deposits under $1.00 won't show up until they total $1.00 or more.
+          Deposits under $1.00 won't show up until they total $1.00 or more.{" "}
           {asset === "Gcoin" &&
-            " USDC auto-converts to Gcoin, withdrawable anytime as USDC. "}
+            "USDC auto-converts to Gcoin, withdrawable anytime as USDC. "}
           Refresh your balance if it seems wrong, or contact{" "}
           <a
             href="mailto:support@randseed.org"
