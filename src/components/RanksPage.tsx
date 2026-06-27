@@ -221,10 +221,10 @@ export default function RanksPage() {
             <div className="sm:hidden relative w-[100px] dropdown-container">
               <button
                 onClick={() => setIsTimeDropdownOpen(!isTimeDropdownOpen)}
-                className="flex w-full items-center justify-between gap-1 bg-transparent py-2 px-1 text-[13px] text-black transition-colors"
+                className="relative flex w-full items-center justify-center gap-1 bg-transparent py-2 px-3 text-[14px] font-medium text-black transition-colors border-2 border-black rounded-lg"
               >
                 <span className="truncate">{timeFilter}</span>
-                <ChevronDown size={14} className="text-black/40 shrink-0" />
+                <ChevronDown size={14} className="absolute right-2 text-black/40 shrink-0" />
               </button>
               {isTimeDropdownOpen && (
                 <div className="absolute top-full right-0 mt-1 w-full bg-white rounded-xl shadow-[0_4px_12px_rgba(0,0,0,0.1)] border border-black/5 py-1 z-50">
@@ -244,6 +244,47 @@ export default function RanksPage() {
               )}
             </div>
           </div>
+        </div>
+      </div>
+
+      <div className="mb-6 bg-gradient-to-r from-[#f3e8ff] to-[#f8f5ff] rounded-xl p-4 border border-[#e9d5ff] flex items-center justify-between shadow-sm">
+        <div className="flex items-center gap-3 md:gap-4">
+          <div className="w-8 h-8 md:w-10 md:h-10 rounded-full bg-white flex items-center justify-center font-bold text-[14px] md:text-[16px] text-purple-700 shadow-sm shrink-0">
+            #42
+          </div>
+          <img
+            src={getAvatar("01")}
+            alt="My Avatar"
+            className="w-10 h-10 md:w-12 md:h-12 rounded-full border-2 border-white shadow-sm object-cover shrink-0"
+          />
+          <div className="flex flex-col">
+            <span className="text-black text-[15px] md:text-[16px] font-bold leading-tight">
+              You
+            </span>
+            <span className="text-[12px] md:text-[14px] text-black/60 mt-1 leading-tight flex items-center gap-1">
+              {getCountryFlagImg("US") ? (
+                <img
+                  src={getCountryFlagImg("US")!}
+                  alt=""
+                  className="w-[16px] h-[10px] object-cover rounded-sm inline-block shadow-sm"
+                  referrerPolicy="no-referrer"
+                />
+              ) : (
+                <span>{getFlagEmoji("US")}</span>
+              )}
+              <span className="truncate max-w-[80px] xs:max-w-[110px] sm:max-w-none">
+                {getCountryName("US")}
+              </span>
+            </span>
+          </div>
+        </div>
+        <div className="flex flex-col items-end justify-center">
+          <span className="text-purple-700 text-[15px] md:text-[16px] font-bold leading-tight">
+            {subTab === "Bonus" ? formatBonusAmount(124.5) : `124.50 ${subTab}`}
+          </span>
+          <span className="text-[12px] md:text-[14px] text-purple-700/60 mt-1 leading-tight">
+            34 Plays
+          </span>
         </div>
       </div>
 
@@ -321,11 +362,9 @@ export default function RanksPage() {
                               winner.user_info?.country?.[0],
                             ) ? (
                               <img
-                                src={
-                                  getCountryFlagImg(
-                                    winner.user_info?.country?.[0],
-                                  )!
-                                }
+                                src={getCountryFlagImg(
+                                  winner.user_info?.country?.[0],
+                                )!}
                                 alt=""
                                 className="w-[16px] h-[10px] object-cover rounded-sm inline-block shadow-sm"
                                 referrerPolicy="no-referrer"
@@ -346,9 +385,9 @@ export default function RanksPage() {
                       <div className="flex items-center gap-2">
                         {getCountryFlagImg(winner.user_info?.country?.[0]) ? (
                           <img
-                            src={
-                              getCountryFlagImg(winner.user_info?.country?.[0])!
-                            }
+                            src={getCountryFlagImg(
+                              winner.user_info?.country?.[0],
+                            )!}
                             alt=""
                             className="w-[20px] h-[14px] object-cover rounded-sm inline-block shadow-sm"
                             referrerPolicy="no-referrer"
