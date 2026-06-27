@@ -218,13 +218,16 @@ export default function RanksPage() {
             </div>
 
             {/* Mobile Dropdown */}
-            <div className="sm:hidden relative w-[100px] dropdown-container">
+            <div className="sm:hidden relative w-[80px] h-[28px] dropdown-container">
               <button
                 onClick={() => setIsTimeDropdownOpen(!isTimeDropdownOpen)}
-                className="relative flex w-full items-center justify-center gap-1 bg-transparent py-2 px-3 text-[14px] font-medium text-black transition-colors border-2 border-black rounded-lg"
+                className="relative flex w-full h-full items-center justify-center bg-transparent text-[13px] font-medium text-black transition-colors border-[1.5px] border-black rounded-md"
               >
-                <span className="truncate">{timeFilter}</span>
-                <ChevronDown size={14} className="absolute right-2 text-black/40 shrink-0" />
+                <span className="truncate pr-3">{timeFilter}</span>
+                <ChevronDown
+                  size={14}
+                  className="absolute right-1.5 text-black/50 shrink-0"
+                />
               </button>
               {isTimeDropdownOpen && (
                 <div className="absolute top-full right-0 mt-1 w-full bg-white rounded-xl shadow-[0_4px_12px_rgba(0,0,0,0.1)] border border-black/5 py-1 z-50">
