@@ -27,8 +27,8 @@ export const WalletMenuBar: React.FC<WalletMenuBarProps> = ({
       case "deposit":
         return (
           <svg
-            width="24"
-            height="24"
+            width="36"
+            height="36"
             viewBox="0 0 24 24"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
@@ -54,8 +54,8 @@ export const WalletMenuBar: React.FC<WalletMenuBarProps> = ({
       case "withdraw":
         return (
           <svg
-            width="24"
-            height="24"
+            width="36"
+            height="36"
             viewBox="0 0 24 24"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
@@ -86,8 +86,8 @@ export const WalletMenuBar: React.FC<WalletMenuBarProps> = ({
       case "record":
         return (
           <svg
-            width="24"
-            height="24"
+            width="36"
+            height="36"
             viewBox="0 0 24 24"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
@@ -121,8 +121,8 @@ export const WalletMenuBar: React.FC<WalletMenuBarProps> = ({
       case "bonus":
         return (
           <svg
-            width="24"
-            height="24"
+            width="36"
+            height="36"
             viewBox="0 0 24 24"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
@@ -164,8 +164,8 @@ export const WalletMenuBar: React.FC<WalletMenuBarProps> = ({
       case "rewards":
         return (
           <svg
-            width="24"
-            height="24"
+            width="36"
+            height="36"
             viewBox="0 0 24 24"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
@@ -198,7 +198,7 @@ export const WalletMenuBar: React.FC<WalletMenuBarProps> = ({
             className="flex flex-col items-center gap-2 bg-transparent border-none p-0 cursor-pointer text-black flex-1 min-w-[56px]"
           >
             <div
-              className={`w-[48px] h-[48px] sm:w-[54px] sm:h-[54px] rounded-[16px] flex items-center justify-center transition-all ${isActive ? "bg-[#E1E2F9] border border-[#D3C3FB]" : "bg-[#f4f4f5]"}`}
+              className={`w-[48px] h-[48px] rounded-[16px] flex items-center justify-center transition-all ${isActive ? "bg-[#E1E2F9] border border-[#D3C3FB]" : "bg-[#f4f4f5]"}`}
             >
               {renderIcon(tab.id, isActive)}
             </div>

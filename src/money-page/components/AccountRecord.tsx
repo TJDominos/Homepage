@@ -53,11 +53,18 @@ const INITIAL_MOCK_RECORDS = [
     date: "2026.05.28 22:15:00",
   },
   {
-    type: "Convert",
+    type: "Buy",
     detail: "ICP → Gcoin",
     usdAmount: "+$0.00",
     tokenAmount: "10.00 Gcoin",
     date: "2026.05.28 10:00:00",
+  },
+  {
+    type: "Sell",
+    detail: "Gcoin → WLT",
+    usdAmount: "+$0.00",
+    tokenAmount: "10.00 WLT",
+    date: "2026.05.27 18:00:00",
   },
   {
     type: "Deposit",

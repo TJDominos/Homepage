@@ -299,84 +299,80 @@ export function MoneyPage({
           ></div>
 
           <div
-            className={`relative w-full max-w-[500px] bg-[#EAEAEA] rounded-t-16px sm:rounded-2xl overflow-hidden flex flex-col pointer-events-auto transform transition-transform ${isDesktop ? "h-auto max-h-[90vh]" : "mt-auto pb-4"}`}
+            className={`relative w-full max-w-[400px] bg-[#EAEAEA] rounded-t-16px sm:rounded-2xl overflow-hidden flex flex-col pointer-events-auto transform transition-transform ${isDesktop ? "h-auto max-h-[90vh]" : "mt-auto pb-4"}`}
           >
-            <div className="px-6 py-8 flex flex-col relative text-left min-h-[400px]">
-              <h2 className="text-[18px] font-bold text-black mb-4 text-center">
-                Balance
-              </h2>
-              <div className="text-[14px] text-[#A8A8A8] mb-8 text-center w-full max-w-[360px] mx-auto px-4 leading-relaxed font-normal">
+            <div className="px-6 py-6 flex flex-col relative text-left">
+              <div className="flex items-center gap-2 mb-3 justify-center">
+                <h2 className="text-[16px] font-bold text-black">
+                  Balance ≈ $-38.31
+                </h2>
+                <button className="text-black/40 hover:text-black transition-colors">
+                  <RefreshCw size={14} className="text-[#A4A2F6]" />
+                </button>
+              </div>
+              <div className="text-[12px] text-black/50 mb-6 text-center w-full max-w-[360px] mx-auto leading-relaxed font-normal">
                 Balance is an estimated value based on the current crypto market
                 and doesn't include your bonus and WL Points.
               </div>
 
-              <div className="flex items-center gap-2 mb-4">
-                <span className="text-[20px] font-bold text-black">
-                  Balance ≈ $-38.31
-                </span>
-                <button className="text-[#A8A8A8] hover:text-black transition-colors">
-                  <RefreshCw size={20} className="text-[#A4A2F6]" />
-                </button>
-              </div>
+              <div className="w-full h-[1px] bg-black/5 mb-4"></div>
 
-              <div className="w-full h-[1px] bg-black/5 mb-6"></div>
-
-              <div className="flex flex-col gap-6 mb-8 flex-1">
+              <div className="flex flex-col gap-4 mb-8">
                 <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-2 text-[15px] text-[#A8A8A8]">
+                  <div className="flex items-center gap-2 text-[14px] font-medium text-black/80">
                     <span>Gcoin</span>
-                    <span className="text-[14px] text-black/20">
+                    <span className="text-[12px] text-black/40 font-normal">
                       1 USDC = 10 Gcoin
                     </span>
                   </div>
-                  <div className="flex flex-col items-end gap-1">
-                    <div className="flex items-center gap-2 font-semibold text-[15px] text-black">
-                      <div className="w-5 h-5 rounded-full bg-[#FFD700] shrink-0"></div>
+                  <div className="flex flex-col items-end">
+                    <div className="flex items-center gap-1.5 font-bold text-[14px] text-black">
+                      <div className="w-4 h-4 rounded-full bg-[#FFD700] shrink-0"></div>
                       <span>0.97</span>
                     </div>
-                    <span className="text-[12px] text-[#A8A8A8] font-medium min-w-[60px] text-right">
+                    <span className="text-[12px] text-black/40 font-medium min-w-[60px] text-right">
                       ≈ $0.10
                     </span>
                   </div>
                 </div>
                 <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-2 text-[15px] text-[#A8A8A8]">
+                  <div className="flex items-center gap-2 text-[14px] font-medium text-black/80">
                     <span>ICP</span>
-                    <span className="text-[14px] text-black/20">
+                    <span className="text-[12px] text-black/40 font-normal">
                       1 USDC = 0.4490 ICP
                     </span>
                   </div>
-                  <div className="flex flex-col items-end gap-1">
-                    <div className="flex items-center gap-2 font-semibold text-[15px] text-black">
-                      <div className="w-5 h-5 rounded-full bg-black/10 flex items-center justify-center font-bold text-black text-[12px] shrink-0">
+                  <div className="flex flex-col items-end">
+                    <div className="flex items-center gap-1.5 font-bold text-[14px] text-black">
+                      <div className="w-4 h-4 rounded-full bg-black/10 flex items-center justify-center font-bold text-black text-[10px] shrink-0">
                         <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-500 via-blue-500 to-purple-500">
                           ∞
                         </span>
                       </div>
                       <span>-17.2467</span>
                     </div>
-                    <span className="text-[12px] text-[#A8A8A8] font-medium min-w-[60px] text-right">
+                    <span className="text-[12px] text-black/40 font-medium min-w-[60px] text-right">
                       ≈ $-38.41
                     </span>
                   </div>
                 </div>
                 <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-2 text-[15px] text-[#A8A8A8]">
+                  <div className="flex items-center gap-2 text-[14px] font-medium text-black/80">
                     <span>WLT</span>
-                    <span className="text-[14px] text-black/20">
+                    <span className="text-[12px] text-black/40 font-normal">
                       1 USDC = 100 WLT
                     </span>
                   </div>
-                  <div className="flex flex-col items-end gap-1">
-                    <div className="flex items-center gap-2 font-semibold text-[15px] text-black">
-                      <div className="flex gap-[2px] shrink-0 items-center justify-center w-5 h-5">
-                        <div className="w-1.5 h-1.5 bg-blue-500 rounded-full"></div>
-                        <div className="w-1.5 h-1.5 bg-purple-500 rounded-full"></div>
-                        <div className="w-1.5 h-1.5 bg-red-500 rounded-full"></div>
+                  <div className="flex flex-col items-end">
+                    <div className="flex items-center gap-1.5 font-bold text-[14px] text-black">
+                      <div className="flex gap-[1.5px] shrink-0 items-center justify-center w-4 h-4">
+                        <div className="w-1 h-1 bg-blue-500 rounded-full"></div>
+                        <div className="w-1 h-1 bg-purple-500 rounded-full"></div>
+                        <div className="w-1 h-1 bg-red-500 rounded-full"></div>
                       </div>
                       <span>100.00</span>
                     </div>
-                    <span className="text-[12px] text-[#A8A8A8] font-medium min-w-[60px] text-right">
+                    <span className="text-[12px] text-black/40 font-medium min-w-[60px] text-right">
                       ≈ $1.00
                     </span>
                   </div>
@@ -385,13 +381,13 @@ export function MoneyPage({
 
               <div className="flex items-center justify-center gap-4 mt-auto">
                 <button
-                  className="w-[140px] py-3 rounded-[24px] border-[1px] border-solid border-black text-black font-semibold text-[15px] hover:bg-black/5 transition-colors"
+                  className="w-[96px] h-[28px] rounded-[14px] border-[1px] border-solid border-black text-black font-semibold text-[13px] hover:bg-black/5 transition-colors flex items-center justify-center"
                   onClick={() => handleModalOpen("withdraw")}
                 >
                   Withdraw
                 </button>
                 <button
-                  className="w-[140px] py-3 rounded-[24px] border-[1px] border-solid border-black bg-transparent text-black font-semibold text-[15px] hover:bg-black/5 transition-colors"
+                  className="w-[96px] h-[28px] rounded-[14px] border-[1px] border-solid border-black bg-transparent text-black font-semibold text-[13px] hover:bg-black/5 transition-colors flex items-center justify-center"
                   onClick={() => handleModalOpen("deposit")}
                 >
                   Deposit

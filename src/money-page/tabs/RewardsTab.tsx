@@ -138,6 +138,28 @@ export function RewardsTab({
           Inviter gets up to 5% earnings from every friend's spending
         </p>
 
+        <div className="flex items-center gap-3 mb-5">
+          <div className="flex items-center gap-2 text-[12px] text-black/60 bg-white border border-black/10 px-3 py-1.5 rounded-lg shadow-sm">
+            <span>Invite Link: https://randseed.org/?invite=M82A5</span>
+            <button
+              onClick={handleCopyLink}
+              className="hover:text-black transition-colors"
+            >
+              {isCopied ? (
+                <span className="text-green-500 font-bold">✓</span>
+              ) : (
+                <Copy className="w-4 h-4" />
+              )}
+            </button>
+          </div>
+          <button
+            onClick={handleSaveInvitePicture}
+            className="w-[80px] h-[28px] rounded-[14px] border border-black text-black font-semibold text-[13px] hover:bg-black/5 transition-colors flex items-center justify-center"
+          >
+            Save
+          </button>
+        </div>
+
         <div className="grid grid-cols-2 gap-4 mb-4">
           <div className="bg-white rounded-xl p-4 flex flex-col items-center justify-center border border-black/5 shadow-sm">
             <div className="w-12 h-12 bg-yellow-50 rounded-full flex items-center justify-center mb-2">
@@ -175,28 +197,7 @@ export function RewardsTab({
       </div>
 
       <div className="mt-auto">
-        <div className="flex items-center gap-2 text-[12px] text-black/60 mb-4 justify-center">
-          <span>Invite Link: https://randseed.org/?invite=M82A5</span>
-          <button
-            onClick={handleCopyLink}
-            className="hover:text-black transition-colors"
-          >
-            {isCopied ? (
-              <span className="text-green-500 font-bold">✓</span>
-            ) : (
-              <Copy className="w-4 h-4" />
-            )}
-          </button>
-        </div>
-
-        <div className="flex justify-center mb-6">
-          <button
-            onClick={handleSaveInvitePicture}
-            className="w-[80px] h-[28px] rounded-[14px] border border-black text-black font-semibold text-[13px] hover:bg-black/5 transition-colors flex items-center justify-center"
-          >
-            Save
-          </button>
-        </div>
+        <div className="hidden"></div>
       </div>
     </div>
   );
