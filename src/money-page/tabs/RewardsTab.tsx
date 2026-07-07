@@ -121,18 +121,22 @@ export function RewardsTab({
       "https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=https://randseed.org";
   };
   const inviteFriendsContent = (
-    <div className="bg-[#f0f2f5] rounded-2xl md:p-6 p-4 border border-black/5 relative overflow-hidden flex flex-col h-full min-h-[380px]">
-      <div className="flex items-center justify-between mb-3">
+    <div className="bg-[#f0f2f5] rounded-2xl sm:p-6 p-4 border border-black/5 relative overflow-hidden flex flex-col h-full min-h-[380px]">
+      <div className="flex items-center justify-between mb-3 w-full">
         <h2 className="text-[20px] font-bold text-black hidden md:block">
           Invite Friends
         </h2>
-        <button
-          onClick={() => setShowInviteRecord(true)}
-          className="text-[14px] text-black/60 flex items-center gap-1 hover:text-black ml-auto"
-        >
-          invited <span className="font-bold text-black mx-1">0</span> friends{" "}
-          <ChevronRight className="w-4 h-4" />
-        </button>
+        <div className="flex items-center gap-2 ml-auto">
+          <span className="text-[14px] text-black/60">
+            invited <span className="font-bold text-black mx-1">0</span> friends
+          </span>
+          <button
+            onClick={() => setShowInviteRecord(true)}
+            className="text-black hover:bg-black/5 p-1 rounded-full transition-colors -mr-1"
+          >
+            <ChevronRight className="w-5 h-5" />
+          </button>
+        </div>
       </div>
 
       <div className="mb-6 flex-1">
@@ -220,7 +224,7 @@ export function RewardsTab({
         <div className="flex flex-col gap-3">
           {/* First Deposit Bonus Widget */}
           <div
-            className="bg-[#f0f2f5] rounded-2xl px-4 flex items-center justify-between cursor-pointer border border-black/5 w-full shadow-sm"
+            className="bg-[#f0f2f5] rounded-2xl px-4 sm:px-6 flex items-center justify-between cursor-pointer border border-black/5 w-full shadow-sm"
             style={{ height: "64px" }}
             onClick={onSignInClick}
           >
@@ -237,15 +241,15 @@ export function RewardsTab({
                 </p>
               </div>
             </div>
-            <div className="flex items-center justify-center w-6 h-6 rounded-full bg-black/5 text-black/50 font-medium">
-              <ChevronRight className="w-4 h-4 ml-[2px]" />
-            </div>
+            <button className="text-black hover:bg-black/5 p-1 rounded-full transition-colors -mr-1">
+              <ChevronRight className="w-5 h-5" />
+            </button>
           </div>
 
           {/* Invite Friends Widget - Mobile Only */}
           {!isDesktop && (
             <div
-              className="bg-[#f0f2f5] rounded-2xl px-4 flex items-center justify-between cursor-pointer border border-black/5 w-full shadow-sm"
+              className="bg-[#f0f2f5] rounded-2xl px-4 sm:px-6 flex items-center justify-between cursor-pointer border border-black/5 w-full shadow-sm"
               style={{ height: "64px" }}
               onClick={() =>
                 !userAccount ? onSignInClick() : setShowMobileInvite(true)
@@ -267,9 +271,9 @@ export function RewardsTab({
                   </p>
                 </div>
               </div>
-              <div className="flex items-center justify-center w-6 h-6 rounded-full bg-black/5 text-black/50 font-medium">
-                <ChevronRight className="w-4 h-4 ml-[2px]" />
-              </div>
+              <button className="text-black hover:bg-black/5 p-1 rounded-full transition-colors -mr-1">
+                <ChevronRight className="w-5 h-5" />
+              </button>
             </div>
           )}
 
@@ -292,7 +296,7 @@ export function RewardsTab({
                   </h3>
                   <button 
                     onClick={() => setPointView("record")} 
-                    className="text-black hover:bg-black/5 p-1 rounded-full transition-colors"
+                    className="text-black hover:bg-black/5 p-1 rounded-full transition-colors -mr-1"
                   >
                     <ChevronRight className="w-5 h-5" />
                   </button>
@@ -341,7 +345,7 @@ export function RewardsTab({
           <div className="flex flex-col gap-4">
             {!userAccount ? (
               <div
-                className="bg-[#f0f2f5] rounded-2xl px-4 flex items-center justify-between cursor-pointer border border-black/5 w-full shadow-sm"
+                className="bg-[#f0f2f5] rounded-2xl px-4 sm:px-6 flex items-center justify-between cursor-pointer border border-black/5 w-full shadow-sm"
                 style={{ height: "64px" }}
                 onClick={onSignInClick}
               >
@@ -361,9 +365,9 @@ export function RewardsTab({
                     </p>
                   </div>
                 </div>
-                <div className="flex items-center justify-center w-6 h-6 rounded-full bg-black/5 text-black/50 font-medium">
-                  <ChevronRight className="w-4 h-4 ml-[2px]" />
-                </div>
+                <button className="text-black hover:bg-black/5 p-1 rounded-full transition-colors -mr-1">
+                  <ChevronRight className="w-5 h-5" />
+                </button>
               </div>
             ) : showInviteRecord ? (
               <InviteRecord
