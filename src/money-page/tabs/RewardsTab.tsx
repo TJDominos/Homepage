@@ -7,8 +7,11 @@ import {
   Share2,
   Copy,
   ChevronLeft,
+  Link,
 } from "lucide-react";
 import { InviteRecord } from "../components/InviteRecord";
+import { WLPointRecord } from "../components/WLPointRecord";
+import { WLPointRedeem } from "../components/WLPointRedeem";
 
 interface RewardsTabProps {
   isDesktop: boolean;
@@ -23,6 +26,7 @@ export function RewardsTab({
 }: RewardsTabProps) {
   const [showInviteRecord, setShowInviteRecord] = useState(false);
   const [showMobileInvite, setShowMobileInvite] = useState(false);
+  const [pointView, setPointView] = useState<"default" | "record" | "redeem">("default");
   const [isCopied, setIsCopied] = useState(false);
 
   const handleCopyLink = () => {
@@ -140,7 +144,8 @@ export function RewardsTab({
 
         <div className="flex items-center gap-3 mb-5">
           <div className="flex items-center gap-2 text-[12px] text-black/60 bg-white border border-black/10 px-3 py-1.5 rounded-lg shadow-sm">
-            <span>Invite Link: https://randseed.org/?invite=M82A5</span>
+            <Link className="w-3.5 h-3.5 shrink-0" />
+            <span className="truncate">https://randseed.org/?invite=M82A5</span>
             <button
               onClick={handleCopyLink}
               className="hover:text-black transition-colors"
@@ -269,47 +274,66 @@ export function RewardsTab({
           )}
 
           {/* WL Point Card */}
-          <div className="bg-[#f0f2f5] rounded-3xl p-4 sm:p-6 shadow-sm border border-black/5 font-sans">
-            <div className="flex justify-between items-start mb-5 border-b border-black/5 pb-5">
-              <div>
-                <h3 className="font-semibold text-[15px] text-black mb-3 flex items-center gap-1.5">
-                  WL Point <Info className="w-4 h-4 text-slate-400" />
-                </h3>
-                <div className="flex items-center gap-2">
-                  <div className="w-[30px] h-[30px] rounded-full bg-[#FFD700] flex items-center justify-center shrink-0">
-                    <Star className="w-[18px] h-[18px] text-white fill-white" />
+          {pointView === "record" && isDesktop ? (
+            <WLPointRecord onBack={() => setPointView("default")} isDesktop />
+          ) : pointView === "redeem" ? (
+            <WLPointRedeem onBack={() => setPointView("default")} isDesktop={isDesktop} />
+          ) : (
+            <div className="bg-[#f0f2f5] rounded-3xl p-4 sm:p-6 shadow-sm border border-black/5 font-sans relative">
+              <div className="flex flex-col mb-5 border-b border-black/5 pb-5">
+                <div className="flex items-center justify-between mb-3 w-full">
+                  <h3 className="font-semibold text-[15px] text-black flex items-center gap-1.5 relative group">
+                    WL Point 
+                    <Info className="w-4 h-4 text-slate-400 cursor-pointer" />
+                    <div className="absolute top-full mt-2 left-0 w-[240px] bg-white p-3 rounded-xl shadow-[0_4px_12px_rgba(0,0,0,0.15)] border border-black/5 text-[12px] text-black/80 font-normal invisible group-hover:visible z-10 transition-all opacity-0 group-hover:opacity-100">
+                      Earn Rewards! 100 Points = 1 USDT. Redeem points for Bonus and WL tokens (token coming soon).
+                      <div className="absolute -top-1 left-24 w-2 h-2 bg-white border-t border-l border-black/5 transform rotate-45"></div>
+                    </div>
+                  </h3>
+                  <button 
+                    onClick={() => setPointView("record")} 
+                    className="text-black hover:bg-black/5 p-1 rounded-full transition-colors"
+                  >
+                    <ChevronRight className="w-5 h-5" />
+                  </button>
+                </div>
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <div className="w-[30px] h-[30px] rounded-full bg-[#FFD700] flex items-center justify-center shrink-0">
+                      <Star className="w-[18px] h-[18px] text-white fill-white" />
+                    </div>
+                    <span className="text-[32px] font-bold text-black leading-none font-serif tracking-tight ml-2">
+                      {userAccount ? "53" : "0"}
+                    </span>
                   </div>
-                  <span className="text-[32px] font-bold text-black leading-none font-serif tracking-tight ml-2">
-                    {userAccount ? "8" : "0"}
-                  </span>
+                  <button
+                    className="w-[80px] h-[28px] border border-[#111] bg-transparent text-[#111] rounded-[14px] flex items-center justify-center text-[12px] font-semibold transition-colors hover:bg-black/5"
+                    onClick={() => setPointView("redeem")}
+                  >
+                    Redeem
+                  </button>
                 </div>
               </div>
-              <button
-                className="w-[80px] h-[28px] border border-[#111] bg-transparent text-[#111] rounded-[14px] flex items-center justify-center text-[12px] font-semibold mt-8 transition-colors hover:bg-black/5"
-                onClick={onSignInClick}
-              >
-                Redeem
-              </button>
-            </div>
-            <div>
-              <div className="flex justify-between items-center px-1">
-                <div>
-                  <h4 className="font-semibold text-[15px] text-black leading-tight">
-                    Daily Check-in
-                  </h4>
-                  <p className="text-[13px] text-black/40 mt-2">
-                    Earn points by clicking the button
-                  </p>
+              <div>
+                <div className="flex justify-between items-center px-1">
+                  <div>
+                    <h4 className="font-semibold text-[15px] text-black leading-tight">
+                      Daily Check-in
+                    </h4>
+                    <p className="text-[13px] text-black/40 mt-2">
+                      Earn points by clicking the button
+                    </p>
+                  </div>
+                  <button
+                    className="w-[80px] h-[28px] bg-[#333] text-white rounded-[14px] flex items-center justify-center text-[12px] font-semibold"
+                    onClick={onSignInClick}
+                  >
+                    {userAccount ? "Claimed" : "Get Points"}
+                  </button>
                 </div>
-                <button
-                  className="w-[80px] h-[28px] bg-[#333] text-white rounded-[14px] flex items-center justify-center text-[12px] font-semibold"
-                  onClick={onSignInClick}
-                >
-                  {userAccount ? "Claimed" : "Get Points"}
-                </button>
               </div>
             </div>
-          </div>
+          )}
         </div>
 
         {/* Right Column - Display only on Desktop */}
@@ -380,6 +404,10 @@ export function RewardsTab({
 
       {!isDesktop && showInviteRecord && (
         <InviteRecord onBack={() => setShowInviteRecord(false)} />
+      )}
+
+      {!isDesktop && pointView === "record" && (
+        <WLPointRecord onBack={() => setPointView("default")} />
       )}
     </>
   );

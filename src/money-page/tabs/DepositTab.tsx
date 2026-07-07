@@ -70,8 +70,8 @@ const AssetIcon = ({ type }: { type: string }) => {
 
 export function DepositTab({ isDesktop }: DepositTabProps) {
   const { stats } = useWltPrice();
-  const [asset, setAsset] = useState<"WLT" | "Gcoin">("WLT");
-  const [crypto, setCrypto] = useState<"WLT" | "USDC" | "USDT">("WLT");
+  const [asset, setAsset] = useState<"WLT" | "Gcoin">("Gcoin");
+  const [crypto, setCrypto] = useState<"WLT" | "USDC" | "USDT">("USDC");
   const [network, setNetwork] = useState<string>("SOL");
   const [showNetworkDropdown, setShowNetworkDropdown] = useState(false);
   const [showAssetDropdown, setShowAssetDropdown] = useState(false);

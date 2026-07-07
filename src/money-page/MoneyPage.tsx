@@ -174,7 +174,7 @@ export function MoneyPage({
             {/* Gcoin */}
             <div
               className="flex flex-col items-center shrink-0 cursor-pointer"
-              onClick={() => handleModalOpen("deposit")}
+              onClick={() => setActiveMenu("deposit")}
             >
               <div className="flex items-center gap-1 mb-2 sm:mb-3">
                 <span className="text-[18px] font-bold text-[#111] font-mono leading-none tracking-tight">
@@ -211,7 +211,10 @@ export function MoneyPage({
             </div>
 
             {/* WLT Amount */}
-            <div className="flex flex-col items-center shrink-0 cursor-pointer">
+            <div 
+              className="flex flex-col items-center shrink-0 cursor-pointer"
+              onClick={() => setActiveMenu("withdraw")}
+            >
               <div className="flex items-center gap-1 mb-2 sm:mb-3">
                 <span className="text-[18px] font-bold text-[#111] font-mono leading-none tracking-tight">
                   {userAccount ? "0.00" : "0.00"}
