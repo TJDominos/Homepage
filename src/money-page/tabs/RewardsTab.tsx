@@ -12,6 +12,7 @@ import {
 import { InviteRecord } from "../components/InviteRecord";
 import { WLPointRecord } from "../components/WLPointRecord";
 import { WLPointRedeem } from "../components/WLPointRedeem";
+import { FirstDepositBonusDetail } from "../components/FirstDepositBonusDetail";
 
 interface RewardsTabProps {
   isDesktop: boolean;
@@ -27,6 +28,7 @@ export function RewardsTab({
   const [showInviteRecord, setShowInviteRecord] = useState(false);
   const [showMobileInvite, setShowMobileInvite] = useState(false);
   const [pointView, setPointView] = useState<"default" | "record" | "redeem">("default");
+  const [depositBonusView, setDepositBonusView] = useState<"default" | "detail">("default");
   const [isCopied, setIsCopied] = useState(false);
 
   const handleCopyLink = () => {
@@ -223,28 +225,38 @@ export function RewardsTab({
       >
         <div className="flex flex-col gap-3">
           {/* First Deposit Bonus Widget */}
-          <div
-            className="bg-[#f0f2f5] rounded-2xl px-4 sm:px-6 flex items-center justify-between cursor-pointer border border-black/5 w-full shadow-sm"
-            style={{ height: "64px" }}
-            onClick={onSignInClick}
-          >
-            <div className="flex items-center gap-4">
-              <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-white shadow-sm relative overflow-hidden">
-                <Gift className="w-[22px] h-[22px] text-blue-500 relative z-10" />
+          {depositBonusView === "detail" ? (
+            <FirstDepositBonusDetail
+              onBack={() => setDepositBonusView("default")}
+              isDesktop={isDesktop}
+              userAccount={userAccount}
+              onSignInClick={onSignInClick}
+              status="unclaimed"
+            />
+          ) : (
+            <div
+              className="bg-[#f0f2f5] rounded-2xl px-4 sm:px-6 flex items-center justify-between cursor-pointer border border-black/5 w-full shadow-sm"
+              style={{ height: "64px" }}
+              onClick={() => setDepositBonusView("detail")}
+            >
+              <div className="flex items-center gap-4">
+                <div className="w-10 h-10 rounded-xl flex items-center justify-center bg-white shadow-sm relative overflow-hidden">
+                  <Gift className="w-[22px] h-[22px] text-blue-500 relative z-10" />
+                </div>
+                <div>
+                  <h3 className="text-sm font-semibold text-black leading-tight">
+                    First Deposit Bonus
+                  </h3>
+                  <p className="text-[12px] text-black/50 mt-2 leading-tight">
+                    Deposit to get 0.1 ICP bonus
+                  </p>
+                </div>
               </div>
-              <div>
-                <h3 className="text-sm font-semibold text-black leading-tight">
-                  First Deposit Bonus
-                </h3>
-                <p className="text-[12px] text-black/50 mt-2 leading-tight">
-                  Deposit to get 0.1 ICP bonus
-                </p>
-              </div>
+              <button className="text-black hover:bg-black/5 p-1 rounded-full transition-colors -mr-1">
+                <ChevronRight className="w-5 h-5" />
+              </button>
             </div>
-            <button className="text-black hover:bg-black/5 p-1 rounded-full transition-colors -mr-1">
-              <ChevronRight className="w-5 h-5" />
-            </button>
-          </div>
+          )}
 
           {/* Invite Friends Widget - Mobile Only */}
           {!isDesktop && (
