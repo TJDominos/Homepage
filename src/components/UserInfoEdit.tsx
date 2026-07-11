@@ -126,7 +126,7 @@ export function UserInfoEdit({
               </div>
 
               <div className="px-4 pb-4">
-                <div className="bg-[#e4e5f0] border border-white/40 rounded-2xl p-3 shadow-sm font-sans flex flex-col gap-2.5">
+                <div className="bg-[#e4e5f0] border border-white/40 rounded-2xl p-3 shadow-sm  flex flex-col gap-2.5">
                   {/* Avatar Selection */}
                   <div>
                     <div className="flex justify-between items-center mb-1">
@@ -253,7 +253,7 @@ export function UserInfoEdit({
                               : userAccount
                           }
                           readOnly
-                          className="w-full bg-[#e8e9ef] text-slate-400 text-[13px] rounded-xl pl-12 pr-4 py-2 outline-none font-mono"
+                          className="w-full bg-[#e8e9ef] text-slate-400 text-[13px] rounded-xl pl-12 pr-4 py-2 outline-none "
                         />
                       </div>
                     ) : (

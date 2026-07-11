@@ -10,12 +10,8 @@
   --foreground: oklch(0.145 0 0);
   --radius: 0.5rem;
   --max-content-width-pc: 1024px;
-  --app-font-family:
-    -apple-system, BlinkMacSystemFont, "SF Pro", "SF Pro Text", system-ui,
-    sans-serif;
-  --app-font-display:
-    -apple-system, BlinkMacSystemFont, "SF Pro", "SF Pro Display", system-ui,
-    sans-serif;
+  --app-font-family: "SF Pro", "Segoe UI", Roboto;
+  --app-font-display: "SF Pro", "Segoe UI", Roboto;
 }
 .dark {
   --background: oklch(0.145 0 0);
@@ -90,10 +86,7 @@
 
 .banner-carousel-mobile .slick-prev:before,
 .banner-carousel-mobile .slick-next:before {
-  font-family:
-    system-ui,
-    -apple-system,
-    sans-serif !important;
+  font-family: "SF Pro", "Segoe UI", Roboto !important;
   font-size: 16px;
   line-height: 1;
   color: rgba(255, 255, 255, 0.9);
@@ -119,7 +112,7 @@
 }
 
 .banner-carousel-mobile .slick-dots li button:before {
-  font-family: Arial, sans-serif !important;
+  font-family: "SF Pro", "Segoe UI", Roboto !important;
   content: "•" !important;
   color: rgba(255, 255, 255, 0.5) !important;
   font-size: 16px !important;
@@ -1008,4 +1001,9 @@ div#root:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-t
 }
 div#root:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(4) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > p:nth-of-type(1) {
   font-size: 12px !important;
+}
+@theme {
+  --font-sans: "SF Pro", "Segoe UI", Roboto;
+  --font-serif: "SF Pro", "Segoe UI", Roboto;
+  --font-mono: "SF Pro", "Segoe UI", Roboto;
 }

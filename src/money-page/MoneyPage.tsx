@@ -158,7 +158,7 @@ export function MoneyPage({
               onClick={() => handleModalOpen("balance")}
             >
               <div className="flex items-center gap-1 mb-2 sm:mb-3">
-                <span className="text-[18px] font-bold text-[#111] font-mono leading-none tracking-tight">
+                <span className="text-[18px] font-bold text-[#111]  leading-none tracking-tight">
                   {userAccount ? "≈ $0.00" : "≈ $0.00"}
                 </span>
                 <ChevronRight
@@ -177,7 +177,7 @@ export function MoneyPage({
               onClick={() => setActiveMenu("deposit")}
             >
               <div className="flex items-center gap-1 mb-2 sm:mb-3">
-                <span className="text-[18px] font-bold text-[#111] font-mono leading-none tracking-tight">
+                <span className="text-[18px] font-bold text-[#111]  leading-none tracking-tight">
                   {userAccount ? "123,343.00" : "0.00"}
                 </span>
                 <ChevronRight
@@ -197,7 +197,7 @@ export function MoneyPage({
               onClick={() => setActiveMenu("bonus")}
             >
               <div className="flex items-center gap-1 mb-2 sm:mb-3">
-                <span className="text-[18px] font-bold text-[#111] font-mono leading-none tracking-tight">
+                <span className="text-[18px] font-bold text-[#111]  leading-none tracking-tight">
                   {userAccount ? "12" : "0.00"}
                 </span>
                 <ChevronRight
@@ -216,7 +216,7 @@ export function MoneyPage({
               onClick={() => setActiveMenu("withdraw")}
             >
               <div className="flex items-center gap-1 mb-2 sm:mb-3">
-                <span className="text-[18px] font-bold text-[#111] font-mono leading-none tracking-tight">
+                <span className="text-[18px] font-bold text-[#111]  leading-none tracking-tight">
                   {userAccount ? "0.00" : "0.00"}
                 </span>
                 <ChevronRight

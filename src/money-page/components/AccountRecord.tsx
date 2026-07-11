@@ -486,16 +486,6 @@ export function AccountRecord({ isDesktop, userAccount }: AccountRecordProps) {
                     <div className="flex flex-col gap-1">
                       <span className="text-[15px] font-semibold text-black flex items-center gap-2">
                         {record.type}
-                        {record.game && (
-                          <span className="text-[12px] font-normal text-black/40 bg-black/5 px-2 py-0.5 rounded-full">
-                            {record.game}
-                          </span>
-                        )}
-                        {record.detail && (
-                          <span className="text-[12px] font-normal text-black/40 bg-black/5 px-2 py-0.5 rounded-full">
-                            {record.detail}
-                          </span>
-                        )}
                       </span>
                       <span className="text-[13px] text-black/40">
                         {record.date}
@@ -507,6 +497,20 @@ export function AccountRecord({ isDesktop, userAccount }: AccountRecordProps) {
                       >
                         {record.usdAmount}/{record.tokenAmount}
                       </span>
+                      {(record.game || record.detail) && (
+                        <div className="flex items-center gap-2">
+                          {record.game && (
+                            <span className="text-[12px] font-normal text-black/40 uppercase">
+                              {record.game === "Staking" ? "CODE: STAKING REWARDS" : `CODE: ${record.game}`}
+                            </span>
+                          )}
+                          {record.detail && (
+                            <span className="text-[12px] font-normal text-black/40">
+                              {record.detail}
+                            </span>
+                          )}
+                        </div>
+                      )}
                     </div>
                   </div>
                 ))}

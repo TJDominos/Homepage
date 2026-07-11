@@ -212,7 +212,7 @@ function App() {
               </div>
             </div>
             <span
-              className="text-[18px] md:text-[16px] font-bold text-black font-sans tracking-tight whitespace-nowrap shrink-0 cursor-pointer"
+              className="text-[18px] md:text-[16px] font-bold text-black  tracking-tight whitespace-nowrap shrink-0 cursor-pointer"
               onClick={() => setActiveTab("play")}
             >
               Randseed

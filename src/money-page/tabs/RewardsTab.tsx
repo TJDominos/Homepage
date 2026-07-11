@@ -93,11 +93,11 @@ export function RewardsTab({
 
     // Draw text
     ctx.fillStyle = "#000000";
-    ctx.font = "bold 28px sans-serif";
+    ctx.font = "bold 28px \"SF Pro\", \"Segoe UI\", Roboto";
     ctx.textAlign = "center";
     ctx.fillText("Invite Friends", 200, 140);
 
-    ctx.font = "15px sans-serif";
+    ctx.font = "15px \"SF Pro\", \"Segoe UI\", Roboto";
     ctx.fillStyle = "#666666";
     ctx.fillText("Scan to play and win!", 200, 180);
 
@@ -109,7 +109,7 @@ export function RewardsTab({
 
       // Draw link text
       ctx.fillStyle = "#000000";
-      ctx.font = "14px monospace";
+      ctx.font = "14px \"SF Pro\", \"Segoe UI\", Roboto";
       ctx.fillText("randseed.org/?invite=M82A5", 200, 440);
 
       // Trigger download
@@ -295,7 +295,7 @@ export function RewardsTab({
           ) : pointView === "redeem" ? (
             <WLPointRedeem onBack={() => setPointView("default")} isDesktop={isDesktop} />
           ) : (
-            <div className="bg-[#f0f2f5] rounded-3xl p-4 sm:p-6 shadow-sm border border-black/5 font-sans relative">
+            <div className="bg-[#f0f2f5] rounded-3xl p-4 sm:p-6 shadow-sm border border-black/5  relative">
               <div className="flex flex-col mb-5 border-b border-black/5 pb-5">
                 <div className="flex items-center justify-between mb-3 w-full">
                   <h3 className="font-semibold text-[15px] text-black flex items-center gap-1.5 relative group">
@@ -318,7 +318,7 @@ export function RewardsTab({
                     <div className="w-[30px] h-[30px] rounded-full bg-[#FFD700] flex items-center justify-center shrink-0">
                       <Star className="w-[18px] h-[18px] text-white fill-white" />
                     </div>
-                    <span className="text-[32px] font-bold text-black leading-none font-serif tracking-tight ml-2">
+                    <span className="text-[32px] font-bold text-black leading-none  tracking-tight ml-2">
                       {userAccount ? "53" : "0"}
                     </span>
                   </div>
