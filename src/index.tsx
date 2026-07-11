@@ -305,7 +305,23 @@ function App() {
                         viewBox="0 0 27 27"
                         fill="none"
                       >
-                        <path d={svgPaths.p1bf39e00} fill="currentColor" />
+                        <circle
+                          cx="13.5"
+                          cy="13.5"
+                          fill={activeTab === "money" ? "currentColor" : "none"}
+                          r="13.5"
+                        />
+                        {activeTab !== "money" && (
+                          <circle
+                            cx="13.5"
+                            cy="13.5"
+                            stroke="currentColor"
+                            strokeWidth="1"
+                            fill="none"
+                            r="13"
+                          />
+                        )}
+                        <path d={svgPaths.p1bf39e00} fill={activeTab === "money" ? "#fff" : "currentColor"} />
                       </svg>
                     )}
                     {tab.id === "play" && (
@@ -358,10 +374,20 @@ function App() {
                       </svg>
                     )}
                     {tab.id === "rank" && (
-                      <Trophy
-                        size={14}
-                        strokeWidth={activeTab === "rank" ? 2 : 1.5}
-                      />
+                      <div className="relative w-full h-full flex items-center justify-center">
+                        <svg className="absolute inset-0 w-full h-full" viewBox="0 0 30 30" fill="none">
+                          <circle cx="15" cy="15" fill={activeTab === "rank" ? "currentColor" : "none"} r="15" />
+                          {activeTab !== "rank" && (
+                            <circle cx="15" cy="15" stroke="currentColor" strokeWidth="1" fill="none" r="14.5" />
+                          )}
+                        </svg>
+                        <Trophy
+                          size={10}
+                          strokeWidth={activeTab === "rank" ? 2 : 1.5}
+                          color={activeTab === "rank" ? "#fff" : "currentColor"}
+                          className="relative z-10"
+                        />
+                      </div>
                     )}
                     {tab.id === "payout" && (
                       <svg
@@ -369,7 +395,11 @@ function App() {
                         viewBox="0 0 27 27"
                         fill="none"
                       >
-                        <path d={svgPaths.p2891d1d0} fill="currentColor" />
+                        <circle cx="13.5" cy="13.5" fill={activeTab === "payout" ? "currentColor" : "none"} r="13.5" />
+                        {activeTab !== "payout" && (
+                          <circle cx="13.5" cy="13.5" stroke="currentColor" strokeWidth="1" fill="none" r="13" />
+                        )}
+                        <path d={svgPaths.p2891d1d0} fill={activeTab === "payout" ? "#fff" : "currentColor"} />
                       </svg>
                     )}
                   </div>
