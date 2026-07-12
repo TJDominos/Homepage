@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import quickQuidLogo from '../imports/image-1.png';
 
 const LOGO_BASE_URL = "https://storage.randseed.org/Product/Logo/";
 
@@ -107,6 +108,14 @@ export function useHomeData() {
               logo: `${LOGO_BASE_URL}Kenologosmall.png`,
               status: 'available',
               frontend_route: '/game/keno'
+            },
+            {
+              id: 7,
+              name: 'Quick Quid',
+              description: 'Pick Number Grid Together. Beat the Odds！',
+              logo: '/qqlogo.png',
+              status: 'available',
+              frontend_route: '/game/quick-quid'
             }
           ]
         ]

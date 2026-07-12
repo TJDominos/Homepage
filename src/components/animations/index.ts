@@ -5,3 +5,4 @@ export * from './MinesAnimation';
 export * from './KenoAnimation';
 export * from './LuckyNickyAnimation';
 export * from './DefaultAnimation';
+export * from './QuickQuidAnimation';

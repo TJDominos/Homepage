@@ -6,6 +6,7 @@ import {
   MinesAnimation,
   KenoAnimation,
   LuckyNickyAnimation,
+  QuickQuidAnimation,
   DefaultAnimation,
 } from "./animations";
 
@@ -34,6 +35,9 @@ export const GameHoverOverlay: React.FC<Props> = ({ gameName }) => {
     }
     if (normalizedName.includes("lucky nicky")) {
       return <LuckyNickyAnimation />;
+    }
+    if (normalizedName.includes("quick quid")) {
+      return <QuickQuidAnimation />;
     }
     return <DefaultAnimation />;
   };
