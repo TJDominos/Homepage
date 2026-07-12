@@ -8,6 +8,7 @@ import {
   ChevronRight,
   MoreHorizontal,
   ChevronDown,
+  Trophy,
 } from "lucide-react";
 import { AccountInfoModal, UserProfileInfo } from "./AccountInfoModal";
 
@@ -142,8 +143,13 @@ export default function RanksPage() {
   };
 
   useEffect(() => {
-    getWinners(currentPage, itemsPerPage);
-  }, [currentPage, itemsPerPage]);
+    if (timeFilter === "Today") {
+      setList([]);
+      setTotalItems(0);
+    } else {
+      getWinners(currentPage, itemsPerPage);
+    }
+  }, [currentPage, itemsPerPage, timeFilter]);
 
   const handlePageChange = (page: number) => {
     goToPage(page);
@@ -337,6 +343,22 @@ export default function RanksPage() {
                     </td>
                   </tr>
                 ))
+              ) : timeFilter === "Today" ? (
+                <tr>
+                  <td colSpan={5} className="px-4 py-16 text-center">
+                    <div className="flex flex-col items-center justify-center">
+                      <div className="w-16 h-16 bg-black/5 rounded-full flex items-center justify-center mb-4">
+                        <Trophy size={32} className="text-black/20" />
+                      </div>
+                      <p className="text-black font-semibold text-[16px] mb-1">
+                        No one has won yet today!
+                      </p>
+                      <p className="text-black/50 text-[14px]">
+                        Play now to claim the 1st place on the leaderboard.
+                      </p>
+                    </div>
+                  </td>
+                </tr>
               ) : list.length > 0 ? (
                 list.map((winner, index) => (
                   <tr
