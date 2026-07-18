@@ -7,6 +7,7 @@ import {
   CheckCircle2,
   ExternalLink,
   Mail,
+  Fingerprint,
 } from "lucide-react";
 
 interface WalletConnectModalProps {
@@ -263,6 +264,42 @@ export function WalletConnectModal({ isOpen, onClose }: WalletConnectModalProps)
     }, 2000);
   };
 
+  const handlePasskeySelect = async () => {
+    setSelectedWallet({ name: "Passkey" });
+    setStep("CONNECTING");
+    
+    try {
+      if (!window.PublicKeyCredential) {
+        throw new Error("WebAuthn not supported");
+      }
+
+      // Generate a mock challenge
+      const challenge = new Uint8Array(32);
+      crypto.getRandomValues(challenge);
+
+      // Attempt to invoke the native Passkey UI (Discoverable Credential / Passkey login)
+      // Note: This requires the user to open the app in a new tab if iframe permissions are restricted.
+      await navigator.credentials.get({
+        publicKey: {
+          challenge: challenge,
+          rpId: window.location.hostname,
+          userVerification: "required",
+        },
+      });
+
+      // User successfully authenticated via Passkey
+      setStep("SUCCESS");
+      setTimeout(() => {
+        const generatedId = `passkey-${Math.random().toString(36).substring(2, 10)}`;
+        onClose(generatedId);
+      }, 1500);
+    } catch (err) {
+      console.error("Passkey error:", err);
+      // Handle cancellation or fallback to the previous step
+      setStep("SELECT_WALLET");
+    }
+  };
+
   const handleEmailSelect = () => {
     setSelectedWallet({ name: "Email" });
     setStep("CONNECTING");
@@ -370,6 +407,23 @@ export function WalletConnectModal({ isOpen, onClose }: WalletConnectModalProps)
                   </p>
                   <div className="flex flex-col gap-0.5">
                     <button
+                      onClick={handlePasskeySelect}
+                      className="w-full h-[40px] md:h-[36px] flex flex-row items-center justify-between px-3 rounded-[12px] transition-all hover:bg-black/5 cursor-pointer"
+                    >
+                      <div className="flex flex-row items-center gap-2.5">
+                        <div className="w-[24px] h-[24px] flex items-center justify-center shrink-0 text-black/80">
+                          <Fingerprint
+                            className="w-[24px] h-[24px]"
+                            strokeWidth={1.5}
+                          />
+                        </div>
+                        <span className="font-semibold text-black text-[14px]">
+                          Sign in with a passkey
+                        </span>
+                      </div>
+                      <ChevronRight className="w-[14px] h-[14px] text-black/30" />
+                    </button>
+                    <button
                       onClick={handleEmailSelect}
                       className="w-full h-[40px] md:h-[36px] flex flex-row items-center justify-between px-3 rounded-[12px] transition-all hover:bg-black/5 cursor-pointer"
                     >
@@ -387,23 +441,35 @@ export function WalletConnectModal({ isOpen, onClose }: WalletConnectModalProps)
                       <ChevronRight className="w-[14px] h-[14px] text-black/30" />
                     </button>
 
+                    <div className="flex flex-row items-center justify-center gap-2 px-3 py-[4px] my-1 opacity-70">
+                      <div className="flex-1 h-[1px] bg-black/10"></div>
+                      <span className="text-[10px] font-semibold uppercase tracking-[0.05em] text-black/40">
+                        OR
+                      </span>
+                      <div className="flex-1 h-[1px] bg-black/10"></div>
+                    </div>
+
                     <div className="flex flex-col items-center">
                       <button
                         onClick={handleInternetIdentitySelect}
                         className="w-full h-[40px] md:h-[36px] flex flex-row items-center justify-between px-3 rounded-[12px] transition-all hover:bg-black/5 cursor-pointer"
                       >
                         <div className="flex flex-row items-center gap-2.5">
-                          <div className="w-[24px] h-[24px] flex items-center justify-center shrink-0">
+                          <div className="w-[24px] h-[24px] flex items-center justify-center rounded-[6px] overflow-hidden shrink-0 bg-white shadow-sm border border-black/5 p-[1px]">
                             <InternetIdentityIcon />
                           </div>
-                          <span className="font-semibold text-black text-[14px]">
+                          <span className="font-semibold flex-1 text-left text-[14px] text-black">
                             Internet Identity
                           </span>
                         </div>
-                        <ChevronRight className="w-[14px] h-[14px] text-black/30" />
+                        <div className="flex flex-row items-center justify-center gap-2">
+                          <span className="text-[9px] uppercase font-bold text-black/45 flex items-center justify-center px-1.5 py-0.5 rounded-[12px] bg-black/5">
+                            Web
+                          </span>
+                          <ChevronRight className="w-[14px] h-[14px] text-black/30" />
+                        </div>
                       </button>
-
-                      <div className="flex flex-row items-center justify-center gap-2 mt-1">
+                      <div className="flex flex-row items-center justify-between w-full px-3 mt-1 mb-2">
                         <span className="text-[10px] text-black/45">
                           Coming from our old site?
                         </span>
@@ -411,14 +477,6 @@ export function WalletConnectModal({ isOpen, onClose }: WalletConnectModalProps)
                           Retrieve account
                         </button>
                       </div>
-                    </div>
-
-                    <div className="flex flex-row items-center justify-center gap-2 px-3 py-[4px] my-1 opacity-70">
-                      <div className="flex-1 h-[1px] bg-black/10"></div>
-                      <span className="text-[10px] font-semibold uppercase tracking-[0.05em] text-black/40">
-                        OR
-                      </span>
-                      <div className="flex-1 h-[1px] bg-black/10"></div>
                     </div>
 
                     {orderedWallets.length === 0 ? (
