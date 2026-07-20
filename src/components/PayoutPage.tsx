@@ -50,11 +50,11 @@ const CurrencyLines: React.FC<{ splits?: CurrencySplit[] }> = ({ splits }) =>
     </div>
   ) : null;
 
-/** One labeled group of the below-md expanded panel. All numbers share
-    one right-aligned spine — the USD total right-aligns with the
-    per-currency amounts (share % hangs in its own trailing mini
-    column) — and both groups use this identical structure so neither
-    side mirrors the other. */
+/** One labeled group of the below-md expanded panel: label and USD
+    total left-aligned as the group header, per-currency lines below
+    on a right-aligned numeric spine (share % in its own trailing mini
+    column). Both groups use this identical structure so neither side
+    mirrors the other. */
 const BreakdownGroup: React.FC<{
   label: string;
   total: React.ReactNode;
@@ -67,10 +67,9 @@ const BreakdownGroup: React.FC<{
     <div className="col-span-3 mb-0.5 text-[11px] font-semibold uppercase tracking-wide text-(--color-black-alpha-50)">
       {label}
     </div>
-    <span className="col-span-2 text-right text-[13px] font-semibold tabular-nums text-(--text-primary)">
+    <span className="col-span-3 text-[13px] font-semibold tabular-nums text-(--text-primary)">
       {total}
     </span>
-    <span aria-hidden />
     {splits?.map((s) => (
       <React.Fragment key={s.symbol}>
         <span className="text-xs text-(--text-subtle)">{s.symbol}</span>
