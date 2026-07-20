@@ -25,58 +25,65 @@ const fmtToken = (n: number) =>
     maximumFractionDigits: n < 100 ? 2 : 0,
   });
 
-/** Per-currency amounts with their share, aligned as a mini table:
-    amount (primary, tabular) · symbol (muted) · share % (muted, right).
-    align="start" (the stacked panel) sizes every column to its widest
-    content so the block shrinks to fit narrow viewports; align="end"
-    keeps fixed trailing columns so lines right-align under a table
-    column. */
-const CurrencyLines: React.FC<{
-  splits?: CurrencySplit[];
-  align?: "start" | "end";
-}> = ({ splits, align = "end" }) =>
+/** Per-currency amounts with their share, right-aligned so lines sit
+    under a numeric table column (md+ expanded rows): amount (primary,
+    tabular) · symbol (muted) · share % (muted, right). */
+const CurrencyLines: React.FC<{ splits?: CurrencySplit[] }> = ({ splits }) =>
   splits && splits.length > 0 ? (
-    align === "start" ? (
-      <div className="grid w-fit grid-cols-[auto_auto_auto] items-baseline gap-x-2 gap-y-1.5 md:gap-x-2.5">
-        {splits.map((s) => (
-          <React.Fragment key={s.symbol}>
-            <span className="text-right text-[13px] font-medium tabular-nums text-(--text-primary) md:text-sm">
-              {fmtToken(s.amount)}
-            </span>
-            <span className="text-xs text-(--text-subtle)">{s.symbol}</span>
-            <span className="text-right text-xs tabular-nums text-(--color-black-alpha-50)">
-              {s.sharePct}%
-            </span>
-          </React.Fragment>
-        ))}
-      </div>
-    ) : (
-      <div className="flex flex-col gap-1.5">
-        {splits.map((s) => (
-          <div
-            key={s.symbol}
-            className="flex items-baseline justify-end gap-2 whitespace-nowrap"
-          >
-            <span className="text-sm font-medium tabular-nums text-(--text-primary)">
-              {fmtToken(s.amount)}
-            </span>
-            <span className="w-11 text-left text-xs text-(--text-subtle)">
-              {s.symbol}
-            </span>
-            <span className="w-9 text-right text-xs tabular-nums text-(--color-black-alpha-50)">
-              {s.sharePct}%
-            </span>
-          </div>
-        ))}
-      </div>
-    )
-  ) : (
-    <span
-      className={`block text-(--text-disabled) ${align === "end" ? "text-right" : "text-left"}`}
-    >
-      –
+    <div className="flex flex-col gap-1.5">
+      {splits.map((s) => (
+        <div
+          key={s.symbol}
+          className="flex items-baseline justify-end gap-2 whitespace-nowrap"
+        >
+          <span className="text-sm font-medium tabular-nums text-(--text-primary)">
+            {fmtToken(s.amount)}
+          </span>
+          <span className="w-11 text-left text-xs text-(--text-subtle)">
+            {s.symbol}
+          </span>
+          <span className="w-9 text-right text-xs tabular-nums text-(--color-black-alpha-50)">
+            {s.sharePct}%
+          </span>
+        </div>
+      ))}
+    </div>
+  ) : null;
+
+/** One labeled group of the below-md expanded panel. All numbers share
+    one right-aligned spine — the USD total right-aligns with the
+    per-currency amounts (share % hangs in its own trailing mini
+    column) — and both groups use this identical structure so neither
+    side mirrors the other. */
+const BreakdownGroup: React.FC<{
+  label: string;
+  total: React.ReactNode;
+  splits?: CurrencySplit[];
+  className?: string;
+}> = ({ label, total, splits, className = "" }) => (
+  <div
+    className={`grid grid-cols-[auto_auto_auto] items-baseline gap-x-2.5 gap-y-1.5 ${className}`}
+  >
+    <div className="col-span-3 mb-0.5 text-[11px] font-semibold uppercase tracking-wide text-(--color-black-alpha-50)">
+      {label}
+    </div>
+    <span className="col-span-2 text-right text-[13px] font-semibold tabular-nums text-(--text-primary)">
+      {total}
     </span>
-  );
+    <span aria-hidden />
+    {splits?.map((s) => (
+      <React.Fragment key={s.symbol}>
+        <span className="text-xs text-(--text-subtle)">{s.symbol}</span>
+        <span className="text-right text-[13px] font-medium tabular-nums text-(--text-primary)">
+          {fmtToken(s.amount)}
+        </span>
+        <span className="text-right text-xs tabular-nums text-(--color-black-alpha-50)">
+          {s.sharePct}%
+        </span>
+      </React.Fragment>
+    ))}
+  </div>
+);
 
 /** Count-up for the hero figure; snaps to the target under reduced motion. */
 function useCountUp(target: number, durationMs = 900) {
@@ -629,29 +636,17 @@ export default function PayoutPage({ userAccount }: PayoutPageProps) {
                                   group entirely; Paid Out then sits alone,
                                   still flush right via ml-auto. */}
                               {g.jackpotUsd !== null && (
-                                <div className="flex flex-col items-start">
-                                  <div className="text-[11px] font-semibold uppercase tracking-wide text-(--color-black-alpha-50)">
-                                    Live Jackpot
-                                  </div>
-                                  <div className="mt-1 text-[13px] font-semibold tabular-nums text-(--text-primary)">
-                                    {fmtUsd(g.jackpotUsd, 2)}
-                                  </div>
-                                  {g.jackpotByCurrency && (
-                                    <div className="mt-2">
-                                      <CurrencyLines
-                                        splits={g.jackpotByCurrency}
-                                        align="start"
-                                      />
-                                    </div>
-                                  )}
-                                </div>
+                                <BreakdownGroup
+                                  label="Live Jackpot"
+                                  total={fmtUsd(g.jackpotUsd, 2)}
+                                  splits={g.jackpotByCurrency}
+                                />
                               )}
-                              <div className="ml-auto flex flex-col items-end">
-                                <div className="text-[11px] font-semibold uppercase tracking-wide text-(--color-black-alpha-50)">
-                                  Paid Out
-                                </div>
-                                <div className="mt-1 text-[13px] font-semibold tabular-nums text-(--text-primary)">
-                                  {g.totalPaidOutUsd === 0 ? (
+                              <BreakdownGroup
+                                className="ml-auto"
+                                label="Paid Out"
+                                total={
+                                  g.totalPaidOutUsd === 0 ? (
                                     <span className="font-normal text-(--text-disabled)">
                                       –
                                     </span>
@@ -660,17 +655,10 @@ export default function PayoutPage({ userAccount }: PayoutPageProps) {
                                       g.totalPaidOutUsd,
                                       g.totalPaidOutUsd < 10 ? 2 : 0,
                                     )
-                                  )}
-                                </div>
-                                {g.paidOutByCurrency && (
-                                  <div className="mt-2">
-                                    <CurrencyLines
-                                      splits={g.paidOutByCurrency}
-                                      align="start"
-                                    />
-                                  </div>
-                                )}
-                              </div>
+                                  )
+                                }
+                                splits={g.paidOutByCurrency}
+                              />
                             </div>
                           </td>
                         </tr>
