@@ -1,0 +1,81 @@
+/**
+ * Payout page — page-scoped styles built on the RS Design System.
+ *
+ * ./rs/*.css are verbatim copies from the design-system build
+ * (RS repo: dist/tokens.css, src/css/button.css) — do not edit them by
+ * hand; re-copy from the RS repo when it updates.
+ *
+ * Everything below references RS tokens only — no hard-coded colors,
+ * radii, shadows or font sizes. Text hierarchy used throughout:
+ * primary --text-primary · secondary --text-subtle · tertiary
+ * --color-black-alpha-50 · empty/disabled --text-disabled.
+ */
+@import "./rs/tokens.css";
+@import "./rs/button.css";
+
+/* The site chrome puts its own font stack on every element; RS components
+   inherit it here so the page reads as one piece with the rest of the app. */
+.payout-page .btn {
+  font-family: inherit;
+}
+
+/* ------------------------------------------------------------ surfaces */
+
+.payout-card {
+  background: var(--color-white);
+  border: 1px solid var(--color-black-alpha-10);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-dropdown);
+}
+
+/* Personal stats card — Background Purple wash fading to white. */
+.payout-mycard {
+  background: linear-gradient(90deg, var(--bg-subtle), var(--color-white));
+  border: 1px solid var(--color-purple-100);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-dropdown);
+}
+
+/* --------------------------------------------------------------- table */
+
+.payout-thead {
+  background: var(--color-neutral-100);
+  color: var(--text-subtle);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-medium);
+}
+
+.payout-sort {
+  border-radius: var(--radius-sm);
+  color: inherit;
+}
+.payout-sort:hover {
+  color: var(--text-primary);
+}
+.payout-sort:focus-visible,
+.payout-expand:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+.payout-row:hover {
+  background: var(--select-option-hover-bg);
+}
+/* Open row and its breakdown panel share one surface so they read as
+   a single connected card. */
+.payout-row--open,
+.payout-panel {
+  background: var(--color-neutral-50);
+}
+
+/* -------------------------------------- tooltip (toast surface tokens) */
+
+.payout-tip {
+  background: var(--toast-bg);
+  color: var(--toast-text);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-popover);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-regular);
+}
+
