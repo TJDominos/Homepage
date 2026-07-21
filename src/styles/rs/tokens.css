@@ -1,0 +1,194 @@
+/**
+ * Do not edit directly, this file was auto-generated.
+ */
+
+:root {
+  --color-black: #000000;
+  --color-white: #ffffff;
+  --color-neutral-50: #f7f7f8;
+  --color-neutral-100: #ededef;
+  --color-neutral-200: #d9d9de;
+  --color-neutral-300: #b8b8c0;
+  --color-neutral-400: #8e8e99;
+  --color-neutral-500: #6b6b75;
+  --color-neutral-600: #4d4d55;
+  --color-neutral-700: #3a3a40;
+  --color-neutral-800: #26262b;
+  --color-neutral-900: #131316;
+  --color-purple-50: #f4f0fb; /** Background Purple — surfaces, subtle fills, hover tints. */
+  --color-purple-100: #e9e1f6;
+  --color-purple-200: #d3c3ed;
+  --color-purple-300: #b49cdf;
+  --color-purple-400: #8b6bc9;
+  --color-purple-500: #6f4fb0;
+  --color-purple-600: #5f40a1; /** Foreground Purple — text, icons, accents on light backgrounds. */
+  --color-purple-700: #4c3380;
+  --color-purple-800: #3a2762;
+  --color-purple-900: #281a45;
+  --color-danger-500: #db2121;
+  --color-danger-600: #c11717; /** Danger — borders, icons, focus ring. */
+  --color-coin: #fdc700; /** Coin / currency gold — coin icons and amounts. */
+  --color-white-alpha-45: rgba(255, 255, 255, 0.45); /** White at 45% — progress-bar track on dark surfaces. */
+  --color-black-alpha-5: rgba(0, 0, 0, 0.05); /** Black at 5% — subtle hover wash (list rows / menu items). */
+  --color-black-alpha-10: rgba(0, 0, 0, 0.1); /** Black at 10% — solid (primary) button disabled fill. */
+  --color-black-alpha-25: rgba(0, 0, 0, 0.25); /** Black at 25% — solid (primary) button disabled text. */
+  --color-black-alpha-30: rgba(0, 0, 0, 0.3); /** Black at 30% — disabled borders / text on white; popup / sheet overlay scrim. */
+  --color-black-alpha-50: rgba(0, 0, 0, 0.5); /** Black at 50%. */
+  --color-black-alpha-60: rgba(0, 0, 0, 0.6); /** Black at 60% — select trigger caret. */
+  --color-black-alpha-65: rgba(0, 0, 0, 0.65); /** Black at 65% — secondary text (captions). */
+  --color-black-alpha-85: rgba(0, 0, 0, 0.85); /** Black at 85% — solid (primary) button hover. */
+  --radius-none: 0; /** 0px — square */
+  --radius-sm: 0.25rem; /** 4px — chips, small controls */
+  --radius-md: 0.5rem; /** 8px — cards, menus */
+  --radius-snug: 0.625rem; /** 10px — multi-line inputs (textarea) */
+  --radius-lg: 0.75rem; /** 12px — surfaces, modals */
+  --radius-xl: 1.25rem; /** 20px — inputs (component default), large surfaces */
+  --radius-full: 9999px; /** pill — buttons (component default), avatars */
+  --button-outline-bg: rgba(0, 0, 0, 0);
+  --shadow-dropdown: 0px 4px 12px rgba(0, 0, 0, 0.1); /** Bottom-sheet / overlay elevation — 0 4 12 black 10%. */
+  --shadow-popover: 0px 8px 24px rgba(0, 0, 0, 0.12); /** Select popover elevation — 0 8 24 black 12%. */
+  --select-icon-size: 1rem; /** 16px chevron — desktop. */
+  --select-icon-size-mobile: 1.25rem; /** 20px chevron — mobile. */
+  --select-form-height: 2.25rem; /** 36px desktop — same as the input default. */
+  --select-form-height-mobile: 3rem; /** 48px mobile — same as .input--lg. */
+  --select-filter-height: 2rem; /** 32px desktop — one step below the form select. */
+  --select-filter-height-mobile: 2.25rem; /** 36px mobile. */
+  --select-filter-min-width: 6rem; /** 96px — keeps short labels ('All') comfortable. */
+  --select-filter-max-width: 15rem; /** 240px desktop cap (mobile caps at 60% of the container). */
+  --select-panel-max-height: 20rem; /** 320px desktop (~8 options) — overflow scrolls. */
+  --select-panel-max-height-mobile: 18rem; /** 288px mobile (~6.5 options). */
+  --select-panel-max-width: 20rem; /** 320px — the panel may grow past the trigger up to this cap. */
+  --select-option-height: 2.25rem; /** 36px desktop row. */
+  --select-option-height-mobile: 2.75rem; /** 44px mobile row — minimum touch target. */
+  --loading-bar-width: 16.5rem; /** 264px default bar width (never overflows its parent; override with width). */
+  --loading-bar-height: 0.25rem; /** 4px bar. */
+  --spinner-icon-size: 3rem; /** 48px brand icon. */
+  --toast-min-width: 12.5rem; /** Toast minimum width (200px) — short toasts stay compact. */
+  --toast-max-width: 24rem; /** Toast maximum width on desktop (384px) — longer messages wrap; clamped to the viewport on narrow screens. */
+  --toast-min-height: 3.75rem; /** Toast minimum height (60px) — grows with content. */
+  --size-icon-sm: 1rem; /** Small icon — 16px. Inline with text, dense toolbars. */
+  --size-icon-md: 1.25rem; /** Medium icon — 20px. Default UI icon (buttons, inputs, list rows). */
+  --size-icon-lg: 1.5rem; /** Large icon — 24px. Section headers, primary actions. */
+  --size-icon-xl: 2rem; /** Extra-large icon — 32px. Feature tiles, empty states. */
+  --size-avatar-sm: 1.5rem; /** Small avatar — 24px. Inline mentions, dense lists. */
+  --size-avatar-md: 2rem; /** Medium avatar — 32px. Default list / comment avatar. */
+  --size-avatar-lg: 2.5rem; /** Large avatar — 40px. Cards, account nav. */
+  --size-avatar-xl: 3rem; /** Extra-large avatar — 48px. List / card headers. */
+  --size-avatar-2xl: 4rem; /** 2XL avatar — 64px. Profile headers. */
+  --space-0: 0; /** 0px */
+  --space-1: 0.25rem; /** 4px — base unit */
+  --space-2: 0.5rem; /** 8px */
+  --space-3: 0.75rem; /** 12px */
+  --space-4: 1rem; /** 16px */
+  --space-5: 1.25rem; /** 20px */
+  --space-6: 1.5rem; /** 24px */
+  --space-8: 2rem; /** 32px */
+  --space-10: 2.5rem; /** 40px */
+  --space-12: 3rem; /** 48px */
+  --font-family-sans: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'PingFang SC', 'Microsoft YaHei', 'Noto Sans CJK SC', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji';
+  --font-family-mono: 'SFMono-Regular', Menlo, Consolas, 'Liberation Mono', monospace;
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+  --font-size-xs: 0.75rem; /** 12px */
+  --font-size-sm: 0.875rem; /** 14px */
+  --font-size-md: 1rem; /** 16px */
+  --font-size-lg: 1.125rem; /** 18px */
+  --font-size-xl: 1.25rem; /** 20px */
+  --font-size-2xl: 1.5rem; /** 24px */
+  --font-size-3xl: 2rem; /** 32px */
+  --font-size-4xl: 2.25rem; /** 36px */
+  --font-line-height-tight: 1.2;
+  --font-line-height-normal: 1.5;
+  --font-line-height-relaxed: 1.65;
+  --text-primary: var(--color-black);
+  --text-subtle: var(--color-black-alpha-65); /** Secondary text — captions / muted copy (black 65%). */
+  --text-accent: var(--color-purple-600);
+  --text-disabled: var(--color-neutral-400);
+  --text-danger: var(--color-danger-600); /** Error / validation message text — #C11717 (AA on white, ~6.2:1). */
+  --bg-subtle: var(--color-purple-50); /** Background Purple surface. */
+  --border-accent: var(--color-purple-600);
+  --border-invalid: var(--color-danger-600); /** Error / invalid field border. */
+  --focus-ring: var(--color-purple-600); /** Focus-visible outline color. */
+  --button-solid-bg: var(--color-black);
+  --button-solid-bg-hover: var(--color-black-alpha-85); /** Solid (primary) button hover — 85% black (#000000D9). */
+  --button-solid-bg-active: var(--color-neutral-900);
+  --button-solid-bg-disabled: var(--color-black-alpha-10); /** Solid (primary) button disabled fill — 10% black (#0000001A). */
+  --button-solid-text: var(--color-white);
+  --button-solid-text-disabled: var(--color-black-alpha-25); /** Solid (primary) button disabled text — 25% black (#00000040). */
+  --button-outline-border: var(--color-black);
+  --button-outline-text: var(--color-black);
+  --button-outline-bg-hover: var(--color-neutral-50);
+  --button-outline-bg-active: var(--color-neutral-100);
+  --button-solid-accent-bg: var(--color-purple-50); /** Purple solid button — Background Purple fill. */
+  --button-solid-accent-bg-hover: var(--color-purple-100);
+  --button-solid-accent-bg-active: var(--color-purple-200);
+  --button-solid-accent-bg-disabled: var(--color-black-alpha-10); /** Disabled fill — black 10% (same as solid). */
+  --button-solid-accent-text: var(--color-purple-600); /** Purple solid button — Foreground Purple text. */
+  --button-solid-accent-text-disabled: var(--color-black-alpha-25); /** Disabled text — black 25% (same as solid). */
+  --input-bg: var(--color-black-alpha-5); /** Input field background — black 5% (#0000000D). */
+  --input-text: var(--color-black); /** Entered value text. */
+  --input-placeholder: var(--color-black-alpha-30); /** Placeholder text — black 30% (#0000004D). */
+  --input-border-focus: var(--color-purple-600); /** Focus border — Foreground Purple (no resting border). */
+  --input-border-invalid: var(--color-danger-600); /** Invalid field border / ring. */
+  --input-label: var(--color-black); /** Field label text. */
+  --input-required: var(--color-danger-500); /** Required-field asterisk marker. */
+  --select-value: var(--color-black); /** Chosen value — black, regular weight, reads like input text (both types). */
+  --select-placeholder: var(--color-black-alpha-30); /** Trigger placeholder — black 30% (matches input.placeholder). */
+  --select-caret: var(--color-black-alpha-60); /** Trigger chevron — black 60%. */
+  --select-border-invalid: var(--color-danger-600); /** Error-state trigger border (aria-invalid). */
+  --select-form-bg: var(--color-black-alpha-5); /** Form select fill — black 5%, same as input.bg. No border, no hover change. */
+  --select-form-padding-x: var(--space-3); /** 12px desktop. */
+  --select-form-padding-x-mobile: var(--space-4); /** 16px mobile. */
+  --select-form-font-size: var(--font-size-sm); /** 14px desktop. */
+  --select-form-font-size-mobile: var(--font-size-md); /** 16px mobile — ≥16px avoids iOS zoom-on-focus. */
+  --select-form-radius: var(--radius-xl); /** 20px — same radius as input. */
+  --select-filter-bg: var(--color-white);
+  --select-filter-border: var(--color-black-alpha-10); /** Filter select outline — black 10% hairline. No hover change. */
+  --select-filter-padding-x: var(--space-3); /** 12px. */
+  --select-filter-font-size: var(--font-size-xs); /** 12px desktop. */
+  --select-filter-font-size-mobile: var(--font-size-sm); /** 14px mobile. */
+  --select-filter-radius: var(--radius-full); /** Pill. */
+  --select-filter-gap: var(--space-2); /** 8px between adjacent filters (.select-group). */
+  --select-panel-bg: var(--color-white); /** Dropdown panel background. */
+  --select-panel-border: var(--color-black-alpha-10); /** Dropdown panel hairline border — black 10%. */
+  --select-panel-offset: var(--space-1); /** 4px gap from the trigger. */
+  --select-panel-radius: var(--radius-md); /** 8px desktop. */
+  --select-panel-radius-mobile: var(--radius-lg); /** 12px mobile. */
+  --select-option-text: var(--color-black); /** Dropdown option text. */
+  --select-option-hover-bg: var(--color-black-alpha-5); /** Option hover / keyboard-active wash — black 5%. */
+  --select-option-selected-bg: var(--color-black-alpha-5); /** Selected option highlight. */
+  --select-option-check: var(--color-purple-600); /** Selected checkmark — Foreground Purple. */
+  --select-option-padding-x: var(--space-3); /** 12px desktop. */
+  --select-option-padding-x-mobile: var(--space-4); /** 16px mobile. */
+  --checkbox-bg: var(--color-white); /** Unchecked fill. */
+  --checkbox-bg-checked: var(--color-purple-600); /** Checked fill — Foreground Purple. */
+  --checkbox-bg-disabled: var(--color-white); /** Disabled fill — white. */
+  --checkbox-border: var(--color-black-alpha-65); /** Unchecked border — black 65%. */
+  --checkbox-border-checked: var(--color-purple-600);
+  --checkbox-border-disabled: var(--color-black-alpha-30); /** Disabled border — black 30%. */
+  --checkbox-check: var(--color-white); /** Check / dash glyph. */
+  --checkbox-check-disabled: var(--color-neutral-400);
+  --switch-track-off: var(--color-neutral-300); /** Switch track — off. */
+  --switch-track-on: var(--color-purple-600); /** Switch track — on (Foreground Purple). */
+  --switch-thumb: var(--color-white); /** Switch knob. */
+  --popup-bg: var(--color-white); /** Bottom-sheet background. */
+  --popup-overlay: var(--color-black-alpha-30); /** Scrim behind the sheet — black 30%. */
+  --popup-title: var(--color-black); /** Sheet title — 16px semibold, black. */
+  --popup-body: var(--color-black-alpha-50); /** Sheet subtitle / body — 12px regular, black 50%. */
+  --loading-bar-track: var(--color-white-alpha-45); /** Unfilled part of the progress bar — white 45% (on dark surfaces). */
+  --loading-bar-fill: var(--color-white); /** Filled part of the progress bar — white. */
+  --loading-text: var(--color-white); /** Percent label — white (on dark surfaces). */
+  --spinner-label: var(--color-neutral-500); /** “Loading…” caption under the icon — neutral.500. */
+  --spinner-gap: var(--space-3); /** 12px between icon and label. */
+  --refresh-icon: var(--color-purple-600); /** Refresh control icon — Foreground Purple. */
+  --refresh-icon-size: var(--size-icon-sm); /** Refresh icon — 16px on desktop. */
+  --refresh-icon-size-mobile: var(--size-icon-md); /** Refresh icon — 20px on mobile. */
+  --toast-bg: var(--color-black-alpha-65); /** Toast background — black at 65%. */
+  --toast-text: var(--color-white); /** Toast text / icon — light on the dark surface. */
+  --tabs-text: var(--color-black-alpha-65); /** Inactive tab label — black 65%. */
+  --tabs-text-active: var(--color-black); /** Active tab label — black. */
+  --tabs-line: var(--color-black-alpha-65); /** Inactive underline — 1px black 65%. */
+  --tabs-line-active: var(--color-black); /** Active underline — 2px black. */
+}

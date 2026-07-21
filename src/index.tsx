@@ -19,6 +19,7 @@ import { AccountInfoModal } from "./components/AccountInfoModal";
 import { ProfileSettingModal } from "./components/ProfileSettingModal";
 import { MoneyPage } from "./money-page/MoneyPage";
 import RanksPage from "./components/RanksPage";
+import PayoutPage from "./components/PayoutPage";
 import { UserInfoEdit } from "./components/UserInfoEdit";
 import { WltHeaderPrice } from "./components/WltHeaderPrice";
 import { getRandomSysAvatar, getSysAvatar } from "./utils/avatar";
@@ -120,10 +121,10 @@ function App() {
     }
     if (activeTab === "payout") {
       return (
-        <div className="text-center py-20 flex-1">
-          <h2 className="text-3xl font-bold text-black mb-4">Payout Page</h2>
-          <p className="text-black/65">Coming soon...</p>
-        </div>
+        <PayoutPage
+          userAccount={userAccount}
+          onSignInClick={() => setWalletConnectModalOpen(true)}
+        />
       );
     }
 
