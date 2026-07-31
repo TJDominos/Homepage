@@ -12,6 +12,10 @@ export const FALLBACK_STATS: WltMarketData = {
   fdv: 158850,
 };
 
+const WLT_TOKEN_MINT = "G45pgo5kzUMPnXGqrLeDXXgxSrVx6ssXJiJTDWpHjups";
+const DEXSCREENER_API_URL = `https://api.dexscreener.com/latest/dex/tokens/${WLT_TOKEN_MINT}`;
+const POLL_INTERVAL_MS = 300000;
+
 export function useWltPrice() {
   const [stats, setStats] = useState<WltMarketData>(FALLBACK_STATS);
   const [isLive, setIsLive] = useState(false);
@@ -20,22 +24,27 @@ export function useWltPrice() {
     const controller = new AbortController();
     const loadPrice = async () => {
       try {
-        const response = await fetch(
-          "https://api.geckoterminal.com/api/v2/networks/solana/pools/D3yTkWUxmL5T1roVkeWptLEaosw5k1nYSkt392QwAkg1",
-          {
-            signal: controller.signal,
-            headers: { accept: "application/json" },
-          },
-        );
+        const response = await fetch(DEXSCREENER_API_URL, {
+          signal: controller.signal,
+        });
         if (!response.ok) return;
+        
         const json = await response.json();
-        const attrs = json?.data?.attributes;
-        if (!attrs) return;
+        if (!json.pairs || json.pairs.length === 0) return;
+        
+        // DexScreener returns the most liquid pair first
+        const pair = json.pairs[0];
+        
+        const fdv = Number(pair.fdv) || FALLBACK_STATS.fdv;
+        const price = Number(pair.priceUsd) || FALLBACK_STATS.price;
+        const change24h = pair.priceChange?.h24 !== undefined && pair.priceChange?.h24 !== null 
+          ? Number(pair.priceChange.h24) 
+          : FALLBACK_STATS.change24h;
 
         setStats({
-          price: parseFloat(attrs.base_token_price_usd) || FALLBACK_STATS.price,
-          change24h: parseFloat(attrs.price_change_percentage?.h24) || FALLBACK_STATS.change24h,
-          fdv: parseFloat(attrs.fdv_usd) || FALLBACK_STATS.fdv,
+          price,
+          change24h,
+          fdv,
         });
         setIsLive(true);
       } catch (error) {
@@ -44,7 +53,7 @@ export function useWltPrice() {
     };
 
     loadPrice();
-    const interval = setInterval(loadPrice, 300000); // 300s update
+    const interval = setInterval(loadPrice, POLL_INTERVAL_MS);
     return () => {
       controller.abort();
       clearInterval(interval);

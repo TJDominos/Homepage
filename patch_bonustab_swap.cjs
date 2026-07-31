@@ -1,0 +1,126 @@
+const fs = require('fs');
+let content = fs.readFileSync('src/frontend/money/tabs/BonusTab.tsx', 'utf-8');
+
+const oldStructure = `<div className="flex gap-2">
+                      <div
+                        className="relative shrink-0 w-[40%] min-w-[90px]"
+                      >
+                        <button
+                          disabled={swapStatus === "processing"}
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setShowSwapCurrencyDropdown(!showSwapCurrencyDropdown);
+                            setShowCurrencyDropdown(false);
+                          }}
+                          className={\`flex w-full items-center justify-between gap-1 bg-black/5 hover:bg-black/10 focus:ring-2 focus:ring-black/10 pl-4 pr-3 py-3 rounded-full text-[14px] text-black font-medium transition-colors cursor-pointer \${showSwapCurrencyDropdown ? "bg-white ring-2 ring-black/10" : ""} \${swapStatus === "processing" ? "opacity-60 cursor-not-allowed" : ""}\`}
+                        >
+                          <span className="truncate flex-1 text-center">
+                            {swapCurrency}
+                          </span>
+                          <ChevronDown
+                            size={14}
+                            className="text-black/40 shrink-0"
+                          />
+                        </button>
+                        {showSwapCurrencyDropdown && (
+                          <div className="absolute bottom-[calc(100%+4px)] left-0 w-full bg-white rounded-xl shadow-[0_4px_12px_rgba(0,0,0,0.1)] border border-black/5 py-1 z-50 overflow-y-auto max-h-[160px]">
+                            {[...SUPPORTED_ASSETS].filter(a => a !== 'Gcoin').sort((a, b) => a.localeCompare(b)).map(asset => (
+                              <button
+                                key={asset}
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  setSwapCurrency(asset);
+                                  setShowSwapCurrencyDropdown(false);
+                                }}
+                                className={\`w-full flex items-center gap-2 px-3 py-2 text-[13px] hover:bg-black/5 \${swapCurrency === asset ? "bg-black/5 text-black font-semibold" : "text-black/70"}\`}
+                              >
+                                <AssetIcon type={asset} className="w-4 h-4" />
+                                {asset}
+                              </button>
+                            ))}
+                          </div>
+                        )}
+                      </div>
+                      <input
+                        type="text"
+                        placeholder="Min: 1,000 Bonus"
+                        disabled={swapStatus === "processing"}
+                        value={swapAmount}
+                        onChange={(e) => {
+                          const val = e.target.value;
+                          if (/^[0-9.,]*$/.test(val)) setSwapAmount(val);
+                        }}
+                        onBlur={(e) => {
+                          const val = e.target.value.replace(/,/g, "");
+                          if (val && !isNaN(Number(val))) {
+                            setSwapAmount(Number(val).toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
+                          }
+                        }}
+                        className={\`flex-1 w-2/3 bg-black/5 focus:bg-white rounded-full px-3 py-3 outline-none text-[14px] text-center text-black placeholder-black/40 focus:ring-2 focus:ring-black/10 transition-all font-medium \${swapStatus === "processing" ? "opacity-60 cursor-not-allowed" : ""}\`}
+                      />
+                    </div>`;
+
+const newStructure = `<div className="flex gap-2">
+                      <input
+                        type="text"
+                        placeholder="Min: 1,000 Bonus"
+                        disabled={swapStatus === "processing"}
+                        value={swapAmount}
+                        onChange={(e) => {
+                          const val = e.target.value;
+                          if (/^[0-9.,]*$/.test(val)) setSwapAmount(val);
+                        }}
+                        onBlur={(e) => {
+                          const val = e.target.value.replace(/,/g, "");
+                          if (val && !isNaN(Number(val))) {
+                            setSwapAmount(Number(val).toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
+                          }
+                        }}
+                        className={\`flex-1 w-2/3 bg-black/5 focus:bg-white rounded-full px-3 py-3 outline-none text-[14px] text-center text-black placeholder-black/40 focus:ring-2 focus:ring-black/10 transition-all font-medium \${swapStatus === "processing" ? "opacity-60 cursor-not-allowed" : ""}\`}
+                      />
+                      <div
+                        className="relative shrink-0 w-[40%] min-w-[90px]"
+                      >
+                        <button
+                          disabled={swapStatus === "processing"}
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setShowSwapCurrencyDropdown(!showSwapCurrencyDropdown);
+                            setShowCurrencyDropdown(false);
+                          }}
+                          className={\`flex w-full items-center justify-between gap-1 bg-black/5 hover:bg-black/10 focus:ring-2 focus:ring-black/10 pl-4 pr-3 py-3 rounded-full text-[14px] text-black font-medium transition-colors cursor-pointer \${showSwapCurrencyDropdown ? "bg-white ring-2 ring-black/10" : ""} \${swapStatus === "processing" ? "opacity-60 cursor-not-allowed" : ""}\`}
+                        >
+                          <span className="truncate flex-1 text-center">
+                            {swapCurrency}
+                          </span>
+                          <ChevronDown
+                            size={14}
+                            className="text-black/40 shrink-0"
+                          />
+                        </button>
+                        {showSwapCurrencyDropdown && (
+                          <div className="absolute bottom-[calc(100%+4px)] left-0 w-full bg-white rounded-xl shadow-[0_4px_12px_rgba(0,0,0,0.1)] border border-black/5 py-1 z-50 overflow-y-auto max-h-[160px]">
+                            {[...SUPPORTED_ASSETS].filter(a => a !== 'Gcoin').sort((a, b) => a.localeCompare(b)).map(asset => (
+                              <button
+                                key={asset}
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  setSwapCurrency(asset);
+                                  setShowSwapCurrencyDropdown(false);
+                                }}
+                                className={\`w-full flex items-center gap-2 px-3 py-2 text-[13px] hover:bg-black/5 \${swapCurrency === asset ? "bg-black/5 text-black font-semibold" : "text-black/70"}\`}
+                              >
+                                <AssetIcon type={asset} className="w-4 h-4" />
+                                {asset}
+                              </button>
+                            ))}
+                          </div>
+                        )}
+                      </div>
+                    </div>`;
+
+content = content.replace(oldStructure, newStructure);
+
+content = content.replace(/ArrowRightLeft/g, 'ArrowRight');
+
+fs.writeFileSync('src/frontend/money/tabs/BonusTab.tsx', content);

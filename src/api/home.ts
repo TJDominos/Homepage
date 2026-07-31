@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import quickQuidLogo from '../imports/image-1.png';
+
 
 const LOGO_BASE_URL = "https://storage.randseed.org/Product/Logo/";
 
