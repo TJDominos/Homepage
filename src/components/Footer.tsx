@@ -116,6 +116,9 @@ const Footer: React.FC = () => {
                     How to Win
                   </a>
                 </li>
+                <li>
+                  <a href="/developers">Developer</a>
+                </li>
               </ul>
             </div>
 

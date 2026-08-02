@@ -36,6 +36,11 @@ const routes = {
     title: 'Randseed - Payouts',
     description: 'View prize pools and payouts.',
     image: 'https://your-cloudflare-r2-bucket.com/payout-thumbnail.png',
+  },
+  '/developers': {
+    title: 'Build on RandSeed — Launch, Grow & Earn',
+    description: 'Publish your web game, reach real players, and earn through transparent, player-powered rewards with zero SDK dependencies.',
+    image: 'https://storage.randseed.org/Thumbnail/HomeThumbnail.jpg',
   }
 };
 
