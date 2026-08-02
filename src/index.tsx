@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { lazy, Suspense, useEffect, useState } from "react";
 import { createRoot } from "react-dom/client";
 import { BrowserRouter, useNavigate, useLocation } from "react-router";
 import { ErrorBoundary } from "./ErrorBoundary";
@@ -26,7 +26,11 @@ import { getRandomSysAvatar, getSysAvatar } from "./utils/avatar";
 import svgPaths from "./imports/svg-401s87trfk";
 import "./index.css";
 
-function App() {
+const DeveloperLanding = lazy(
+  () => import("./developer-landing/DeveloperLanding"),
+);
+
+function GameApp() {
   const { banners, games, gamesLoading, bannersLoading } = useHomeData();
   const [windowWidth, setWindowWidth] = useState(() =>
     typeof window === "undefined" ? 768 : window.innerWidth,
@@ -476,6 +480,34 @@ function App() {
       )}
     </div>
   );
+}
+
+function App() {
+  const location = useLocation();
+
+  if (/^\/developers\/?$/.test(location.pathname)) {
+    return (
+      <Suspense
+        fallback={
+          <div
+            role="status"
+            style={{
+              minHeight: "100vh",
+              display: "grid",
+              placeItems: "center",
+              fontFamily: "system-ui, sans-serif",
+            }}
+          >
+            Loading RandSeed…
+          </div>
+        }
+      >
+        <DeveloperLanding />
+      </Suspense>
+    );
+  }
+
+  return <GameApp />;
 }
 
 const rootElement = document.getElementById("root");
