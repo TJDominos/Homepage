@@ -284,6 +284,8 @@
   gap: 10px;
   border: 1px solid transparent;
   border-radius: 999px;
+  cursor: pointer;
+  font-family: inherit;
   font-size: 14px;
   font-weight: 700;
   transition:
@@ -859,8 +861,13 @@
   align-items: center;
   min-height: 44px;
   margin-top: 25px;
+  padding: 0;
   gap: 9px;
   color: var(--landing-purple) !important;
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+  font-family: inherit;
   font-size: 14px;
   font-weight: 800;
 }

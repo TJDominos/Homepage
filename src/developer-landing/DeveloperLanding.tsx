@@ -29,9 +29,6 @@ import { WalletConnectModal } from "../components/WalletConnectModal";
 import { useAuth } from "../auth/AuthContext";
 import "./DeveloperLanding.css";
 
-const PUBLISH_URL =
-  "mailto:support@randseed.org?subject=Publish%20a%20game%20on%20RandSeed";
-
 function getPortalPath(hasOrganization: boolean): string {
   return hasOrganization
     ? "/developers/dashboard"
@@ -194,6 +191,10 @@ export default function DeveloperLanding(): React.ReactElement {
     setWalletConnectModalOpen(true);
   }
 
+  function openSignInModal(): void {
+    setWalletConnectModalOpen(true);
+  }
+
   function handleWalletConnectClose(verifiedId?: string): void {
     setWalletConnectModalOpen(false);
     if (typeof verifiedId === "string") {
@@ -263,10 +264,14 @@ export default function DeveloperLanding(): React.ReactElement {
                 custom payment infrastructure, or intrusive ads.
               </p>
               <div className="landing-actions">
-                <a className="button button--primary" href={PUBLISH_URL}>
-                  Publish Your Game
+                <button
+                  className="button button--primary"
+                  type="button"
+                  onClick={openSignInModal}
+                >
+                  Submit my game
                   <ArrowRight aria-hidden="true" />
-                </a>
+                </button>
               </div>
               <div className="landing-hero__proof" aria-label="Key benefits">
                 <span>
@@ -379,9 +384,13 @@ export default function DeveloperLanding(): React.ReactElement {
                 Upload through a streamlined workflow, complete review, and
                 start learning from real players.
               </p>
-              <a className="text-link" href={PUBLISH_URL}>
-                Submit your game <ArrowRight aria-hidden="true" />
-              </a>
+              <button
+                className="text-link"
+                type="button"
+                onClick={openSignInModal}
+              >
+                Submit my game <ArrowRight aria-hidden="true" />
+              </button>
             </div>
             <ol className="process-list">
               <li>
@@ -565,9 +574,13 @@ export default function DeveloperLanding(): React.ReactElement {
               new ways to grow and earn.
             </p>
             <div className="landing-actions">
-              <a className="button button--light" href={PUBLISH_URL}>
-                Publish Your Game <ArrowRight aria-hidden="true" />
-              </a>
+              <button
+                className="button button--light"
+                type="button"
+                onClick={openSignInModal}
+              >
+                Submit my game <ArrowRight aria-hidden="true" />
+              </button>
             </div>
             <p className="closing-cta__tagline">
               Launch fast. Play fair. Earn together.
