@@ -24,13 +24,23 @@ import { UserInfoEdit } from "./components/UserInfoEdit";
 import { WltHeaderPrice } from "./components/WltHeaderPrice";
 import { getRandomSysAvatar, getSysAvatar } from "./utils/avatar";
 import svgPaths from "./imports/svg-401s87trfk";
+import { AuthProvider, useAuth } from "./auth/AuthContext";
 import "./index.css";
 
 const DeveloperLanding = lazy(
   () => import("./developer-landing/DeveloperLanding"),
 );
+const DeveloperPortal = lazy(
+  () => import("./developer-portal/DeveloperPortal"),
+);
 
 function GameApp() {
+  const {
+    accountId: userAccount,
+    profile,
+    signIn,
+    updateProfile,
+  } = useAuth();
   const { banners, games, gamesLoading, bannersLoading } = useHomeData();
   const [windowWidth, setWindowWidth] = useState(() =>
     typeof window === "undefined" ? 768 : window.innerWidth,
@@ -53,18 +63,9 @@ function GameApp() {
   const [isUserInfoModalOpen, setUserInfoModalOpen] = useState(false);
   const [isProfileSettingModalOpen, setProfileSettingModalOpen] =
     useState(false);
-  const [userAccount, setUserAccount] = useState<string | null>(null);
   const [pendingUserAccount, setPendingUserAccount] = useState<string | null>(
     null,
   );
-  const [profile, setProfile] = useState<any>(() => {
-    try {
-      const saved = localStorage.getItem("user_profile_data");
-      return saved ? JSON.parse(saved) : null;
-    } catch {
-      return null;
-    }
-  });
 
   const isDesktop = windowWidth >= 768;
 
@@ -450,8 +451,8 @@ function GameApp() {
           setPendingUserAccount(null);
         }}
         onSubmit={(data) => {
-          setProfile(data);
-          setUserAccount(pendingUserAccount);
+          updateProfile(data, pendingUserAccount ?? undefined);
+          if (pendingUserAccount) signIn(pendingUserAccount);
           setProfileSettingModalOpen(false);
         }}
         userAccount={pendingUserAccount}
@@ -471,8 +472,7 @@ function GameApp() {
           isOpen={isUserInfoModalOpen}
           onClose={() => setUserInfoModalOpen(false)}
           onSubmit={(data) => {
-            setProfile(data);
-            localStorage.setItem("user_profile_data", JSON.stringify(data));
+            updateProfile(data);
           }}
           userAccount={userAccount}
           profile={profile}
@@ -484,6 +484,20 @@ function GameApp() {
 
 function App() {
   const location = useLocation();
+
+  if (/^\/developers\/.+/.test(location.pathname)) {
+    return (
+      <Suspense
+        fallback={
+          <div className="developer-route-loading" role="status">
+            Loading Developer Portal…
+          </div>
+        }
+      >
+        <DeveloperPortal />
+      </Suspense>
+    );
+  }
 
   if (/^\/developers\/?$/.test(location.pathname)) {
     return (
@@ -515,7 +529,9 @@ if (rootElement) {
   createRoot(rootElement).render(
     <ErrorBoundary>
       <BrowserRouter>
-        <App />
+        <AuthProvider>
+          <App />
+        </AuthProvider>
       </BrowserRouter>
     </ErrorBoundary>,
   );

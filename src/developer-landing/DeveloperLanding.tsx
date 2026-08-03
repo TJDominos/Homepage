@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
+import { useNavigate } from "react-router";
 import {
   ArrowRight,
   BadgeDollarSign,
@@ -25,12 +26,23 @@ import {
 } from "lucide-react";
 import Footer from "../components/Footer";
 import { WalletConnectModal } from "../components/WalletConnectModal";
+import { useAuth } from "../auth/AuthContext";
 import "./DeveloperLanding.css";
 
 const PUBLISH_URL =
   "mailto:support@randseed.org?subject=Publish%20a%20game%20on%20RandSeed";
 
-function RandseedMark({ className = "" }: { className?: string }) {
+function getPortalPath(hasOrganization: boolean): string {
+  return hasOrganization
+    ? "/developers/dashboard"
+    : "/developers/onboarding";
+}
+
+function RandseedMark({
+  className = "",
+}: {
+  className?: string;
+}): React.ReactElement {
   return (
     <svg
       className={className}
@@ -67,7 +79,7 @@ const heroGames = [
   { title: "Orbit", genre: "Skill", tone: "lime", icon: MousePointer2 },
 ];
 
-function HeroGameDeck() {
+function HeroGameDeck(): React.ReactElement {
   const [activeIndex, setActiveIndex] = useState(0);
 
   useEffect(() => {
@@ -168,10 +180,28 @@ const showcaseGames = [
   { title: "Vault 9", genre: "Adventure", tone: "rose", icon: Layers3 },
 ];
 
-export default function DeveloperLanding() {
+export default function DeveloperLanding(): React.ReactElement {
+  const { isSignedIn, organization, signIn } = useAuth();
+  const navigate = useNavigate();
   const [isWalletConnectModalOpen, setWalletConnectModalOpen] = useState(false);
-  const [signedInAccount, setSignedInAccount] = useState<string | null>(null);
   const signInButtonRef = useRef<HTMLButtonElement>(null);
+
+  function openPortal(): void {
+    if (isSignedIn) {
+      navigate(getPortalPath(Boolean(organization)));
+      return;
+    }
+    setWalletConnectModalOpen(true);
+  }
+
+  function handleWalletConnectClose(verifiedId?: string): void {
+    setWalletConnectModalOpen(false);
+    if (typeof verifiedId === "string") {
+      signIn(verifiedId);
+      navigate(getPortalPath(Boolean(organization)));
+    }
+    signInButtonRef.current?.focus();
+  }
 
   useEffect(() => {
     const previousTitle = document.title;
@@ -204,10 +234,10 @@ export default function DeveloperLanding() {
             ref={signInButtonRef}
             className="landing-nav__cta"
             type="button"
-            onClick={() => setWalletConnectModalOpen(true)}
+            onClick={openPortal}
           >
             <Wallet aria-hidden="true" />
-            {signedInAccount ? "Signed In" : "Sign In"}
+            {isSignedIn ? "Open Portal" : "Sign In"}
           </button>
         </div>
       </header>
@@ -550,13 +580,7 @@ export default function DeveloperLanding() {
 
       <WalletConnectModal
         isOpen={isWalletConnectModalOpen}
-        onClose={(verifiedId) => {
-          setWalletConnectModalOpen(false);
-          if (typeof verifiedId === "string") {
-            setSignedInAccount(verifiedId);
-          }
-          signInButtonRef.current?.focus();
-        }}
+        onClose={handleWalletConnectClose}
       />
     </div>
   );
