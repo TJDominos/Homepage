@@ -5,6 +5,11 @@ export const AssetIcon = ({ type, className = "w-5 h-5" }: { type: string; class
   if (type === "WLT") {
     return <WltLogo className={`${className} shrink-0`} />;
   }
+  if (type === "Bonus") {
+    return (
+      <img src="https://storage.randseed.org/Icons/bonus.svg" alt="Bonus" className={`${className} shrink-0`} />
+    );
+  }
   if (type === "Gcoin") {
     return (
       <div className={`${className} rounded-full bg-[#FFD700] border border-black/10 shrink-0`}></div>

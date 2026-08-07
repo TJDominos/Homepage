@@ -55,7 +55,8 @@ export function WithdrawTab({ isDesktop }: WithdrawTabProps) {
   const [showAssetDropdown, setShowAssetDropdown] = useState(false);
   const [address, setAddress] = useState("");
   const [amount, setAmount] = useState("");
-  const [faqExpanded, setFaqExpanded] = useState(false);
+  const [faqFeeExpanded, setFaqFeeExpanded] = useState(false);
+  const [faqLockedExpanded, setFaqLockedExpanded] = useState(false);
   const [expandedTx, setExpandedTx] = useState<string | null>(null);
   const [wltBalanceType, setWltBalanceType] = useState<"available" | "locked">(
     "available",
@@ -173,7 +174,7 @@ export function WithdrawTab({ isDesktop }: WithdrawTabProps) {
             <label className="text-[15px] font-semibold text-black">
               Withdraw Amount
             </label>
-            {asset !== "Gcoin" && (
+                        {asset === "WLT" && (
               <div className="flex items-center bg-black/5 rounded-full p-0.5">
                 <button
                   onClick={() => setWltBalanceType("available")}
@@ -214,52 +215,95 @@ export function WithdrawTab({ isDesktop }: WithdrawTabProps) {
               Max
             </button>
           </div>
-
-          <div className="flex flex-col gap-1 mt-1 px-2 text-[12px] text-black/65 font-normal">
-            {asset !== "Gcoin" ? (
-              <>
-                <div className="flex items-center">
-                  <span className="whitespace-nowrap">
-                    Available Balance: 0.00 {asset}
-                  </span>
-                </div>
-                <div className="flex flex-wrap items-center gap-x-1 gap-y-0.5">
-                  <span className="whitespace-nowrap">
-                    Locked Balance: 0.00 {asset}
-                  </span>
-                  <span className="hidden sm:inline">,</span>
-                  <span className="whitespace-nowrap mx-1">
-                    Network fee: 0.5 {crypto}
-                  </span>
-                  <div className="w-4 h-4 rounded-full bg-black/10 flex items-center justify-center ml-1 text-[10px] shrink-0 font-bold text-black/50">
-                    ?
+          <div className="flex flex-col gap-1 mt-1 px-2 text-[12px] text-black/65 font-medium">
+            {asset === "WLT" && (
+              <div className="flex flex-col gap-1 w-full">
+                {wltBalanceType === "available" ? (
+                  <div className="flex items-center gap-1">
+                    <span className="whitespace-nowrap">Available: 0.00 {asset}</span>
                   </div>
-                </div>
-              </>
-            ) : (
-              <div className="flex flex-wrap items-center gap-x-1 gap-y-0.5">
-                <span className="whitespace-nowrap">
-                  Balance: 123.3K {asset}
-                </span>
-                <span className="hidden sm:inline">,</span>
-                <span className="whitespace-nowrap mx-1">
-                  Network fee: 0.5 {crypto}
-                </span>
-                <div className="w-4 h-4 rounded-full bg-black/10 flex items-center justify-center ml-1 text-[10px] shrink-0 font-bold text-black/50">
-                  ?
+                ) : (
+                  <div className="flex items-center gap-1">
+                    <span className="whitespace-nowrap">Locked: 0.00 {asset}</span>
+                    <div 
+                      className="cursor-pointer w-4 h-4 rounded-full bg-black/20 hover:bg-black/30 transition-colors flex items-center justify-center text-[10px] shrink-0 font-bold text-black/60 relative z-10" 
+                      onClick={(e) => { 
+                        e.stopPropagation();
+                        setFaqLockedExpanded(true); 
+                        setTimeout(() => {
+                          const el = document.getElementById(window.innerWidth < 768 ? 'faq-locked-mobile' : 'faq-locked-desktop');
+                          if (el) { el.focus({ preventScroll: true }); el.scrollIntoView({ behavior: 'smooth', block: 'center' }); }
+                        }, 100); 
+                      }}
+                    >?</div>
+                  </div>
+                )}
+                <div className="flex items-center gap-1">
+                  <span className="whitespace-nowrap">Network fee: 0.5 {crypto}</span>
+                  <div 
+                    className="cursor-pointer w-4 h-4 rounded-full bg-black/20 hover:bg-black/30 transition-colors flex items-center justify-center text-[10px] shrink-0 font-bold text-black/60 relative z-10" 
+                    onClick={(e) => { 
+                      e.stopPropagation();
+                      setFaqFeeExpanded(true); 
+                      setTimeout(() => {
+                        const el = document.getElementById(window.innerWidth < 768 ? 'faq-fee-mobile' : 'faq-fee-desktop');
+                        if (el) { el.focus({ preventScroll: true }); el.scrollIntoView({ behavior: 'smooth', block: 'center' }); }
+                      }, 100); 
+                    }}
+                  >?</div>
                 </div>
               </div>
             )}
-
-            {asset !== "Gcoin" && (
-              <div className="text-[12px] text-[#6A3FE6] font-medium leading-snug">
-                *Locked Balance can be withdrawn subject to 30-day lockup +
+            {asset === "Gcoin" && (
+              <div className="flex flex-col gap-1 w-full">
+                <div className="flex items-center gap-1">
+                  <span className="whitespace-nowrap">Balance: 123.3K {asset}</span>
+                </div>
+                <div className="flex items-center gap-1">
+                  <span className="whitespace-nowrap">Network fee: 0.5 {crypto}</span>
+                  <div 
+                    className="cursor-pointer w-4 h-4 rounded-full bg-black/20 hover:bg-black/30 transition-colors flex items-center justify-center text-[10px] shrink-0 font-bold text-black/60 relative z-10" 
+                    onClick={(e) => { 
+                      e.stopPropagation();
+                      setFaqFeeExpanded(true); 
+                      setTimeout(() => {
+                        const el = document.getElementById(window.innerWidth < 768 ? 'faq-fee-mobile' : 'faq-fee-desktop');
+                        if (el) { el.focus({ preventScroll: true }); el.scrollIntoView({ behavior: 'smooth', block: 'center' }); }
+                      }, 100); 
+                    }}
+                  >?</div>
+                </div>
+              </div>
+            )}
+            {asset !== "WLT" && asset !== "Gcoin" && (
+              <div className="flex flex-col gap-1 w-full">
+                <div className="flex items-center gap-1">
+                  <span className="whitespace-nowrap">Available: 0.00 {asset}</span>
+                </div>
+                <div className="flex items-center gap-1">
+                  <span className="whitespace-nowrap">Network fee: 0.5 {crypto}</span>
+                  <div 
+                    className="cursor-pointer w-4 h-4 rounded-full bg-black/20 hover:bg-black/30 transition-colors flex items-center justify-center text-[10px] shrink-0 font-bold text-black/60 relative z-10" 
+                    onClick={(e) => { 
+                      e.stopPropagation();
+                      setFaqFeeExpanded(true); 
+                      setTimeout(() => {
+                        const el = document.getElementById(window.innerWidth < 768 ? 'faq-fee-mobile' : 'faq-fee-desktop');
+                        if (el) { el.focus({ preventScroll: true }); el.scrollIntoView({ behavior: 'smooth', block: 'center' }); }
+                      }, 100); 
+                    }}
+                  >?</div>
+                </div>
+              </div>
+            )}
+            {asset === "WLT" && wltBalanceType === "locked" && (
+              <div className="text-[12px] text-[#6A3FE6] font-medium leading-snug mt-1">
+                *Locked tokens can be withdrawn subject to 30-day lockup +
                 360-day linear vesting.
               </div>
             )}
           </div>
         </div>
-
         {parseFloat(amount.replace(/,/g, "") || "0") >
           (asset !== "Gcoin" ? 0 : 123322) && (
           <div className="text-red-500 font-medium text-[13px] px-2 mb-4">
@@ -315,12 +359,12 @@ export function WithdrawTab({ isDesktop }: WithdrawTabProps) {
     </div>
   );
 
-  const faqContent = (
+  const faqContent = (isMobile: boolean) => (
     <div className="bg-[#f0f2f5] rounded-3xl py-2 px-6 flex flex-col mt-2 md:mt-0">
-      <div className="flex flex-col">
+      <div className="flex flex-col border-b border-black/5">
         <div
-          className="flex flex-col cursor-pointer"
-          onClick={() => setFaqExpanded(!faqExpanded)}
+          id={isMobile ? "faq-fee-mobile" : "faq-fee-desktop"} tabIndex={-1} className="flex flex-col cursor-pointer outline-none"
+          onClick={() => setFaqFeeExpanded(!faqFeeExpanded)}
         >
           <div className="flex items-center justify-between py-3">
             <div className="flex items-center gap-2">
@@ -331,13 +375,38 @@ export function WithdrawTab({ isDesktop }: WithdrawTabProps) {
             </div>
             <ChevronDown
               size={16}
-              className={`text-black/50 transition-transform ${faqExpanded ? "rotate-180" : ""}`}
+              className={`text-black/50 transition-transform ${faqFeeExpanded ? "rotate-180" : ""}`}
             />
           </div>
-          {faqExpanded && (
+          {faqFeeExpanded && (
             <span className="text-[12px] text-black/50 leading-relaxed pb-3 pt-1">
               The network fee is a small amount of crypto required to process
               your transaction on the blockchain.
+            </span>
+          )}
+        </div>
+      </div>
+      
+      <div className="flex flex-col">
+        <div
+          id={isMobile ? "faq-locked-mobile" : "faq-locked-desktop"} tabIndex={-1} className="flex flex-col cursor-pointer outline-none"
+          onClick={() => setFaqLockedExpanded(!faqLockedExpanded)}
+        >
+          <div className="flex items-center justify-between py-3">
+            <div className="flex items-center gap-2">
+              <HelpCircle size={18} className="text-black/50" />
+              <span className="text-[14px] font-semibold text-black">
+                Why withdrawal is locked?
+              </span>
+            </div>
+            <ChevronDown
+              size={16}
+              className={`text-black/50 transition-transform ${faqLockedExpanded ? "rotate-180" : ""}`}
+            />
+          </div>
+          {faqLockedExpanded && (
+            <span className="text-[12px] text-black/50 leading-relaxed pb-3 pt-1">
+              Bonus-to-token conversion is a conditional reward. Locked tokens are withheld in an on-chain escrow account and will be automatically distributed to the withdrawal address on schedule.
             </span>
           )}
         </div>
@@ -502,7 +571,7 @@ export function WithdrawTab({ isDesktop }: WithdrawTabProps) {
         <div className="flex-1 w-full max-w-2xl">
           {rightColumnContent}
           <div className="hidden md:block w-full max-w-2xl mx-auto mt-2">
-            {faqContent}
+            {faqContent(false)}
           </div>
         </div>
 
@@ -654,7 +723,7 @@ export function WithdrawTab({ isDesktop }: WithdrawTabProps) {
             </div>
           </div>
 
-          <div className="md:hidden">{faqContent}</div>
+          <div className="md:hidden">{faqContent(true)}</div>
         </div>
       </div>
     </div>

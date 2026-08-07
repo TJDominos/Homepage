@@ -1,4 +1,5 @@
-import { useState, useEffect } from 'react';
+const fs = require('fs');
+const content = `import { useState, useEffect } from 'react';
 
 export interface WltMarketData {
   price: number | null;
@@ -13,7 +14,7 @@ export const FALLBACK_STATS: WltMarketData = {
 };
 
 const WLT_TOKEN_MINT = "G45pgo5kzUMPnXGqrLeDXXgxSrVx6ssXJiJTDWpHjups";
-const JUPITER_API_URL = `https://api.jup.ag/price/v2?ids=${WLT_TOKEN_MINT}`;
+const JUPITER_API_URL = \`https://api.jup.ag/price/v2?ids=\${WLT_TOKEN_MINT}\`;
 const POLL_INTERVAL_MS = 300000;
 
 export function useWltPrice() {
@@ -61,3 +62,5 @@ export function useWltPrice() {
 
   return { stats, isLive };
 }
+`;
+fs.writeFileSync('src/hooks/useWltPrice.ts', content);

@@ -227,7 +227,7 @@ export function BonusTab({ isDesktop, expandWidget }: BonusTabProps) {
                   Top Up Bonus
                 </h3>
                 <p className="text-[12px] font-normal text-black/65 mb-4">
-                  Exchange Tokens to Bonus.
+                  Exchange Tokens to Bonus
                 </p>
                 </div>
                 <div className="w-full flex flex-col justify-end gap-3 mt-auto">
@@ -430,7 +430,7 @@ export function BonusTab({ isDesktop, expandWidget }: BonusTabProps) {
                 <div className="w-10 h-10 bg-white rounded-xl flex items-center justify-center shadow-sm shrink-0">
                   <ArrowRight className="w-6 h-6 text-purple-500" />
                 </div>
-                <h3 className="text-[16px] font-semibold text-black">Redeem Bonus</h3>
+                <h3 className="text-[16px] font-semibold text-black">Redeem Token</h3>
               </div>
               <ChevronDown className="w-5 h-5 text-black/40" />
             </div>
@@ -475,10 +475,10 @@ export function BonusTab({ isDesktop, expandWidget }: BonusTabProps) {
                   />
                 </motion.div>
                 <h3 className="text-[16px] font-semibold text-black mb-1">
-                  Redeem Bonus
+                  Redeem Token
                 </h3>
                 <p className="text-[12px] font-normal text-black/65 mb-4">
-                  Redeem Bonus to Tokens.
+                  Exchange Bonus to Tokens
                 </p>
                 </div>
                 <div className="w-full flex flex-col justify-end gap-3 mt-auto">
@@ -548,7 +548,7 @@ export function BonusTab({ isDesktop, expandWidget }: BonusTabProps) {
                         )}
                       </div>
                     </div>
-                    <div className="h-[20px] flex items-center justify-center mt-1 w-full">
+                    <div className="flex flex-col items-center justify-center mt-1 w-full gap-1">
                       {parseFloat(swapAmount.replace(/,/g, "")) >= 1000 ? (
                         <span className="text-[12px] font-medium text-purple-600 leading-[1]">
                           ≈ {formatNumber(calculateTokenFromSwap())} {swapCurrency}
@@ -563,6 +563,9 @@ export function BonusTab({ isDesktop, expandWidget }: BonusTabProps) {
                           {formatNumber(1000 * BONUS_PRICE_USD / (prices[swapCurrency]?.priceUsd || 1))} {swapCurrency}
                         </span>
                       )}
+                      <span className="text-[11px] text-slate-400 font-medium leading-[1]">
+                        Conversion fee: 0.00 {swapCurrency}
+                      </span>
                     </div>
                   </div>
                   <button
@@ -1031,7 +1034,7 @@ export function BonusTab({ isDesktop, expandWidget }: BonusTabProps) {
                         )}
                       </div>
                     </div>
-                    <div className="h-[20px] flex items-center justify-center mt-1 w-full">
+                    <div className="flex flex-col items-center justify-center mt-1 w-full gap-1">
                       {gcoinAmount && parseFloat(gcoinAmount.replace(/,/g, "")) > 0 ? (
                         <span className="text-[12px] font-medium text-blue-600 leading-[1]">
                           ≈ {formatNumber(calculateGcoinSwap())} {gcoinDirection === "toGcoin" ? "Gcoin" : gcoinCurrency}
@@ -1039,6 +1042,11 @@ export function BonusTab({ isDesktop, expandWidget }: BonusTabProps) {
                       ) : (
                         <span className="text-[11px] text-slate-400 font-medium leading-[1]">
                           Rate: 1 {gcoinCurrency} = 10 Gcoin
+                        </span>
+                      )}
+                      {gcoinDirection === 'fromGcoin' && ['USDC', 'USDT'].includes(gcoinCurrency) && (
+                        <span className="text-[11px] text-slate-400 font-medium leading-[1]">
+                          Conversion fee: 0.00 {gcoinCurrency}
                         </span>
                       )}
                     </div>

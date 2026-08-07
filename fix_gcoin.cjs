@@ -1,83 +1,25 @@
 const fs = require('fs');
-let content = fs.readFileSync('src/frontend/money/tabs/BonusTab.tsx', 'utf-8');
 
-const oldStr = `<div className="flex items-center gap-2 mb-4 bg-black/5 px-3 py-1.5 rounded-full mt-1">
-                  {gcoinDirection === "toGcoin" ? (
-                    <>
-                      <div className="flex items-center gap-1.5">
-                        <AssetIcon type={gcoinCurrency} className="w-4 h-4" />
-                        <span className="text-[12px] font-medium text-black">{gcoinCurrency}</span>
-                      </div>
-                      <button onClick={() => setGcoinDirection("fromGcoin")} className="p-1 hover:bg-black/10 rounded-full transition-colors text-black/40 hover:text-black">
-                        <ArrowRightLeft size={14} />
-                      </button>
-                      <div className="flex items-center gap-1.5">
-                        <AssetIcon type="Gcoin" className="w-4 h-4" />
-                        <span className="text-[12px] font-medium text-black">Gcoin</span>
-                      </div>
-                    </>
-                  ) : (
-                    <>
-                      <div className="flex items-center gap-1.5">
-                        <AssetIcon type="Gcoin" className="w-4 h-4" />
-                        <span className="text-[12px] font-medium text-black">Gcoin</span>
-                      </div>
-                      <button onClick={() => setGcoinDirection("toGcoin")} className="p-1 hover:bg-black/10 rounded-full transition-colors text-black/40 hover:text-black">
-                        <ArrowRightLeft size={14} />
-                      </button>
-                      <div className="flex items-center gap-1.5">
-                        <AssetIcon type={gcoinCurrency} className="w-4 h-4" />
-                        <span className="text-[12px] font-medium text-black">{gcoinCurrency}</span>
-                      </div>
-                    </>
-                  )}
-                </div>`;
+let wt = fs.readFileSync('src/frontend/money/tabs/WithdrawTab.tsx', 'utf-8');
 
-const newStr = `<button 
-                  onClick={() => setGcoinDirection(gcoinDirection === "toGcoin" ? "fromGcoin" : "toGcoin")}
-                  className="flex items-center gap-2 mb-4 bg-black/5 hover:bg-black/10 px-3 py-1.5 rounded-full mt-1 cursor-pointer transition-colors"
-                >
-                  {gcoinDirection === "toGcoin" ? (
-                    <>
-                      <div className="flex items-center gap-1.5">
-                        <AssetIcon type={gcoinCurrency} className="w-4 h-4" />
-                        <span className="text-[12px] font-medium text-black">{gcoinCurrency}</span>
-                      </div>
-                      <div className="p-1 rounded-full transition-colors text-black/40">
-                        <ArrowRightLeft size={14} />
-                      </div>
-                      <div className="flex items-center gap-1.5">
-                        <AssetIcon type="Gcoin" className="w-4 h-4" />
-                        <span className="text-[12px] font-medium text-black">Gcoin</span>
-                      </div>
-                    </>
-                  ) : (
-                    <>
-                      <div className="flex items-center gap-1.5">
-                        <AssetIcon type="Gcoin" className="w-4 h-4" />
-                        <span className="text-[12px] font-medium text-black">Gcoin</span>
-                      </div>
-                      <div className="p-1 rounded-full transition-colors text-black/40">
-                        <ArrowRightLeft size={14} />
-                      </div>
-                      <div className="flex items-center gap-1.5">
-                        <AssetIcon type={gcoinCurrency} className="w-4 h-4" />
-                        <span className="text-[12px] font-medium text-black">{gcoinCurrency}</span>
-                      </div>
-                    </>
-                  )}
-                </button>`;
+wt = wt.replace(
+  /\{asset !== "WLT" && asset !== "Gcoin" && \(/,
+  `{asset === "Gcoin" && (
+              <div className="flex flex-wrap items-center gap-x-1 gap-y-0.5">
+                <span className="whitespace-nowrap">Balance: 123.3K {asset}</span>
+                <span className="hidden sm:inline mx-1">,</span>
+                <span className="whitespace-nowrap">Network fee: 0.5 {crypto}</span>
+                <div 
+                  className="cursor-pointer w-4 h-4 rounded-full bg-black/20 hover:bg-black/30 transition-colors flex items-center justify-center text-[10px] shrink-0 font-bold text-black/60 relative z-10" 
+                  onClick={(e) => { 
+                    e.stopPropagation();
+                    setFaqFeeExpanded(true); 
+                    setTimeout(() => document.getElementById('faq-fee')?.scrollIntoView({ behavior: 'smooth', block: 'center' }), 100); 
+                  }}
+                >?</div>
+              </div>
+            )}
+            {asset !== "WLT" && asset !== "Gcoin" && (`
+);
 
-if (content.includes(oldStr)) {
-  content = content.replace(oldStr, newStr);
-  fs.writeFileSync('src/frontend/money/tabs/BonusTab.tsx', content);
-  console.log("Success");
-} else {
-  console.log("String not found. Normalizing whitespace for a regex match...");
-  const oldRegex = /<div className="flex items-center gap-2 mb-4 bg-black\/5 px-3 py-1\.5 rounded-full mt-1">[\s\S]*?<\/div>\s*<div className="w-full flex flex-col justify-end gap-3 mt-auto">/;
-  // let's do this directly with regex
-  const regexNew = newStr + '\n                <div className="w-full flex flex-col justify-end gap-3 mt-auto">';
-  content = content.replace(oldRegex, regexNew);
-  fs.writeFileSync('src/frontend/money/tabs/BonusTab.tsx', content);
-  console.log("Replaced with regex.");
-}
+fs.writeFileSync('src/frontend/money/tabs/WithdrawTab.tsx', wt);

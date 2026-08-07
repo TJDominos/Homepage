@@ -11,15 +11,31 @@ import {
 } from "../api/payoutMock";
 import "./styles/payout.css";
 
-const fmtGcoin = (n: number, dec = 0) => (
-  <span className="inline-flex items-center gap-1">
-    <AssetIcon type="Gcoin" className="w-[14px] h-[14px]" />
-    {(n * 10).toLocaleString("en-US", {
-      minimumFractionDigits: dec,
-      maximumFractionDigits: dec,
-    })}
-  </span>
-);
+const fmtGcoin = (n: number, dec = 0) => {
+  const formatter = new Intl.NumberFormat("en-US", {
+    notation: "compact",
+    maximumFractionDigits: dec,
+  });
+  return (
+    <span className="inline-flex items-center gap-1">
+      <AssetIcon type="Gcoin" className="w-[14px] h-[14px]" />
+      {formatter.format(n * 10)}
+    </span>
+  );
+};
+
+const fmtBonus = (n: number, dec = 0) => {
+  const formatter = new Intl.NumberFormat("en-US", {
+    notation: "compact",
+    maximumFractionDigits: dec,
+  });
+  return (
+    <span className="inline-flex items-center gap-1">
+      <AssetIcon type="Bonus" className="w-[14px] h-[14px]" />
+      {formatter.format(n * 10000)}
+    </span>
+  );
+};
 
 const fmtPct = (n: number) => `${n.toFixed(2)}%`;
 
@@ -379,7 +395,11 @@ export default function PayoutPage({ userAccount }: PayoutPageProps) {
                     </div>
                   </div>
                   <div className="mt-1 text-[24px] font-bold leading-none tracking-tight text-(--text-primary)">
-                    {fmtGcoin(Math.round(heroPaidOut))}
+                    <div className="flex items-center gap-3 flex-wrap">
+                      {fmtGcoin(Math.round(heroPaidOut))}
+                      <span className="text-black/30 font-light text-[20px] hidden sm:inline">/</span>
+                      <span className="text-[20px] sm:text-[24px]">{fmtBonus(Math.round(heroPaidOut), 0)}</span>
+                    </div>
                   </div>
                   <div className="mt-2 text-xs text-(--color-black-alpha-50) flex items-center justify-between w-full">
                     <span>Across all games, lifetime</span>
@@ -457,8 +477,9 @@ export default function PayoutPage({ userAccount }: PayoutPageProps) {
                         <div className="text-xs font-medium text-(--text-subtle)">
                           Reward
                         </div>
-                        <div className="text-base font-semibold tabular-nums text-(--text-primary)">
+                        <div className="text-base font-semibold tabular-nums text-(--text-primary) flex flex-col gap-0.5">
                           {fmtGcoin(filteredMyStats.wonUsd, 2)}
+                          <span className="text-[13px]">{fmtBonus(filteredMyStats.wonUsd, 0)}</span>
                         </div>
                       </div>
                       <div>
@@ -505,7 +526,10 @@ export default function PayoutPage({ userAccount }: PayoutPageProps) {
                               
                               <td className="px-2 py-2.5 text-right tabular-nums text-black/80">
                                 <div className="flex flex-col items-end">
-                                  <span className="text-[12px] md:text-[14px]">{fmtGcoin(r.wonUsd, 2)}</span>
+                                  <div className="flex flex-col items-end gap-0.5">
+                                    <span className="text-[12px] md:text-[14px]">{fmtGcoin(r.wonUsd, 2)}</span>
+                                    <span className="text-[12px] md:text-[14px]">{fmtBonus(r.wonUsd, 0)}</span>
+                                  </div>
                                   <span className="text-[11px] text-black/40 sm:hidden mt-0.5">{r.plays.toLocaleString("en-US")} plays</span>
                                 </div>
                               </td>
@@ -618,9 +642,10 @@ export default function PayoutPage({ userAccount }: PayoutPageProps) {
                                   {g.jackpotUsd === null ? (
                                     <span className="text-[12px] md:text-[14px] text-(--text-disabled)">–</span>
                                   ) : (
-                                    <span className="inline-flex items-center justify-end gap-1 whitespace-nowrap text-[12px] font-semibold tabular-nums text-(--text-primary) md:text-sm">
+                                    <div className="flex flex-col items-end gap-0.5 whitespace-nowrap text-[12px] font-semibold tabular-nums text-(--text-primary) md:text-sm">
                                       {fmtGcoin(g.jackpotUsd, 2)}
-                                    </span>
+                                      {fmtBonus(g.jackpotUsd, 0)}
+                                    </div>
                                   )}
                                 </td>
                               )}
@@ -630,9 +655,10 @@ export default function PayoutPage({ userAccount }: PayoutPageProps) {
                                     {g.jackpotUsd === null ? (
                                       <span className="text-black/30 text-[12px] md:text-[14px]">–</span>
                                     ) : (
-                                      <span className="inline-flex items-center justify-end gap-1 whitespace-nowrap text-[12px] font-semibold tabular-nums text-black md:text-[15px]">
+                                      <div className="flex flex-col items-end gap-0.5 whitespace-nowrap text-[12px] font-semibold tabular-nums text-black md:text-[15px]">
                                         {fmtGcoin(g.jackpotUsd, 2)}
-                                      </span>
+                                        {fmtBonus(g.jackpotUsd, 0)}
+                                      </div>
                                     )}
                                   </td>
                                   <td className="hidden md:table-cell px-3 py-3.5 text-right tabular-nums text-[12px] md:text-[14px] text-(--text-subtle)">
@@ -667,10 +693,12 @@ export default function PayoutPage({ userAccount }: PayoutPageProps) {
                                   <span>
                                     {g.totalPaidOutUsd === 0
                                       ? "–"
-                                      : fmtGcoin(
-                                          g.totalPaidOutUsd,
-                                          g.totalPaidOutUsd < 10 ? 2 : 0,
-                                        )}
+                                      : (
+                                        <div className="flex flex-col items-end gap-0.5">
+                                          {fmtGcoin(g.totalPaidOutUsd, g.totalPaidOutUsd < 10 ? 2 : 0)}
+                                          {fmtBonus(g.totalPaidOutUsd, 0)}
+                                        </div>
+                                      )}
                                   </span>
                                   <span className="sm:hidden mt-0.5 text-[11px] text-black/40 font-normal">{g.totalPlays.toLocaleString("en-US")} plays</span>
                                 </div>
