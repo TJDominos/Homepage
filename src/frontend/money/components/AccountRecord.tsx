@@ -9,14 +9,13 @@ interface AccountRecordProps {
 const CATEGORIES = [
   "All Category",
   "Buy",
-  "Deposit",
+  "Fee",
   "Play",
   "Refund",
   "Reward",
   "Sell",
   "Staking",
   "Win",
-  "Withdraw",
 ];
 
 const CURRENCIES = ["All Assets", "Bonus", "Gcoin", "ICP", "WLT"];
@@ -67,16 +66,18 @@ const INITIAL_MOCK_RECORDS = [
     date: "2026.05.27 18:00:00",
   },
   {
-    type: "Deposit",
-    usdAmount: "+$11.84",
-    tokenAmount: "1.00 ICP",
-    date: "2026.05.27 15:30:20",
+    type: "Fee",
+    usdAmount: "-$0.05",
+    tokenAmount: "-0.50 Gcoin",
+    date: "2026.05.26 09:12:45",
+    cause: "Withdraw 1,200 WLT",
   },
   {
-    type: "Withdraw",
-    usdAmount: "-$2.95",
-    tokenAmount: "29.50 Gcoin",
-    date: "2026.05.26 09:12:45",
+    type: "Fee",
+    usdAmount: "-$0.05",
+    tokenAmount: "-0.50 Gcoin",
+    date: "2025.11.12 00:01:24",
+    cause: "Buy 0.6 ICP → Gcoin",
   },
   {
     type: "Staking",
@@ -245,37 +246,46 @@ export function AccountRecord({ isDesktop, userAccount }: AccountRecordProps) {
           <div className="grid grid-cols-2 gap-x-6 pt-2 border-t border-black/5 relative z-0 md:hidden">
             {/* Left Column: Income */}
             <div className="flex flex-col gap-3">
-              <div className="flex justify-between items-center text-sm mb-1">
+              <div 
+                className="flex justify-between items-center text-sm mb-1 cursor-pointer hover:opacity-80"
+                onClick={() => { setCategoryFilter("All Category"); setRecords(INITIAL_MOCK_RECORDS); setHasMore(true); }}
+              >
                 <span className="text-black font-semibold">Income</span>
                 <span className="text-black font-semibold">
-                  {formatAmount(1976.63, true)}
+                  {formatAmount(792.08, true)}
                 </span>
               </div>
-              <div className="flex justify-between items-center text-sm pl-2">
+              <div 
+                className="flex justify-between items-center text-sm pl-2 cursor-pointer hover:opacity-80"
+                onClick={() => { setCategoryFilter("Buy"); setRecords(INITIAL_MOCK_RECORDS); setHasMore(true); }}
+              >
                 <span className="text-black/50">Buy</span>
                 <span className="text-black font-medium">
                   {formatAmount(0.0, true)}
                 </span>
               </div>
-              <div className="flex justify-between items-center text-sm pl-2">
-                <span className="text-black/50">Deposit</span>
-                <span className="text-black font-medium">
-                  {formatAmount(1184.55, true)}
-                </span>
-              </div>
-              <div className="flex justify-between items-center text-sm pl-2">
+              <div 
+                className="flex justify-between items-center text-sm pl-2 cursor-pointer hover:opacity-80"
+                onClick={() => { setCategoryFilter("Refund"); setRecords(INITIAL_MOCK_RECORDS); setHasMore(true); }}
+              >
                 <span className="text-black/50">Refund</span>
                 <span className="text-black font-medium">
                   {formatAmount(0.67, true)}
                 </span>
               </div>
-              <div className="flex justify-between items-center text-sm pl-2">
+              <div 
+                className="flex justify-between items-center text-sm pl-2 cursor-pointer hover:opacity-80"
+                onClick={() => { setCategoryFilter("Reward"); setRecords(INITIAL_MOCK_RECORDS); setHasMore(true); }}
+              >
                 <span className="text-black/50">Reward</span>
                 <span className="text-black font-medium">
                   {formatAmount(100.0, true)}
                 </span>
               </div>
-              <div className="flex justify-between items-center text-sm pl-2">
+              <div 
+                className="flex justify-between items-center text-sm pl-2 cursor-pointer hover:opacity-80"
+                onClick={() => { setCategoryFilter("Win"); setRecords(INITIAL_MOCK_RECORDS); setHasMore(true); }}
+              >
                 <span className="text-black/50">Win</span>
                 <span className="text-black font-medium">
                   {formatAmount(691.41, true)}
@@ -285,34 +295,49 @@ export function AccountRecord({ isDesktop, userAccount }: AccountRecordProps) {
 
             {/* Right Column: Spending */}
             <div className="flex flex-col gap-3">
-              <div className="flex justify-between items-center text-sm mb-1">
+              <div 
+                className="flex justify-between items-center text-sm mb-1 cursor-pointer hover:opacity-80"
+                onClick={() => { setCategoryFilter("All Category"); setRecords(INITIAL_MOCK_RECORDS); setHasMore(true); }}
+              >
                 <span className="text-black font-semibold">Spending</span>
                 <span className="text-black font-semibold">
-                  {formatAmount(1969.26, false)}
+                  {formatAmount(1676.50, false)}
                 </span>
               </div>
-              <div className="flex justify-between items-center text-sm pl-2">
+              <div 
+                className="flex justify-between items-center text-sm pl-2 cursor-pointer hover:opacity-80"
+                onClick={() => { setCategoryFilter("Play"); setRecords(INITIAL_MOCK_RECORDS); setHasMore(true); }}
+              >
                 <span className="text-black/50">Play</span>
                 <span className="text-black font-medium">
                   {formatAmount(773.32, false)}
                 </span>
               </div>
-              <div className="flex justify-between items-center text-sm pl-2">
+              <div 
+                className="flex justify-between items-center text-sm pl-2 cursor-pointer hover:opacity-80"
+                onClick={() => { setCategoryFilter("Sell"); setRecords(INITIAL_MOCK_RECORDS); setHasMore(true); }}
+              >
                 <span className="text-black/50">Sell</span>
                 <span className="text-black font-medium">
                   {formatAmount(0.0, false)}
                 </span>
               </div>
-              <div className="flex justify-between items-center text-sm pl-2">
+              <div 
+                className="flex justify-between items-center text-sm pl-2 cursor-pointer hover:opacity-80"
+                onClick={() => { setCategoryFilter("Staking"); setRecords(INITIAL_MOCK_RECORDS); setHasMore(true); }}
+              >
                 <span className="text-black/50">Staking</span>
                 <span className="text-black font-medium">
                   {formatAmount(900.23, false)}
                 </span>
               </div>
-              <div className="flex justify-between items-center text-sm pl-2">
-                <span className="text-black/50">Withdraw</span>
+              <div 
+                className="flex justify-between items-center text-sm pl-2 cursor-pointer hover:opacity-80"
+                onClick={() => { setCategoryFilter("Fee"); setRecords(INITIAL_MOCK_RECORDS); setHasMore(true); }}
+              >
+                <span className="text-black/50">Fee</span>
                 <span className="text-black font-medium">
-                  {formatAmount(295.71, false)}
+                  {formatAmount(2.95, false)}
                 </span>
               </div>
             </div>
@@ -322,25 +347,28 @@ export function AccountRecord({ isDesktop, userAccount }: AccountRecordProps) {
           <div className="hidden md:grid grid-cols-4 gap-x-6 gap-y-4 pt-2 border-t border-black/5 relative z-0">
             {/* Col 1: Income total + Buy */}
             <div className="flex flex-col gap-3">
-              <div className="flex justify-between items-center text-sm mb-1">
+              <div 
+                className="flex justify-between items-center text-sm mb-1 cursor-pointer hover:opacity-80"
+                onClick={() => { setCategoryFilter("All Category"); setRecords(INITIAL_MOCK_RECORDS); setHasMore(true); }}
+              >
                 <span className="text-black font-semibold">Income</span>
                 <span className="text-black font-semibold">
-                  {formatAmount(1976.63, true)}
+                  {formatAmount(792.08, true)}
                 </span>
               </div>
-              <div className="flex justify-between items-center text-sm pl-2">
+              <div 
+                className="flex justify-between items-center text-sm pl-2 cursor-pointer hover:opacity-80"
+                onClick={() => { setCategoryFilter("Buy"); setRecords(INITIAL_MOCK_RECORDS); setHasMore(true); }}
+              >
                 <span className="text-black/50">Buy</span>
                 <span className="text-black font-medium">
                   {formatAmount(0.0, true)}
                 </span>
               </div>
-              <div className="flex justify-between items-center text-sm pl-2">
-                <span className="text-black/50">Deposit</span>
-                <span className="text-black font-medium">
-                  {formatAmount(1184.55, true)}
-                </span>
-              </div>
-              <div className="flex justify-between items-center text-sm pl-2">
+              <div 
+                className="flex justify-between items-center text-sm pl-2 cursor-pointer hover:opacity-80"
+                onClick={() => { setCategoryFilter("Refund"); setRecords(INITIAL_MOCK_RECORDS); setHasMore(true); }}
+              >
                 <span className="text-black/50">Refund</span>
                 <span className="text-black font-medium">
                   {formatAmount(0.67, true)}
@@ -354,13 +382,19 @@ export function AccountRecord({ isDesktop, userAccount }: AccountRecordProps) {
                 <span className="text-black font-semibold">Placeholder</span>
                 <span className="text-black font-semibold">-</span>
               </div>
-              <div className="flex justify-between items-center text-sm pl-2">
+              <div 
+                className="flex justify-between items-center text-sm pl-2 cursor-pointer hover:opacity-80"
+                onClick={() => { setCategoryFilter("Reward"); setRecords(INITIAL_MOCK_RECORDS); setHasMore(true); }}
+              >
                 <span className="text-black/50">Reward</span>
                 <span className="text-black font-medium">
                   {formatAmount(100.0, true)}
                 </span>
               </div>
-              <div className="flex justify-between items-center text-sm pl-2">
+              <div 
+                className="flex justify-between items-center text-sm pl-2 cursor-pointer hover:opacity-80"
+                onClick={() => { setCategoryFilter("Win"); setRecords(INITIAL_MOCK_RECORDS); setHasMore(true); }}
+              >
                 <span className="text-black/50">Win</span>
                 <span className="text-black font-medium">
                   {formatAmount(691.41, true)}
@@ -370,19 +404,28 @@ export function AccountRecord({ isDesktop, userAccount }: AccountRecordProps) {
 
             {/* Col 3: Spending total + Play */}
             <div className="flex flex-col gap-3 mt-4 md:mt-0">
-              <div className="flex justify-between items-center text-sm mb-1">
+              <div 
+                className="flex justify-between items-center text-sm mb-1 cursor-pointer hover:opacity-80"
+                onClick={() => { setCategoryFilter("All Category"); setRecords(INITIAL_MOCK_RECORDS); setHasMore(true); }}
+              >
                 <span className="text-black font-semibold">Spending</span>
                 <span className="text-black font-semibold">
-                  {formatAmount(1969.26, false)}
+                  {formatAmount(1676.50, false)}
                 </span>
               </div>
-              <div className="flex justify-between items-center text-sm pl-2">
+              <div 
+                className="flex justify-between items-center text-sm pl-2 cursor-pointer hover:opacity-80"
+                onClick={() => { setCategoryFilter("Play"); setRecords(INITIAL_MOCK_RECORDS); setHasMore(true); }}
+              >
                 <span className="text-black/50">Play</span>
                 <span className="text-black font-medium">
                   {formatAmount(773.32, false)}
                 </span>
               </div>
-              <div className="flex justify-between items-center text-sm pl-2">
+              <div 
+                className="flex justify-between items-center text-sm pl-2 cursor-pointer hover:opacity-80"
+                onClick={() => { setCategoryFilter("Sell"); setRecords(INITIAL_MOCK_RECORDS); setHasMore(true); }}
+              >
                 <span className="text-black/50">Sell</span>
                 <span className="text-black font-medium">
                   {formatAmount(0.0, false)}
@@ -396,16 +439,22 @@ export function AccountRecord({ isDesktop, userAccount }: AccountRecordProps) {
                 <span className="text-black font-semibold">Placeholder</span>
                 <span className="text-black font-semibold">-</span>
               </div>
-              <div className="flex justify-between items-center text-sm pl-2">
+              <div 
+                className="flex justify-between items-center text-sm pl-2 cursor-pointer hover:opacity-80"
+                onClick={() => { setCategoryFilter("Staking"); setRecords(INITIAL_MOCK_RECORDS); setHasMore(true); }}
+              >
                 <span className="text-black/50">Staking</span>
                 <span className="text-black font-medium">
                   {formatAmount(900.23, false)}
                 </span>
               </div>
-              <div className="flex justify-between items-center text-sm pl-2">
-                <span className="text-black/50">Withdraw</span>
+              <div 
+                className="flex justify-between items-center text-sm pl-2 cursor-pointer hover:opacity-80"
+                onClick={() => { setCategoryFilter("Fee"); setRecords(INITIAL_MOCK_RECORDS); setHasMore(true); }}
+              >
+                <span className="text-black/50">Fee</span>
                 <span className="text-black font-medium">
-                  {formatAmount(295.71, false)}
+                  {formatAmount(2.95, false)}
                 </span>
               </div>
             </div>
@@ -497,16 +546,21 @@ export function AccountRecord({ isDesktop, userAccount }: AccountRecordProps) {
                       >
                         {record.usdAmount}/{record.tokenAmount}
                       </span>
-                      {(record.game || record.detail) && (
+                      {(record.game || record.detail || record.cause) && (
                         <div className="flex items-center gap-2">
                           {record.game && (
                             <span className="text-[12px] font-normal text-black/40 uppercase">
-                              {record.game === "Staking" ? "CODE: STAKING REWARDS" : `CODE: ${record.game}`}
+                              {record.game === "Staking" ? "CODE: STAKING REWARDS" : `Game: ${record.game}`}
                             </span>
                           )}
                           {record.detail && (
                             <span className="text-[12px] font-normal text-black/40">
                               {record.detail}
+                            </span>
+                          )}
+                          {record.cause && (
+                            <span className="text-[13px] font-semibold text-black">
+                              {record.cause}
                             </span>
                           )}
                         </div>

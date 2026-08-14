@@ -60,7 +60,7 @@ export function useTokenPrices() {
           setPrices(newPrices);
         }
       } catch (e) {
-        console.error("Failed to fetch token prices", e);
+        // Silently fail and keep FALLBACK_PRICES or current prices
       }
     };
     
