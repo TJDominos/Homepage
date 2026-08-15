@@ -48,16 +48,26 @@ export function FirstDepositBonusDetail({
   };
 
   return (
-    <div className={`h-[500px] w-full relative overflow-hidden ${isDesktop ? 'rounded-3xl' : 'rounded-2xl'}`}>
-      <div className="flex flex-col h-full bg-[#EFA2BA] relative overflow-hidden">
+    <div className={`${isDesktop ? 'h-[500px] rounded-3xl' : 'h-full min-h-screen'} w-full relative overflow-hidden bg-[#EFA2BA] flex flex-col`}>
+      <div className="flex flex-col h-full relative overflow-hidden">
         {/* Background Graphic / Header */}
       <div className="relative pt-6 pb-24 px-4 bg-gradient-to-b from-[#4A3289] to-[#EFA2BA] flex-shrink-0 flex flex-col items-center justify-center text-center">
-        <button
-          onClick={onBack}
-          className="absolute top-4 left-4 w-8 h-8 flex items-center justify-center rounded-full bg-white/20 hover:bg-white/30 transition-colors z-20"
-        >
-          <ChevronLeft className="w-6 h-6 text-white" />
-        </button>
+        {!isDesktop && (
+          <button
+            onClick={onBack}
+            className="absolute top-4 left-4 w-8 h-8 flex items-center justify-center rounded-full bg-white/20 hover:bg-white/30 transition-colors z-20"
+          >
+            <ChevronLeft className="w-6 h-6 text-white" />
+          </button>
+        )}
+        {isDesktop && (
+          <button
+            onClick={onBack}
+            className="absolute top-4 left-4 w-8 h-8 flex items-center justify-center rounded-full bg-white/20 hover:bg-white/30 transition-colors z-20"
+          >
+            <ChevronLeft className="w-6 h-6 text-white" />
+          </button>
+        )}
         <div className="relative z-10 mt-6">
           <h2 className="text-[32px] font-bold text-white leading-tight italic drop-shadow-md">
             New User Airdrop

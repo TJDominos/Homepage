@@ -183,23 +183,13 @@ export function InviteRecord({ onBack, isDesktop }: InviteRecordProps) {
 
   // Mobile full screen
   return (
-    <div className="fixed inset-0 z-[999] bg-[#f0f2f5] flex flex-col overflow-y-auto fade-in">
-      <div 
-        className="flex flex-row items-center justify-start px-4 pb-3 sticky top-0 bg-[#f0f2f5] z-10 border-b border-black/5"
-        style={{ paddingTop: 'max(env(safe-area-inset-top), 16px)' }}
+    <div className="fixed inset-0 z-[999] bg-[#f0f2f5] flex flex-col overflow-y-auto fade-in pt-12">
+      <button
+        onClick={onBack}
+        className="absolute top-4 left-4 w-8 h-8 flex items-center justify-center rounded-full bg-white border border-black/5 shadow-sm hover:bg-slate-50 transition-colors z-20"
       >
-        <button
-          onClick={onBack}
-          className="hover:opacity-80 transition-opacity flex items-center font-medium pr-4"
-        >
-          <ChevronLeft
-            strokeWidth={2.5}
-            size={24}
-            className="mr-1 text-black"
-          />
-          <span className="text-[16px] font-medium text-black">Record</span>
-        </button>
-      </div>
+        <ChevronLeft className="w-5 h-5 text-black" />
+      </button>
       <div className="px-4 pb-8 mt-4">{content}</div>
     </div>
   );
