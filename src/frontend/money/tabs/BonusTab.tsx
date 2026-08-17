@@ -643,7 +643,7 @@ export function BonusTab({ isDesktop, expandWidget }: BonusTabProps) {
                   transition={{ delay: 0.1 }}
                   className="text-[18px] font-semibold text-slate-800 mb-2"
                 >
-                  Swap Successful!
+                  Swap Submitted!
                 </motion.h3>
                 <motion.p
                   initial={{ y: 10, opacity: 0 }}
@@ -651,7 +651,7 @@ export function BonusTab({ isDesktop, expandWidget }: BonusTabProps) {
                   transition={{ delay: 0.2 }}
                   className="text-[14px] text-slate-500 mb-8 max-w-[200px]"
                 >
-                  Your {swapCurrency} has been credited to your balance.
+                  On-chain transfer is processing. Your balance will update shortly.
                 </motion.p>
                 <button
                   onClick={() => setSwapStatus("idle")}
