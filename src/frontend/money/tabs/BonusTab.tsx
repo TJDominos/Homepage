@@ -61,15 +61,19 @@ export function BonusTab({ isDesktop, expandWidget }: BonusTabProps) {
   >("idle");
 
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const swapDropdownRef = useRef<HTMLDivElement>(null);
+  const gcoinDropdownRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (
-        dropdownRef.current &&
-        !dropdownRef.current.contains(event.target as Node)
-      ) {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
         setShowCurrencyDropdown(false);
+      }
+      if (swapDropdownRef.current && !swapDropdownRef.current.contains(event.target as Node)) {
         setShowSwapCurrencyDropdown(false);
+      }
+      if (gcoinDropdownRef.current && !gcoinDropdownRef.current.contains(event.target as Node)) {
+        setShowGcoinCurrencyDropdown(false);
       }
     };
     document.addEventListener("mousedown", handleClickOutside);
@@ -120,7 +124,6 @@ export function BonusTab({ isDesktop, expandWidget }: BonusTabProps) {
     setTopUpStatus("processing");
     setTimeout(() => {
       setTopUpStatus("success");
-      setTopUpAmount("");
     }, 1500);
   };
 
@@ -136,7 +139,6 @@ export function BonusTab({ isDesktop, expandWidget }: BonusTabProps) {
     setGcoinStatus("processing");
     setTimeout(() => {
       setGcoinStatus("success");
-      setGcoinAmount("");
     }, 1500);
   };
 
@@ -145,7 +147,6 @@ export function BonusTab({ isDesktop, expandWidget }: BonusTabProps) {
     setSwapStatus("processing");
     setTimeout(() => {
       setSwapStatus("success");
-      setSwapAmount("");
     }, 1500);
   };
 
@@ -173,7 +174,7 @@ export function BonusTab({ isDesktop, expandWidget }: BonusTabProps) {
             <div className="flex items-center justify-between w-full h-full">
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 bg-white rounded-xl flex items-center justify-center shadow-sm shrink-0">
-                  <ArrowUpCircle className="w-6 h-6 text-green-500" />
+                  <AssetIcon type="Bonus" className="w-6 h-6" />
                 </div>
                 <h3 className="text-[16px] font-semibold text-black">Top Up Bonus</h3>
               </div>
@@ -218,10 +219,7 @@ export function BonusTab({ isDesktop, expandWidget }: BonusTabProps) {
                     ease: "easeInOut",
                   }}
                 >
-                  <ArrowUpCircle
-                    className="w-[40px] h-[40px] text-green-500"
-                    strokeWidth={1.5}
-                  />
+                  <AssetIcon type="Bonus" className="w-[40px] h-[40px]" />
                 </motion.div>
                 <h3 className="text-[16px] font-semibold text-black mb-1">
                   Top Up Bonus
@@ -276,7 +274,7 @@ export function BonusTab({ isDesktop, expandWidget }: BonusTabProps) {
                         )}
                       </div>
                       <div className="flex flex-col gap-1 flex-1 w-2/3">
-                        <label className="text-[13px] font-normal text-black text-left pl-2">Amount</label>
+                        <label className="text-[13px] font-normal text-black text-left pl-2">{topUpCurrency} Amount</label>
                         <input
                           type="text"
                           placeholder="Amount"
@@ -296,7 +294,7 @@ export function BonusTab({ isDesktop, expandWidget }: BonusTabProps) {
                         />
                       </div>
                     </div>
-                    <div className="h-[20px] flex items-center justify-center mt-1 w-full">
+                    <div className="flex flex-col items-center justify-center mt-1 w-full gap-1">
                       {parseFloat(topUpAmount.replace(/,/g, "")) > 0 ? (
                         <span className="text-[12px] font-medium text-green-600 leading-[1]">
                           ≈ {formatNumber(calculateBonusFromTopUp())} Bonus
@@ -310,6 +308,9 @@ export function BonusTab({ isDesktop, expandWidget }: BonusTabProps) {
                           Bonus
                         </span>
                       ) : null}
+                      <span className="text-[11px] text-slate-400 font-medium leading-[1]">
+                        {parseFloat(topUpAmount.replace(/,/g, "")) > 0 ? `Conversion fee: 10.00 Bonus` : "No conversion fee"}
+                      </span>
                     </div>
                   </div>
                   <button
@@ -361,10 +362,7 @@ export function BonusTab({ isDesktop, expandWidget }: BonusTabProps) {
                       stiffness: 200,
                     }}
                   >
-                    <ArrowUpCircle
-                      className="w-8 h-8 text-green-500"
-                      strokeWidth={1.5}
-                    />
+                    <AssetIcon type="Bonus" className="w-8 h-8" />
                   </motion.div>
                   {[...Array(5)].map((_, i) => (
                     <motion.div
@@ -398,16 +396,21 @@ export function BonusTab({ isDesktop, expandWidget }: BonusTabProps) {
                 >
                   Top Up Successful!
                 </motion.h3>
-                <motion.p
+                <motion.div
                   initial={{ y: 10, opacity: 0 }}
                   animate={{ y: 0, opacity: 1 }}
                   transition={{ delay: 0.2 }}
-                  className="text-[14px] text-slate-500 mb-8 max-w-[200px]"
+                  className="text-center mb-6"
                 >
-                  Your bonus balance has been updated.
-                </motion.p>
+                  <div className="text-[24px] font-bold text-green-600 mb-1">
+                    +{formatNumber(calculateBonusFromTopUp())} Bonus
+                  </div>
+                  <p className="text-[14px] text-slate-500 max-w-[200px] mx-auto">
+                    Your bonus balance has been updated.
+                  </p>
+                </motion.div>
                 <button
-                  onClick={() => setTopUpStatus("idle")}
+                  onClick={() => { setTopUpStatus("idle"); setTopUpAmount(""); }}
                   className={`bg-[#333] text-white flex items-center justify-center font-[600] hover:bg-black active:scale-95 transition-all outline-none mt-auto ${"w-[80px] h-[28px] text-[13px] rounded-full mx-auto mt-auto"}`}
                 >
                   OK
@@ -485,7 +488,7 @@ export function BonusTab({ isDesktop, expandWidget }: BonusTabProps) {
                   <div className="flex flex-col w-full">
                     <div className="flex gap-2 items-end">
                       <div className="flex flex-col gap-1 flex-1 w-2/3">
-                        <label className="text-[13px] font-normal text-black text-left pl-2">Amount</label>
+                        <label className="text-[13px] font-normal text-black text-left pl-2">Bonus Amount</label>
                         <input
                           type="text"
                           placeholder="Min: 1,000 Bonus"
@@ -506,6 +509,7 @@ export function BonusTab({ isDesktop, expandWidget }: BonusTabProps) {
                       </div>
                       <div
                         className="flex flex-col gap-1 relative shrink-0 w-[40%] min-w-[90px]"
+                        ref={swapDropdownRef}
                       >
                         <label className="text-[13px] font-normal text-black text-left pl-2">Assets</label>
                         <button
@@ -564,7 +568,7 @@ export function BonusTab({ isDesktop, expandWidget }: BonusTabProps) {
                         </span>
                       )}
                       <span className="text-[11px] text-slate-400 font-medium leading-[1]">
-                        Conversion fee: 0.00 {swapCurrency}
+                        {parseFloat(swapAmount.replace(/,/g, "")) > 0 ? `Conversion fee: 10.00 Bonus` : "No conversion fee"}
                       </span>
                     </div>
                   </div>
@@ -645,16 +649,21 @@ export function BonusTab({ isDesktop, expandWidget }: BonusTabProps) {
                 >
                   Swap Submitted!
                 </motion.h3>
-                <motion.p
+                <motion.div
                   initial={{ y: 10, opacity: 0 }}
                   animate={{ y: 0, opacity: 1 }}
                   transition={{ delay: 0.2 }}
-                  className="text-[14px] text-slate-500 mb-8 max-w-[200px]"
+                  className="text-center mb-6"
                 >
-                  On-chain transfer is processing. Your balance will update shortly.
-                </motion.p>
+                  <div className="text-[24px] font-bold text-blue-500 mb-1">
+                    +{formatNumber(calculateTokenFromSwap())} {swapCurrency}
+                  </div>
+                  <p className="text-[14px] text-slate-500 max-w-[200px] mx-auto">
+                    On-chain transfer is processing. Your balance will update shortly.
+                  </p>
+                </motion.div>
                 <button
-                  onClick={() => setSwapStatus("idle")}
+                  onClick={() => { setSwapStatus("idle"); setSwapAmount(""); }}
                   className={`bg-[#333] text-white flex items-center justify-center font-[600] hover:bg-black active:scale-95 transition-all outline-none mt-auto ${"w-[80px] h-[28px] text-[13px] rounded-full mx-auto mt-auto"}`}
                 >
                   OK
@@ -745,7 +754,7 @@ export function BonusTab({ isDesktop, expandWidget }: BonusTabProps) {
                         />
                       </div>
                     </div>
-                    <div className="h-[20px] flex items-center justify-center mt-1 w-full"></div>
+                    <div className="h-[20px] flex flex-col items-center justify-center mt-1 w-full gap-1"></div>
                   </div>
                   <button
                     onClick={handleClaimSubmit}
@@ -926,7 +935,11 @@ export function BonusTab({ isDesktop, expandWidget }: BonusTabProps) {
                     ease: "easeInOut",
                   }}
                 >
-                  <ArrowRightLeft className="w-[40px] h-[40px] text-[#FFD700]" strokeWidth={1.5} />
+                  <div className="relative flex items-center justify-center">
+                    <AssetIcon type="Gcoin" className="w-[46px] h-[46px] opacity-20 absolute" />
+                    <AssetIcon type="Gcoin" className="w-[38px] h-[38px] opacity-40 absolute" />
+                    <ArrowRightLeft className="w-[28px] h-[28px] text-[#D4AF37] relative z-10 drop-shadow-sm" strokeWidth={2.5} />
+                  </div>
                 </motion.div>
                 <h3 className="text-[16px] font-semibold text-black mb-1">
                   Convert Gcoin
@@ -968,9 +981,9 @@ export function BonusTab({ isDesktop, expandWidget }: BonusTabProps) {
                 </button>
                 <div className="w-full flex flex-col justify-end gap-3 mt-auto">
                   <div className="flex flex-col w-full">
-                    <div className="flex gap-2 items-end">
+                    <div className={`flex gap-2 items-end ${gcoinDirection === "toGcoin" ? "flex-row-reverse" : "flex-row"}`}>
                       <div className="flex flex-col gap-1 flex-1 w-2/3">
-                        <label className="text-[13px] font-normal text-black text-left pl-2">Amount</label>
+                        <label className="text-[13px] font-normal text-black text-left pl-2">{gcoinDirection === "toGcoin" ? `${gcoinCurrency} Amount` : "Gcoin Amount"}</label>
                         <input
                           type="text"
                           placeholder={gcoinDirection === "toGcoin" ? "Amount in " + gcoinCurrency : "Amount in Gcoin"}
@@ -991,8 +1004,9 @@ export function BonusTab({ isDesktop, expandWidget }: BonusTabProps) {
                       </div>
                       <div
                         className="flex flex-col gap-1 relative shrink-0 w-[40%] min-w-[90px]"
+                        ref={gcoinDropdownRef}
                       >
-                        <label className="text-[13px] font-normal text-black text-left pl-2">{gcoinDirection === "toGcoin" ? "From" : "To"}</label>
+                        <label className="text-[13px] font-normal text-black text-left pl-2">Assets</label>
                         <button
                           disabled={gcoinStatus === "processing"}
                           onClick={(e) => {
@@ -1044,11 +1058,9 @@ export function BonusTab({ isDesktop, expandWidget }: BonusTabProps) {
                           Rate: 1 {gcoinCurrency} = 10 Gcoin
                         </span>
                       )}
-                      {gcoinDirection === 'fromGcoin' && ['USDC', 'USDT'].includes(gcoinCurrency) && (
-                        <span className="text-[11px] text-slate-400 font-medium leading-[1]">
-                          Conversion fee: 0.00 {gcoinCurrency}
-                        </span>
-                      )}
+                      <span className="text-[11px] text-slate-400 font-medium leading-[1]">
+                        {parseFloat(gcoinAmount.replace(/,/g, "")) > 0 ? `Conversion fee: 1.00 Gcoin` : "No conversion fee"}
+                      </span>
                     </div>
                   </div>
                   <button
@@ -1106,16 +1118,21 @@ export function BonusTab({ isDesktop, expandWidget }: BonusTabProps) {
                 >
                   Conversion Successful!
                 </motion.h3>
-                <motion.p
+                <motion.div
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.4 }}
-                  className="text-[14px] text-slate-500 mb-8 max-w-[200px]"
+                  className="text-center mb-6"
                 >
-                  Your {gcoinDirection === "toGcoin" ? "Gcoin" : gcoinCurrency} has been credited to your balance.
-                </motion.p>
+                  <div className="text-[24px] font-bold text-blue-600 mb-1">
+                    +{formatNumber(calculateGcoinSwap())} {gcoinDirection === "toGcoin" ? "Gcoin" : gcoinCurrency}
+                  </div>
+                  <p className="text-[14px] text-slate-500 max-w-[200px] mx-auto">
+                    Your {gcoinDirection === "toGcoin" ? "Gcoin" : gcoinCurrency} has been credited to your balance.
+                  </p>
+                </motion.div>
                 <button
-                  onClick={() => setGcoinStatus("idle")}
+                  onClick={() => { setGcoinStatus("idle"); setGcoinAmount(""); }}
                   className={`bg-[#333] text-white flex items-center justify-center font-[600] hover:bg-black active:scale-95 transition-all outline-none mt-auto ${"w-[80px] h-[28px] text-[13px] rounded-full mx-auto mt-auto"}`}
                 >
                   Done
