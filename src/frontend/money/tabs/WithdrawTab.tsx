@@ -186,7 +186,7 @@ export function WithdrawTab({ isDesktop }: WithdrawTabProps) {
                   onClick={() => setWltBalanceType("locked")}
                   className={`px-3 py-1 rounded-full text-[12px] font-semibold transition-all ${wltBalanceType === "locked" ? "bg-[#6A3FE6] text-white shadow-sm" : "text-black/50"}`}
                 >
-                  Locked
+                  Deferred
                 </button>
               </div>
             )}
@@ -224,7 +224,7 @@ export function WithdrawTab({ isDesktop }: WithdrawTabProps) {
                   </div>
                 ) : (
                   <div className="flex items-center gap-1">
-                    <span className="whitespace-nowrap">Locked: 0.00 {asset}</span>
+                    <span className="whitespace-nowrap">Deferred: 0.00 {asset}</span>
                     <div 
                       className="cursor-pointer w-4 h-4 rounded-full bg-black/20 hover:bg-black/30 transition-colors flex items-center justify-center text-[10px] shrink-0 font-bold text-black/60 relative z-10" 
                       onClick={(e) => { 
@@ -298,7 +298,7 @@ export function WithdrawTab({ isDesktop }: WithdrawTabProps) {
             )}
             {asset === "WLT" && wltBalanceType === "locked" && (
               <div className="text-[12px] text-[#6A3FE6] font-medium leading-snug mt-1">
-                *Locked tokens can be withdrawn subject to 30-day lockup +
+                *Deferred tokens can be withdrawn subject to 30-day lockup +
                 360-day linear vesting.
               </div>
             )}
@@ -396,7 +396,7 @@ export function WithdrawTab({ isDesktop }: WithdrawTabProps) {
             <div className="flex items-center gap-2">
               <HelpCircle size={18} className="text-black/50" />
               <span className="text-[14px] font-semibold text-black">
-                Why withdrawal is locked?
+                Why is withdrawal deferred?
               </span>
             </div>
             <ChevronDown
@@ -406,7 +406,7 @@ export function WithdrawTab({ isDesktop }: WithdrawTabProps) {
           </div>
           {faqLockedExpanded && (
             <span className="text-[12px] text-black/50 leading-relaxed pb-3 pt-1">
-              Bonus-to-token conversion is a conditional reward. Locked tokens are withheld in an on-chain escrow account and will be automatically distributed to the withdrawal address on schedule.
+              Bonus-to-token conversion is a conditional reward. These locked tokens are deferred and withheld in an on-chain escrow account and will be automatically distributed to the withdrawal address on schedule.
             </span>
           )}
         </div>
