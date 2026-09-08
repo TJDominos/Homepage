@@ -15,6 +15,8 @@ import { ProfileSettingModal } from "../components/modals/ProfileSettingModal";
 import { MoneyPage } from "./MoneyPage";
 import RanksPage from "./RanksPage";
 import PayoutPage from "./PayoutPage";
+import { NotFoundPage } from "./NotFoundPage";
+import { InboxPage } from "./InboxPage";
 import PlayPage from "./PlayPage";
 import { UserInfoEdit } from "../components/modals/UserInfoEdit";
 import { WltHeaderPrice } from "../components/layout/WltHeaderPrice";
@@ -32,12 +34,13 @@ function App() {
 
   const path = location.pathname.replace("/", "");
   const validTabs = ["money", "play", "inbox", "payout", "rank"];
-  const activeTab = (validTabs.includes(path) ? path : "play") as
+  const activeTab = (path === "" ? "play" : validTabs.includes(path) ? path : "404") as
     | "money"
     | "play"
     | "inbox"
     | "payout"
-    | "rank";
+    | "rank"
+    | "404";
   const setActiveTab = (tab: string) => navigate(`/${tab}`);
 
   const [isWalletConnectModalOpen, setWalletConnectModalOpen] = useState(false);
@@ -105,18 +108,18 @@ function App() {
       );
     }
     if (activeTab === "inbox") {
-      return (
-        <div className="text-center py-3 flex-1">
-          <h2 className="text-sm font-bold text-black mb-4">Inbox Page</h2>
-          <p className="text-black/65">Coming soon...</p>
-        </div>
-      );
+      return <InboxPage />;
     }
     if (activeTab === "rank") {
       return <RanksPage />;
     }
     if (activeTab === "payout") {
       return <PayoutPage userAccount={userAccount} />;
+    }
+
+
+    if (activeTab === "404") {
+      return <NotFoundPage />;
     }
 
     // Play tab
@@ -360,7 +363,7 @@ function App() {
         {["money", "play", "rank", "payout"].includes(activeTab) && <Footer />}
       </div>
 
-      {!isDesktop && (
+      {!isDesktop && activeTab !== "404" && (
         <TabSwitch activePage={activeTab} setActivePage={setActiveTab as any} />
       )}
 

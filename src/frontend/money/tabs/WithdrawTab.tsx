@@ -406,7 +406,7 @@ export function WithdrawTab({ isDesktop }: WithdrawTabProps) {
           </div>
           {faqLockedExpanded && (
             <span className="text-[12px] text-black/50 leading-relaxed pb-3 pt-1">
-              Bonus-to-token conversion is a conditional reward. These locked tokens are deferred and withheld in an on-chain escrow account and will be automatically distributed to the withdrawal address on schedule.
+              Bonus-to-token conversion is a conditional reward. Deferred tokens are held in an on-chain escrow account and automatically distributed to the withdrawal address according to the configured schedule.
             </span>
           )}
         </div>

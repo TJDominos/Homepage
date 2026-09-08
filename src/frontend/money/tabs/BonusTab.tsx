@@ -394,7 +394,7 @@ export function BonusTab({ isDesktop, expandWidget }: BonusTabProps) {
                   transition={{ delay: 0.1 }}
                   className="text-[18px] font-semibold text-slate-800 mb-2"
                 >
-                  Top Up Successful!
+                  Top Up Submitted!
                 </motion.h3>
                 <motion.div
                   initial={{ y: 10, opacity: 0 }}
@@ -406,7 +406,8 @@ export function BonusTab({ isDesktop, expandWidget }: BonusTabProps) {
                     +{formatNumber(calculateBonusFromTopUp())} Bonus
                   </div>
                   <p className="text-[14px] text-slate-500 max-w-[200px] mx-auto">
-                    Your bonus balance has been updated.
+                    {/* Your bouns balance will update shortly. */}
+                    Your bonus balance will update shortly.
                   </p>
                 </motion.div>
                 <button
@@ -1116,7 +1117,7 @@ export function BonusTab({ isDesktop, expandWidget }: BonusTabProps) {
                   transition={{ delay: 0.3 }}
                   className="text-[18px] font-semibold text-slate-800 mb-2"
                 >
-                  Conversion Successful!
+                  Conversion Submitted!
                 </motion.h3>
                 <motion.div
                   initial={{ opacity: 0, y: 10 }}
@@ -1128,7 +1129,7 @@ export function BonusTab({ isDesktop, expandWidget }: BonusTabProps) {
                     +{formatNumber(calculateGcoinSwap())} {gcoinDirection === "toGcoin" ? "Gcoin" : gcoinCurrency}
                   </div>
                   <p className="text-[14px] text-slate-500 max-w-[200px] mx-auto">
-                    Your {gcoinDirection === "toGcoin" ? "Gcoin" : gcoinCurrency} has been credited to your balance.
+                    Your {gcoinDirection === "toGcoin" ? "Gcoin" : gcoinCurrency} will be credited to your balance shortly.
                   </p>
                 </motion.div>
                 <button

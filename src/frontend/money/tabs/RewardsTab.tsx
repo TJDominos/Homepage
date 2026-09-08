@@ -158,9 +158,9 @@ export function RewardsTab({
 
       <div className="mb-6 flex-1">
         <p className="text-[14px] text-black/70 mb-4 font-medium leading-relaxed">
-          New User gets $WLT Airdrop and Free Gcoins
+          New User gets $WLT Airdrop and Free Bonuses
           <br />
-          Inviter gets up to 5% earnings from every friend's spending
+          Inviter gets up to 50% earnings from every friend's spending.
         </p>
 
         <div className="flex items-center gap-3 mb-5">
